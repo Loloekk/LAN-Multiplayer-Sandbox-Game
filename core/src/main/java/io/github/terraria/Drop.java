@@ -1,5 +1,6 @@
 package io.github.terraria;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -7,19 +8,22 @@ import com.badlogic.gdx.Game;
 
 ///** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Drop extends Game {
-    private SpriteBatch batch;
+    SpriteBatch batch;
     private Texture image;
+    public Texture buttonTexture;
+
 
     @Override
     public void create() {
         batch = new SpriteBatch();
+        buttonTexture = new Texture(Gdx.files.internal("libgdx.png"));
         image = new Texture("libgdx.png");
+        this.setScreen(new MainMenuScreen(this));
     }
 
     @Override
     public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        this.setScreen(new MainMenuScreen(this));
+        super.render();
     }
 
     @Override
