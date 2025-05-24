@@ -8,13 +8,13 @@ public class Block {
     private final int id;
     private final String name;
     public final String texture; // path
-    public final String behavior;
+    public final BlockBehavior behavior;
     
     Block(int id, String name, String texture, String behavior) {
         this.id = id;
         this.name = name;
         this.texture = texture;
-        this.behavior = behavior;
+        this.behavior = BehaviorFactory.create(behavior);
     }
 
     public int getId() {
@@ -23,5 +23,13 @@ public class Block {
 
     public String getName() {
         return name;
+    }
+
+    public String getTexture() {
+        return texture;
+    }
+
+    public BlockBehavior getBehavior() {
+        return behavior;
     }
 }
