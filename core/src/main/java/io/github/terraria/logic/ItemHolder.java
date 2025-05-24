@@ -8,6 +8,7 @@ import static java.lang.Math.min;
 
 // Ekwipunek albo skrzynki...
 public abstract class ItemHolder {
+    // Te same typy dynamiczne dziedziczące po Block powinny zwracać equals true.
     private final Multiset<Item> set = HashMultiset.create();
     private final int capacity;
     public ItemHolder(int cap) {
