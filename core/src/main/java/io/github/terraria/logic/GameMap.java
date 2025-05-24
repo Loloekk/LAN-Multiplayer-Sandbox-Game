@@ -2,7 +2,10 @@ package io.github.terraria.logic;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.commons.lang3.tuple.Pair;
+
+import io.github.terraria.logic.block.Block;
 
 // Myślę, że na postaci / moby potrzebna jest osobna mapa.
 public class GameMap {

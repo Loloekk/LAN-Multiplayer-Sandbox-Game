@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import io.github.terraria.logic.block.BlockRegistry;
+
 public class GameScreen implements Screen {
     private static final float RECT_SIZE = 50;
     private static final float MOVE_SPEED = 300;
@@ -22,6 +24,7 @@ public class GameScreen implements Screen {
     private final Rectangle player;
 
     public GameScreen(Drop game) {
+        BlockRegistry.loadAll();
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920, 1080);
