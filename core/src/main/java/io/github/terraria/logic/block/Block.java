@@ -9,7 +9,7 @@ public class Block {
     private final String name;
     public final String texture; // path
     public final BlockBehavior behavior;
-    
+
     Block(int id, String name, String texture, String behavior) {
         this.id = id;
         this.name = name;
@@ -31,5 +31,18 @@ public class Block {
 
     public BlockBehavior getBehavior() {
         return behavior;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o == null || getClass() != o.getClass())
+            return false;
+        Block bl = (Block) o;
+        return name.equals(bl.name);
+    }
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }

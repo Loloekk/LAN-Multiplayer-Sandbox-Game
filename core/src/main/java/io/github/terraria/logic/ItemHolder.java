@@ -4,15 +4,16 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 // Ekwipunek albo skrzynki...
 public abstract class ItemHolder {
-    // Te same typy dynamiczne dziedziczące po Block powinny zwracać equals true.
+    // Te same typy Blocków powinny zwracać equals true.
     private final Multiset<Item> set = HashMultiset.create();
     private final int capacity;
     public ItemHolder(int cap) {
-        capacity = cap;
+        capacity = max(cap,0);
     }
     public boolean insert(Item item) {
         if(set.size()==capacity)
