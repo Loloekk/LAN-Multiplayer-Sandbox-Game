@@ -1,0 +1,9 @@
+plugins {
+  id 'java'
+  id 'application'
+}
+
+dependencies {
+  implementation project(':common')
+  implementation 'com.esotericsoftware:kryonet:2.22.0-RC1'
+}

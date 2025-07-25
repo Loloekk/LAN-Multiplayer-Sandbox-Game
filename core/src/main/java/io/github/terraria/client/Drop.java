@@ -1,10 +1,11 @@
-package io.github.terraria;
+package io.github.terraria.client;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Game;
+import io.github.terraria.client.GameScreen;
 
 ///** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Drop extends Game {
@@ -18,7 +19,7 @@ public class Drop extends Game {
         batch = new SpriteBatch();
         buttonTexture = new Texture(Gdx.files.internal("libgdx.png"));
         image = new Texture("libgdx.png");
-        this.setScreen(new MainMenuScreen(this));
+        this.setScreen(new GameScreen(this));
     }
 
     @Override

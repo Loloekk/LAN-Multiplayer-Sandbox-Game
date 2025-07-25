@@ -5,6 +5,7 @@ dependencies {
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
   implementation 'org.apache.commons:commons-lang3:3.12.0'
   implementation 'com.google.guava:guava:32.1.2-jre'
+  implementation 'com.esotericsoftware:kryonet:2.22.0-RC1'
   testImplementation 'org.junit.jupiter:junit-jupiter:5.+'
   testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
   testImplementation 'org.assertj:assertj-core:3.+'
@@ -17,3 +18,7 @@ dependencies {
 test {
   useJUnitPlatform()
 }
+
+
+
+
