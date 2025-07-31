@@ -1,17 +1,18 @@
 package io.github.terraria.logic;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import io.github.terraria.logic.building.PlaneContainer;
+import io.github.terraria.logic.building.StaticPlaneContainer;
 
-public class GameStateImpl implements GameState {
-    // TODO: dependency injection.
-    private final ArrayList<Player> players = new ArrayList<>(); // Cały gracz, czy tylko awatar?
-    private final PlaneContainer grid = new StaticPlaneContainer();
-    private final World world = new World(new Vector2(0, -10), true);
-    public GameStateImpl() { // Box2D.init();
+public class GameStateImpl extends GameState {
+    public GameStateImpl(PlaneContainer container, World world) {
+        super(container, world);
     }
+    public GameStateImpl() {
+        this(new StaticPlaneContainer(), new World(new Vector2(0, -10), true));
+    }
+
     @Override
     public void step() {}
 }

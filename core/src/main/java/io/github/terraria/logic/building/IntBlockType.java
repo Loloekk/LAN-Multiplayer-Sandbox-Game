@@ -1,10 +1,14 @@
-package io.github.terraria.logic;
+package io.github.terraria.logic.building;
 
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import io.github.terraria.logic.block.BlockBehavior;
 
 public class IntBlockType implements BlockType {
-    int id;
+    private final int id;
+    public IntBlockType(int id) {
+        this.id = id;
+    }
+
     @Override
     public FixtureDef getFixtureDef() {
         return null;
@@ -13,5 +17,10 @@ public class IntBlockType implements BlockType {
     @Override
     public BlockBehavior getBlockBehavior() {
         return null;
+    }
+
+    @Override
+    public String getName() {
+        return "";
     }
 }
