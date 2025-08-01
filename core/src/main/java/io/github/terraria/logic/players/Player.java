@@ -1,4 +1,4 @@
-package io.github.terraria.logic;
+package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.physics.box2d.Body;
 

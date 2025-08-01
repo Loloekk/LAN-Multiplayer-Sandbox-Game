@@ -1,4 +1,4 @@
-package io.github.terraria.logic;
+package io.github.terraria.logic.players;
 
 class PlayerImpl implements Player {
     private final int id;
