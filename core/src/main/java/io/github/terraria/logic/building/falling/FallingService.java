@@ -32,7 +32,7 @@ public class FallingService {
         while(true) {
             y++;
             PhysicalBlock phy = plane.getPhysicalAt(x, y);
-            if(phy != null && phy.blockType().isFallable()) {
+            if(phy != null && phy.blockType().canFall()) {
                 phy.body().setType(BodyDef.BodyType.DynamicBody);
                 // I grupa dla braku kolizji.
                 VolatileBlock volBlock = new VolatileBlockImpl(phy);

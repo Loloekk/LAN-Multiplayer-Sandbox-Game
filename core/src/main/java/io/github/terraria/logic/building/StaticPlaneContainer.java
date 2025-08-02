@@ -42,17 +42,18 @@ public class StaticPlaneContainer implements PlaneContainer {
     }
 
     @Override
-    public void placeBlockAt(int x, int y, BlockType block) {
-
+    public boolean placeBlockAt(int x, int y, BlockType block) {
+        // Jeżeli block jest fizyczny, to oddeleguj tworzenie body gdzie indziej.
+        return false;
     }
 
     @Override
-    public void placeBlockAt(int x, int y, BlockType block, Body body) {
-
+    public boolean placeBlockAt(int x, int y, BlockType block, Body body) {
+        return false;
     }
 
     @Override
-    public void removeFrontBlockAt(int x, int y) {
-
+    public BlockType removeFrontBlockAt(int x, int y) {
+        return null;
     }
 }

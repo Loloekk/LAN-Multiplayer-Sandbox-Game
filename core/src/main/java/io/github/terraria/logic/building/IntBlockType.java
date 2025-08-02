@@ -15,6 +15,11 @@ public class IntBlockType implements BlockType {
     }
 
     @Override
+    public boolean canFall() {
+        return false;
+    }
+
+    @Override
     public BlockBehavior getBlockBehavior() {
         return null;
     }

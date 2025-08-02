@@ -9,7 +9,7 @@ public class VolatileBlocksContainer {
     private final List<VolatileBlock> volBlocks = new ArrayList<>();
     public void add(List<VolatileBlock> newBlocks) {
         volBlocks.addAll(newBlocks);
-    };
+    }
     public List<VolatileBlock> filter() {// Zwraca wyrzucone (i.e. nieruszające się).
        Map<Boolean, List<VolatileBlock>> partitioned = volBlocks.stream()
            .collect(Collectors.partitioningBy(VolatileBlock::update));

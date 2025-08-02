@@ -4,9 +4,9 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import io.github.terraria.logic.block.BlockBehavior;
 
 public interface BlockType {
-    public FixtureDef getFixtureDef();
-    public boolean isFallable();
+    FixtureDef getFixtureDef();
+    boolean canFall();
     // Na specjalnie kliknięcie:
-    public BlockBehavior getBlockBehavior();
-    public String getName();
+    BlockBehavior getBlockBehavior();
+    String getName();
 }

@@ -1,16 +1,36 @@
 package io.github.terraria.logic.building;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import io.github.terraria.logic.IntVector2;
 
 // Kontener bez logiki.
 public interface PlaneContainer {
-    public void init(int width, int height, int zeroX, int zeroY);
+    void init(int width, int height, int zeroX, int zeroY);
     // Zwraca z wierzchniej warstwy.
-    public BlockType getBlockAt(int x, int y, int layer);
-    public BlockType getFrontBlockAt(int x, int y);
-    public PhysicalBlock getPhysicalAt(int x, int y);
-    public void placeBlockAt(int x, int y, BlockType block);
-    public void placeBlockAt(int x, int y, BlockType block, Body body);
+    BlockType getBlockAt(int x, int y, int layer);
+    default BlockType getBlockAt(IntVector2 loc, int layer) {
+        return getBlockAt(loc.x(), loc.y(), layer);
+    }
+    BlockType getFrontBlockAt(int x, int y);
+    default BlockType getFrontBlockAt(IntVector2 loc) {
+        return getFrontBlockAt(loc.x(), loc.y());
+    }
+    // Współrzędnie Bodies konsekwencją położenia w tym kontenerze.
+    PhysicalBlock getPhysicalAt(int x, int y);
+    default PhysicalBlock getPhysicalAt(IntVector2 loc) {
+        return getPhysicalAt(loc.x(), loc.y());
+    }
+    boolean placeBlockAt(int x, int y, BlockType block);
+    default boolean placeBlockAt(IntVector2 loc, BlockType block) {
+        return placeBlockAt(loc.x(), loc.y(), block);
+    }
+    boolean placeBlockAt(int x, int y, BlockType block, Body body);
+    default boolean placeBlockAt(IntVector2 loc, BlockType block, Body body) {
+        return placeBlockAt(loc.x(), loc.y(), block, body);
+    }
     // Zdejmuje z wierzchniej warstwy.
-    public void removeFrontBlockAt(int x, int y);
+    BlockType removeFrontBlockAt(int x, int y);
+    default BlockType removeFrontBlockAt(IntVector2 loc) {
+        return removeFrontBlockAt(loc.x(), loc.y());
+    }
 }
