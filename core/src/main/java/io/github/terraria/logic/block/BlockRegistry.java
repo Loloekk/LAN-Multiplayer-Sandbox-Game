@@ -1,3 +1,4 @@
+/*
 package io.github.terraria.logic.block;
 
 import java.util.HashMap;
@@ -19,4 +20,4 @@ public class BlockRegistry {
             registerBlock(block);
         }
     }
-}
+}*/

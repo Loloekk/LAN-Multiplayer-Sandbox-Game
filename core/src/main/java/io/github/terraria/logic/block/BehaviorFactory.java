@@ -1,11 +1,14 @@
+/*
 package io.github.terraria.logic.block;
 
 import java.util.Map;
 import java.util.function.Supplier;
 
+*/
 /**
  * Factory for creating BlockBehavior instances by name.
- */
+ *//*
+
 public class BehaviorFactory {
     private static final Map<String, Supplier<BlockBehavior>> behaviors = Map.of(
         "solid", () -> new SolidBehavior()
@@ -20,3 +23,4 @@ public class BehaviorFactory {
         }
     }
 }
+*/

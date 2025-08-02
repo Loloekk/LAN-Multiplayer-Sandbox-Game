@@ -1,3 +1,4 @@
+/*
 package io.github.terraria.logic.block;
 
 import java.util.ArrayList;
@@ -8,9 +9,11 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
+*/
 /**
  * Loads blocks from a JSON file.
- */
+ *//*
+
 public class BlockJsonLoader {
     public static List<Block> loadAllBlocks() {
         FileHandle file = Gdx.files.internal("blocks.json");
@@ -33,3 +36,4 @@ public class BlockJsonLoader {
         return blocks;
     }
 }
+*/
