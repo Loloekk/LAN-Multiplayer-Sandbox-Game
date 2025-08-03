@@ -21,6 +21,6 @@ public class Recipe {
         this.station = station;
     }
 
-    public StationType getStation() {}
+    public StationType getStation() { return null; }
     public boolean canCraft(ItemHolder inventory) { return true; }
 }
