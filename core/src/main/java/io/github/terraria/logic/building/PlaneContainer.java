@@ -3,9 +3,9 @@ package io.github.terraria.logic.building;
 import com.badlogic.gdx.physics.box2d.Body;
 import io.github.terraria.logic.IntVector2;
 
-// Kontener bez logiki.
+// Kontener bez istotnej logiki. Tylko logika przypisania do warstw.
+// Delegowanie stworzenia ciał fizycznych do innych klas.
 public interface PlaneContainer {
-    void init(int width, int height, int zeroX, int zeroY);
     // Zwraca z wierzchniej warstwy.
     BlockType getBlockAt(int x, int y, int layer);
     default BlockType getBlockAt(IntVector2 loc, int layer) {
