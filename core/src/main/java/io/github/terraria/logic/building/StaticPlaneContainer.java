@@ -2,6 +2,7 @@ package io.github.terraria.logic.building;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import io.github.terraria.logic.IntRectangle;
 
 import java.util.ArrayList;
 
@@ -80,5 +81,17 @@ public class StaticPlaneContainer implements PlaneContainer {
     public BlockType removeFrontBlockAt(int x, int y) {
         // Zniszcz body.
         return null;
+    }
+
+    @Override
+    public LocalPlaneContainer getLocal(IntRectangle neighbourhood) {
+        ArrayList<ArrayList<ArrayList<BlockType>>> localGrid = new ArrayList<>();
+        for (int x = neighbourhood.leftBottom().x(); x < neighbourhood.rightTop().x(); x++) {
+            ArrayList<ArrayList<BlockType>> column = new ArrayList<>();
+            for (int y = neighbourhood.leftBottom().y(); y < neighbourhood.rightTop().y(); y++)
+                column.add(new ArrayList<>(grid.get(x).get(y)));
+            localGrid.add(column);
+        }
+        return new LocalPlaneContainerImpl(localGrid);
     }
 }

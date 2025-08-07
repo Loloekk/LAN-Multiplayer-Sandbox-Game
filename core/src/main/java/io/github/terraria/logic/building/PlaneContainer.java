@@ -1,12 +1,12 @@
 package io.github.terraria.logic.building;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import io.github.terraria.logic.IntRectangle;
 import io.github.terraria.logic.IntVector2;
 
 // Kontener bez istotnej logiki. Tylko logika przypisania do warstw.
 // Delegowanie stworzenia ciał fizycznych do innych klas.
 public interface PlaneContainer {
-    // Zwraca z wierzchniej warstwy.
     BlockType getBlockAt(int x, int y, int layer);
     default BlockType getBlockAt(IntVector2 loc, int layer) {
         return getBlockAt(loc.x(), loc.y(), layer);
@@ -33,4 +33,5 @@ public interface PlaneContainer {
     default BlockType removeFrontBlockAt(IntVector2 loc) {
         return removeFrontBlockAt(loc.x(), loc.y());
     }
+    LocalPlaneContainer getLocal(IntRectangle neighbourhood);
 }

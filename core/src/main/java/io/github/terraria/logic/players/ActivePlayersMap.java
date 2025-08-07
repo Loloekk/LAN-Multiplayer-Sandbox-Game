@@ -3,6 +3,7 @@ package io.github.terraria.logic.players;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import io.github.terraria.logic.IntRectangle;
 
 import java.util.List;
 import java.util.Map;
@@ -49,5 +50,13 @@ public class ActivePlayersMap implements ActivePlayers {
                 return player;
         }
         return null;
+    }
+
+    @Override
+    public ActivePlayers getLocal(IntRectangle rectangle) {
+        Map<Integer, PhysicalPlayer> filteredMap = map.entrySet().stream()
+                .filter(entry -> rectangle.contains(entry.getValue().body().getPosition()))
+                .collect(java.util.stream.Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return new ActivePlayersMap(filteredMap);
     }
 }
