@@ -12,4 +12,7 @@ public record IntVector2(int x, int y) {
     public static IntVector2 toInt(Vector2 vec) {
         return new IntVector2((int) Math.floor(vec.x), (int) Math.floor(vec.y));
     }
+    public Vector2 toFloat() {
+        return new Vector2((float) x, (float) y);
+    }
 }

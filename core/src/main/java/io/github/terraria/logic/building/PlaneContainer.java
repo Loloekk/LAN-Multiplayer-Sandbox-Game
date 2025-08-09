@@ -24,6 +24,7 @@ public interface PlaneContainer {
     default boolean placeBlockAt(IntVector2 loc, BlockType block) {
         return placeBlockAt(loc.x(), loc.y(), block);
     }
+    // Ignores body if block not physical.
     boolean placeBlockAt(int x, int y, BlockType block, Body body);
     default boolean placeBlockAt(IntVector2 loc, BlockType block, Body body) {
         return placeBlockAt(loc.x(), loc.y(), block, body);
