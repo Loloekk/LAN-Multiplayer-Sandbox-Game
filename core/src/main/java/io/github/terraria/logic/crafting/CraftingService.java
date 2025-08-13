@@ -1,14 +1,24 @@
 package io.github.terraria.logic.crafting;
 
 import io.github.terraria.logic.ItemHolder;
-import io.github.terraria.logic.crafting.station.CraftingStation;
-import io.github.terraria.logic.crafting.station.StationType;
+import io.github.terraria.logic.crafting.station.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CraftingService {
-    private RecipeRepoImpl repo;
-    private Map<StationType, CraftingStation> stations;
+    private final RecipeRepoImpl repo;
+    private final Map<StationType, CraftingStation> stations;
+
+    public CraftingService(RecipeRepoImpl repo) {
+        this.repo = repo;
+        this.stations = new HashMap<>();
+        this.stations.put(StationType.WORKBENCH, new WorkBenchStation());
+        this.stations.put(StationType.FURNACE, new FurnaceStation());
+        this.stations.put(StationType.ANVIL, new AnvilStation());
+    }
 
     boolean canCraft(Recipe recipe, ItemHolder inventory) {
         StationType type = recipe.getStation();
@@ -16,10 +26,15 @@ public class CraftingService {
         return station.canCraft(recipe, inventory);
     }
 
-    void craft(Recipe recipe, ItemHolder inventory) {
+    public List<Recipe> getAvailableRecipes(StationType type) {
+        return repo.findByStation(type);
+    }
+
+    boolean craft(Recipe recipe, ItemHolder inventory) {
         if (!canCraft(recipe, inventory)) {
-            return; // or throw exception?
+            return false;
         }
         stations.get(recipe.getStation()).craft(recipe, inventory);
+        return true;
     }
 }

@@ -6,23 +6,24 @@ import io.github.terraria.logic.crafting.Recipe;
 import java.util.List;
 
 public class FurnaceStation implements CraftingStation {
-    @Override
-    public StationType getStationType() {
-        return null;
-    }
+    private int coal;
 
     @Override
-    public List<Recipe> getAvailableRecipes() {
-        return List.of();
+    public StationType getStationType() {
+        return StationType.FURNACE;
     }
 
     @Override
     public boolean canCraft(Recipe recipe, ItemHolder inventory) {
-        return false;
+        return coal >= recipe.getOutput().getAmount() && recipe.getStation() == getStationType() && recipe.canCraft(inventory);
     }
 
     @Override
-    public void craft(Recipe recipe, ItemHolder inventory) {
-
+    public boolean craft(Recipe recipe, ItemHolder inventory) {
+        if (!canCraft(recipe, inventory)) {
+            return false;
+        }
+        coal -= recipe.getOutput().getAmount();
+        return recipe.craft(inventory);
     }
 }

@@ -8,21 +8,20 @@ import java.util.List;
 public class AnvilStation implements CraftingStation {
     @Override
     public StationType getStationType() {
-        return null;
-    }
-
-    @Override
-    public List<Recipe> getAvailableRecipes() {
-        return List.of();
+        return StationType.ANVIL;
     }
 
     @Override
     public boolean canCraft(Recipe recipe, ItemHolder inventory) {
-        return false;
+        return recipe.getStation() == getStationType() && recipe.canCraft(inventory);
     }
 
     @Override
-    public void craft(Recipe recipe, ItemHolder inventory) {
+    public boolean craft(Recipe recipe, ItemHolder inventory) {
+        if (!canCraft(recipe, inventory)) {
+            return false;
+        }
 
+        return recipe.craft(inventory);
     }
 }

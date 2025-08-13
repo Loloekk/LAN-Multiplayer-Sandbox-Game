@@ -20,6 +20,15 @@ public abstract class ItemHolder {
         set.add(item);
         return true;
     }
+    public boolean insert(Item item, int count) {
+        while (count > 0) {
+            if(set.size()==capacity)
+                return false;
+            set.add(item);
+            count--;
+        }
+        return true;
+    }
     public int getCount(Item item) { return set.count(item); }
     public int remove(Item item, int count) {
         return min(set.remove(item, count), count);

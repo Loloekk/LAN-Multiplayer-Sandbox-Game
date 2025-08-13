@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface CraftingStation {
     StationType getStationType();
-    List<Recipe> getAvailableRecipes();
     boolean canCraft(Recipe recipe, ItemHolder inventory);
-    void craft(Recipe recipe, ItemHolder inventory);
+    boolean craft(Recipe recipe, ItemHolder inventory);
 }
