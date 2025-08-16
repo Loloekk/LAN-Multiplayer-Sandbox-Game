@@ -10,8 +10,12 @@ public class PlayerRegistryMap implements PlayerRegistry {
     }
 
     @Override
-    public void registerPlayer(int id) {
-        // Initialize equipment, position...
+    public boolean registerPlayer(int id) {
+        if(map.containsKey(id))
+            return false;
+        map.putIfAbsent(id, new PlayerImpl(id, PlayerRegistry.firstSpawn));
+        // Initialize equipment...
+        return true;
     }
 
     @Override

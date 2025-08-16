@@ -15,6 +15,7 @@ public class StaticPlaneContainer implements PlaneContainer {
     // Słabe, że nie jest wysokość globalnie.
     // [width][height][layer] dla lokalności dostępu.
     // Blok pod [i][j] ma współrzędne w world i - zeroX, i - zeroY.
+    // TODO - rozważyć: Blok ma wymiary 1x1 w world. To raczej nie jest restrykcyjne, ale można ewentualnie uwzględniać skalowanie wszędzie.
     // Argumenty do metod są we współrzędnych world.
     private final ArrayList<ArrayList<ArrayList<BlockType>>> grid;
     private final ArrayList<ArrayList<Body>> bodies;

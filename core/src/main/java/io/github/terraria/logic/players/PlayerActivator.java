@@ -13,19 +13,18 @@ public abstract class PlayerActivator {
         this.activePlayers = activePlayers;
     }
 
-    protected final Vector2 spawn = new Vector2(0f, 0f); // Czy to nie będzie zależało od init PlainContainer? Trzeba tak zrobić właśnie, żeby nie zależało. (0, 0) to dobra wartość na spawn.
-
-    protected abstract Body getNewPlayerBody();
+    protected abstract Body getNewPlayerBody(Vector2 spawnPosition);
 
     // Sprawdzanie haseł poza modelem.
     public void loginPlayer(int playersId) {
-        activePlayers.add(new PhysicalPlayer(registry.getPlayer(playersId), getNewPlayerBody()));
+        Player player = registry.getPlayer(playersId);
+        activePlayers.add(new PhysicalPlayer(player, getNewPlayerBody(player.getSpawnPosition())));
     }
     public void logoutPlayer(int playersId) {
+        PhysicalPlayer physicalPlayer = activePlayers.remove(playersId);
+        Body body = physicalPlayer.body();
+        physicalPlayer.player().setSpawnPosition(body.getPosition());
         // Destroy body.
-        Body body = activePlayers.remove(playersId).body();
         world.destroyBody(body);
-
-        // Save some player info to registry?
     }
 }
