@@ -25,6 +25,7 @@ public class BlockType {
         body.createFixture(getFixtureDef());
         return body;
     }
+    // isPhysical() true implies layer 0.
     public int getLayer() { return LayerFactory.get(this); }
     // To na razie można odpuścić sobie.
     public boolean canFall() { return false; }

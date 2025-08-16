@@ -16,7 +16,6 @@ public class StaticPlaneContainer implements PlaneContainer {
     // [width][height][layer] dla lokalności dostępu.
     // Blok pod [i][j] ma współrzędne w world i - zeroX, i - zeroY.
     // Argumenty do metod są we współrzędnych world.
-    // TODO: Weryfikacja powyższej konwencji (metody do konwersji współrzędnych).
     private final ArrayList<ArrayList<ArrayList<BlockType>>> grid;
     private final ArrayList<ArrayList<Body>> bodies;
     private final int zeroX, zeroY;
@@ -27,20 +26,38 @@ public class StaticPlaneContainer implements PlaneContainer {
         this.zeroY = zeroY;
         this.world = world;
 
-        // Add buffer blocks frame to the world.
+        // Adding buffer blocks around the map.
+        {
+            int bufferBlockId = -1;
+            BlockType block;
+            int left =  -1 - zeroX, right = width - zeroX;
+            int bottom = -1 - zeroY, top = height - zeroY;
+            for (int x = left; x <= right; x++) {
+                block = new BlockType(bufferBlockId);
+                block.createBody(world, new IntVector2(x, bottom));
+                block = new BlockType(bufferBlockId);
+                block.createBody(world, new IntVector2(x, top));
+            }
+            for (int y = bottom; y <= top; y++) {
+                block = new BlockType(bufferBlockId);
+                block.createBody(world, new IntVector2(left, y));
+                block = new BlockType(bufferBlockId);
+                block.createBody(world, new IntVector2(right, y));
+            }
+        }
         grid = new ArrayList<>(width);
         bodies = new ArrayList<>(width);
-        for(int x = 0; x < width; x++) {
+        for(int i = 0; i < width; i++) {
             ArrayList<ArrayList<BlockType>> column = new ArrayList<>(height);
             ArrayList<Body> bodiesColumn = new ArrayList<>(height);
-            for (int y = 0; y < height; y++) {
+            for (int j = 0; j < height; j++) {
                 ArrayList<BlockType> point = new ArrayList<>(layers);
                 {
                     BlockType frontBlock = null;
                     Body body = null;
-                    if (y < zeroY) {
+                    if (j < zeroY) {
                         frontBlock = new BlockType(0);
-                        body = frontBlock.createBody(world, new IntVector2(x - zeroX, y - zeroY));
+                        body = frontBlock.createBody(world, new IntVector2(i - zeroX, j - zeroY));
                     }
                     point.add(frontBlock);
                     bodiesColumn.add(body);
@@ -53,23 +70,41 @@ public class StaticPlaneContainer implements PlaneContainer {
         }
     }
 
+    // These private methods also take world coordinates as arguments.
+    private ArrayList<BlockType> getPointAt(int x, int y) {
+        return grid.get(x + zeroX).get(y + zeroY);
+    }
+
+    private void setPointAt(int x, int y, ArrayList<BlockType> point) {
+        grid.get(x + zeroX).set(y + zeroY, point);
+    }
+
+    private Body getBodyAt(int x, int y) {
+        return bodies.get(x + zeroX).get(y + zeroY);
+    }
+
+    private void setBodyAt(int x, int y, Body body) {
+        bodies.get(x + zeroX).set(y + zeroY, body);
+    }
+
     // Best thin, so can be used efficiently in other methods.
     @Override
     public BlockType getBlockAt(int x, int y, int layer) {
-        return grid.get(x + zeroX).get(y + zeroY).get(layer);
+        return getPointAt(x, y).get(layer);
     }
 
     @Override
     public BlockType getFrontBlockAt(int x, int y) {
-        BlockType block = getBlockAt(x, y, 0);
+        ArrayList<BlockType> point = getPointAt(x, y);
+        BlockType block = point.get(0);
         if(block != null)
             return block;
-        return getBlockAt(x, y, 1);
+        return point.get(1);
     }
 
     @Override
     public PhysicalBlock getPhysicalAt(int x, int y) {
-        return new PhysicalBlock(getBlockAt(x, y, 0), bodies.get(x + zeroX).get(y + zeroY));
+        return new PhysicalBlock(getBlockAt(x, y, 0), getBodyAt(x, y));
     }
 
     @Override
@@ -81,14 +116,16 @@ public class StaticPlaneContainer implements PlaneContainer {
     @Override
     public boolean placeBlockAt(int x, int y, BlockType block, Body body) {
         int layer = block.getLayer();
-        if(getBlockAt(x, y, layer) != null)
+        ArrayList<BlockType> point = getPointAt(x, y);
+        if(point.get(layer) != null)
             return false;
-        grid.get(x + zeroX).get(y + zeroY).set(layer, block);
+        point.set(layer, block);
+        setPointAt(x, y, point);
         if(block.isPhysical()) {
-            Body oldBody = bodies.get(x + zeroX).get(y + zeroY);
+            Body oldBody = getBodyAt(x, y);
             if (oldBody != null)
                 oldBody.getWorld().destroyBody(oldBody);
-            bodies.get(x + zeroX).set(y + zeroY, body);
+            setBodyAt(x, y, body);
         }
         return true;
     }
@@ -97,17 +134,22 @@ public class StaticPlaneContainer implements PlaneContainer {
     public BlockType removeFrontBlockAt(int x, int y) {
         {
             // Zniszcz body.
-            Body body = bodies.get(x + zeroX).get(y + zeroY);
+            Body body = getBodyAt(x, y);
             if(body != null)
                 body.getWorld().destroyBody(body);
-            bodies.get(x + zeroX).set(y + zeroY, null);
+            setBodyAt(x, y, null);
         }
-        BlockType block = getBlockAt(x, y, 0);
-        grid.get(x + zeroX).get(y + zeroY).set(0, null);
-        if(block != null)
-            return block;
-        grid.get(x + zeroX).get(y + zeroY).set(1, null);
-        return getBlockAt(x, y, 1);
+        ArrayList<BlockType> point = getPointAt(x, y);
+        BlockType block = point.get(0);
+        if(block != null) {
+            point.set(0, null);
+        }
+        else {
+            block = point.get(1);
+            point.set(1, null);
+        }
+        setPointAt(x, y, point);
+        return block;
     }
 
     @Override
@@ -116,7 +158,7 @@ public class StaticPlaneContainer implements PlaneContainer {
         for (int x = neighbourhood.leftBottom().x(); x < neighbourhood.rightTop().x(); x++) {
             ArrayList<ArrayList<BlockType>> column = new ArrayList<>();
             for (int y = neighbourhood.leftBottom().y(); y < neighbourhood.rightTop().y(); y++)
-                column.add(new ArrayList<>(grid.get(x + zeroX).get(y + zeroY)));
+                column.add(new ArrayList<>(getPointAt(x, y)));
             localGrid.add(column);
         }
         return new LocalPlaneContainerImpl(localGrid);
