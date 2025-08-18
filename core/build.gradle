@@ -1,3 +1,8 @@
+plugins {
+  id "application"
+  id "java"
+}
+
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 eclipse.project.name = appName + '-core'
 
@@ -11,7 +16,7 @@ java {
 
 dependencies {
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
-  implementation 'org.apache.commons:commons-lang3:3.12.0'
+  implementation 'org.apache.commons:commons-lang3:3.18.0'
   implementation 'com.google.guava:guava:32.1.2-jre'
   implementation 'com.esotericsoftware:kryonet:2.22.0-RC1'
   testImplementation 'org.junit.jupiter:junit-jupiter:5.+'
@@ -22,6 +27,12 @@ dependencies {
     implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
   }
   api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+
+  runtimeOnly "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+  runtimeOnly "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+
 }
 
 test {
