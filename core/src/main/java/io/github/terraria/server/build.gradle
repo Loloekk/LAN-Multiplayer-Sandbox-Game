@@ -1,3 +1,5 @@
+package io.github.terraria.server
+
 plugins {
   id 'java'
   id 'application'
