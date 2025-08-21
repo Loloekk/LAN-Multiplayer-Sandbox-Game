@@ -1,8 +1,8 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import io.github.terraria.logic.IntVector2;
+import io.github.terraria.logic.physics.Body;
 
 // body daje w szczególności informację o pozycji.
 // Logujący gracz miałby na razie ustawiony spawn.

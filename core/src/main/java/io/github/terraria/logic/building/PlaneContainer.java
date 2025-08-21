@@ -1,8 +1,8 @@
 package io.github.terraria.logic.building;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import io.github.terraria.logic.IntRectangle;
 import io.github.terraria.logic.IntVector2;
+import io.github.terraria.logic.physics.Body;
 
 // Kontener bez istotnej logiki. Tylko logika przypisania do warstw.
 // Delegowanie stworzenia ciał fizycznych do innych klas.

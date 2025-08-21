@@ -1,3 +1,4 @@
+/*
 package io.github.terraria.logic.building.falling;
 import com.badlogic.gdx.physics.box2d.Body;
 import io.github.terraria.logic.building.BlockType;
@@ -12,3 +13,4 @@ public abstract class VolatileBlock {
     }
     public abstract boolean update(); // Zwraca czy nastąpiła zmiana (spadek).
 }
+*/

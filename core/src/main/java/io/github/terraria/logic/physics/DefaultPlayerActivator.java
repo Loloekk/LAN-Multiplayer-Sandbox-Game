@@ -1,7 +1,10 @@
-package io.github.terraria.logic.players;
+package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import io.github.terraria.logic.players.ActivePlayers;
+import io.github.terraria.logic.players.PlayerRegistry;
 
 public class DefaultPlayerActivator extends PlayerActivator {
     public DefaultPlayerActivator(PlayerRegistry registry, World world, ActivePlayers activePlayers) {
@@ -16,11 +19,7 @@ public class DefaultPlayerActivator extends PlayerActivator {
 
     @Override
     protected Body getNewPlayerBody(Vector2 spawnPosition) {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(spawnPosition);
-
-        Body body = world.createBody(bodyDef);
+        Body body = world.createDynamicBody(spawnPosition);
 
         PolygonShape rectangle = new PolygonShape();
         rectangle.setAsBox(width, height);

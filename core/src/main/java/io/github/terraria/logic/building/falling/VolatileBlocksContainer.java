@@ -1,3 +1,4 @@
+/*
 package io.github.terraria.logic.building.falling;
 
 import java.util.ArrayList;
@@ -20,3 +21,4 @@ public class VolatileBlocksContainer {
        return partitioned.get(false);
     }
 }
+*/

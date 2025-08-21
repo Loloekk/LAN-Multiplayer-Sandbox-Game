@@ -1,3 +1,4 @@
+/*
 package io.github.terraria.logic.building.falling;
 
 import com.badlogic.gdx.math.Vector2;
@@ -17,3 +18,4 @@ public class VolatileBlockImpl extends VolatileBlock {
         return ret;
     }
 }
+*/

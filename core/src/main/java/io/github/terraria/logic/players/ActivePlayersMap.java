@@ -1,8 +1,6 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import io.github.terraria.logic.IntRectangle;
 
 import java.util.List;
@@ -34,19 +32,10 @@ public class ActivePlayersMap implements ActivePlayers {
         return List.copyOf(map.values());
     }
 
-    public static boolean liesOn(Vector2 desired, Body body) {
-        for (Fixture fixture : body.getFixtureList()) {
-            if (fixture.testPoint(desired)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public PhysicalPlayer getAt(Vector2 desired) {
         for (PhysicalPlayer player : map.values()) {
-            if (liesOn(desired, player.body()))
+            if (player.body().liesOn(desired))
                 return player;
         }
         return null;

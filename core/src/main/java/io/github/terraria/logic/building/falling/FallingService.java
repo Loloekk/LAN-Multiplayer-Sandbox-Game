@@ -1,3 +1,4 @@
+/*
 package io.github.terraria.logic.building.falling;
 
 import com.badlogic.gdx.math.Vector2;
@@ -44,3 +45,4 @@ public class FallingService {
         fallingBlocks.add(list);
     }
 }
+*/

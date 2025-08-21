@@ -1,7 +1,10 @@
-package io.github.terraria.logic.players;
+package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import io.github.terraria.logic.players.ActivePlayers;
+import io.github.terraria.logic.players.PhysicalPlayer;
+import io.github.terraria.logic.players.Player;
+import io.github.terraria.logic.players.PlayerRegistry;
 
 public abstract class PlayerActivator {
     private final PlayerRegistry registry;

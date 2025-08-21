@@ -1,5 +1,5 @@
 package io.github.terraria.logic.building;
 
-import com.badlogic.gdx.physics.box2d.Body;
+import io.github.terraria.logic.physics.Body;
 
 public record PhysicalBlock (BlockType blockType, Body body) {}

@@ -1,7 +1,7 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
+import io.github.terraria.logic.physics.Body;
 
 public class MoveService {
     public enum Direction {

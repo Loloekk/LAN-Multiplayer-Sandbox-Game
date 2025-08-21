@@ -1,9 +1,9 @@
 package io.github.terraria.logic.building;
 
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import io.github.terraria.logic.IntRectangle;
 import io.github.terraria.logic.IntVector2;
+import io.github.terraria.logic.physics.Body;
+import io.github.terraria.logic.physics.World;
 
 import java.util.ArrayList;
 
@@ -23,6 +23,8 @@ public class StaticPlaneContainer implements PlaneContainer {
     private final World world;
 
     StaticPlaneContainer(int width, int height, int zeroX, int zeroY, World world) {
+        if(!(0<=zeroX && zeroX<width) || !(0<=zeroY && zeroY<height))
+            throw new IllegalArgumentException("Bad zero coordinates.");
         this.zeroX = zeroX;
         this.zeroY = zeroY;
         this.world = world;
