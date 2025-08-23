@@ -39,6 +39,7 @@ public class StaticPlaneContainer implements PlaneContainer {
                     Body body = block.createBody(world, new IntVector2(i - zeroX, j - zeroY));
                     bodiesColumn.add(body);
                 }
+                else bodiesColumn.add(null);
             }
             bodies.add(bodiesColumn);
         }
