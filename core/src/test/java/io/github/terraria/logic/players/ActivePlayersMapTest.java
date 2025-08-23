@@ -1,6 +1,7 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
+import com.google.common.collect.ImmutableList;
 import io.github.terraria.logic.IntRectangle;
 import io.github.terraria.logic.IntVector2;
 import io.github.terraria.logic.physics.Body;
@@ -84,5 +85,16 @@ class ActivePlayersMapTest {
         IntVector2 pos = IntVector2.toInt(positions.get(0));
         IntRectangle rectangle = new IntRectangle(pos, pos);
         assertThat(map.getLocal(rectangle).getList()).isEmpty();
+    }
+
+    @Test
+    void addIdDuplicateNoOp() {
+        map.add(new PhysicalPlayer(new PlayerImpl(0, new Vector2(4f, 3f)), Mockito.mock(Body.class)));
+        assertThat(map.getList()).containsExactlyInAnyOrderElementsOf(physicalPlayers);
+    }
+
+    @Test
+    void getListIsImmutable() {
+        assertThat(map.getList() instanceof ImmutableList);
     }
 }

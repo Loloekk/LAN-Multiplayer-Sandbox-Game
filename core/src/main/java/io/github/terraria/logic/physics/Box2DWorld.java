@@ -2,6 +2,7 @@ package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public class Box2DWorld implements World {
     private final com.badlogic.gdx.physics.box2d.World world;
@@ -14,19 +15,25 @@ public class Box2DWorld implements World {
         world = new com.badlogic.gdx.physics.box2d.World(gravity, doSleep);
     }
 
+    // Not too nice...
     @Override
-    public Box2DBody createStaticBody(Vector2 v) {
+    public Box2DBody createStaticBody(Vector2 v, FixtureDef fixtureDef) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(v);
-        return new Box2DBody(world.createBody(bodyDef));
+        com.badlogic.gdx.physics.box2d.Body box2DBody = world.createBody(bodyDef);
+        box2DBody.createFixture(fixtureDef);
+        return new Box2DBody(box2DBody);
     }
 
+    // Not too nice...
     @Override
-    public Box2DBody createDynamicBody(Vector2 v) {
+    public Box2DBody createDynamicBody(Vector2 v, FixtureDef fixtureDef) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(v);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        return new Box2DBody(world.createBody(bodyDef));
+        com.badlogic.gdx.physics.box2d.Body box2DBody = world.createBody(bodyDef);
+        box2DBody.createFixture(fixtureDef);
+        return new Box2DBody(box2DBody);
     }
 
     @Override

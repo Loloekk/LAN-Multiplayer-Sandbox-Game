@@ -16,8 +16,6 @@ public class BodyFactory {
     public static void load() {}
     public static boolean isPhysical(BlockType blockType) { return map.containsKey(blockType); }
     public static Body createBody(BlockType blockType, World world, IntVector2 intVector2) {
-        Body body = world.createStaticBody(intVector2.toFloat());
-        body.createFixture(map.get(blockType));
-        return body;
+        return world.createStaticBody(intVector2.toFloat(), map.get(blockType));
     }
 }

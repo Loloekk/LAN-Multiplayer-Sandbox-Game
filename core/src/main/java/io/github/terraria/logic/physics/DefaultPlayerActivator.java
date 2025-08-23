@@ -19,8 +19,6 @@ public class DefaultPlayerActivator extends PlayerActivator {
 
     @Override
     protected Body getNewPlayerBody(Vector2 spawnPosition) {
-        Body body = world.createDynamicBody(spawnPosition);
-
         PolygonShape rectangle = new PolygonShape();
         rectangle.setAsBox(width, height);
 
@@ -31,7 +29,6 @@ public class DefaultPlayerActivator extends PlayerActivator {
         fixtureDef.friction = friction;
         fixtureDef.restitution = restitution;
 
-        body.createFixture(fixtureDef);
-        return body;
+        return world.createDynamicBody(spawnPosition, fixtureDef);
     }
 }

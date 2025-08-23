@@ -23,53 +23,69 @@ public class StaticPlaneContainer implements PlaneContainer {
     private final World world;
 
     StaticPlaneContainer(int width, int height, int zeroX, int zeroY, World world) {
+        this(width, height, zeroX, zeroY, world, null);
+    }
+
+    StaticPlaneContainer(int width, int height, int zeroX, int zeroY, World world, ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid) {
         if(!(0<=zeroX && zeroX<width) || !(0<=zeroY && zeroY<height))
             throw new IllegalArgumentException("Bad zero coordinates.");
         this.zeroX = zeroX;
         this.zeroY = zeroY;
         this.world = world;
 
-        // Adding buffer blocks around the map.
-        {
-            int bufferBlockId = -1;
-            BlockType block;
-            int left =  -1 - zeroX, right = width - zeroX;
-            int bottom = -1 - zeroY, top = height - zeroY;
-            for (int x = left; x <= right; x++) {
-                block = new BlockType(bufferBlockId);
-                block.createBody(world, new IntVector2(x, bottom));
-                block = new BlockType(bufferBlockId);
-                block.createBody(world, new IntVector2(x, top));
-            }
-            for (int y = bottom; y <= top; y++) {
-                block = new BlockType(bufferBlockId);
-                block.createBody(world, new IntVector2(left, y));
-                block = new BlockType(bufferBlockId);
-                block.createBody(world, new IntVector2(right, y));
-            }
-        }
-        grid = new ArrayList<>(width);
+        bufferBlocks(width, height, zeroX, zeroY, world);
+        grid = savedGrid != null ? savedGrid : getDefaultGrid(width, height, zeroY);
         bodies = new ArrayList<>(width);
         for(int i = 0; i < width; i++) {
-            ArrayList<ArrayList<BlockType>> column = new ArrayList<>(height);
             ArrayList<Body> bodiesColumn = new ArrayList<>(height);
+            for (int j = 0; j < height; j++) {
+                BlockType block = grid.get(i).get(j).get(0);
+                if(block != null && block.isPhysical()) {
+                    Body body = block.createBody(world, new IntVector2(i - zeroX, j - zeroY));
+                    bodiesColumn.add(body);
+                }
+            }
+            bodies.add(bodiesColumn);
+        }
+    }
+
+    private ArrayList<ArrayList<ArrayList<BlockType>>> getDefaultGrid(int width, int height, int zeroY) {
+        ArrayList<ArrayList<ArrayList<BlockType>>> defaultGrid = new ArrayList<>(width);
+        for(int i = 0; i < width; i++) {
+            ArrayList<ArrayList<BlockType>> column = new ArrayList<>(height);
             for (int j = 0; j < height; j++) {
                 ArrayList<BlockType> point = new ArrayList<>(layers);
                 {
-                    BlockType frontBlock = null;
-                    Body body = null;
-                    if (j < zeroY) {
-                        frontBlock = new BlockType(0);
-                        body = frontBlock.createBody(world, new IntVector2(i - zeroX, j - zeroY));
-                    }
+                    BlockType frontBlock = (j < zeroY) ? new BlockTypeImpl(1) : null;
                     point.add(frontBlock);
-                    bodiesColumn.add(body);
                 }
                 point.add(null);
                 column.add(point);
             }
-            grid.add(column);
-            bodies.add(bodiesColumn);
+            defaultGrid.add(column);
+        }
+        return defaultGrid;
+    }
+
+    private static void bufferBlocks(int width, int height, int zeroX, int zeroY, World world) {
+        // Adding buffer blocks around the map.
+        {
+            final int bufferBlockId = -1;
+            BlockType block;
+            final int left =  -1 - zeroX, right = width - zeroX;
+            final int bottom = -1 - zeroY, top = height - zeroY;
+            for (int x = left + 1; x < right; x++) {
+                block = new BlockTypeImpl(bufferBlockId);
+                block.createBody(world, new IntVector2(x, bottom));
+                block = new BlockTypeImpl(bufferBlockId);
+                block.createBody(world, new IntVector2(x, top));
+            }
+            for (int y = bottom + 1; y < top; y++) {
+                block = new BlockTypeImpl(bufferBlockId);
+                block.createBody(world, new IntVector2(left, y));
+                block = new BlockTypeImpl(bufferBlockId);
+                block.createBody(world, new IntVector2(right, y));
+            }
         }
     }
 
@@ -107,7 +123,10 @@ public class StaticPlaneContainer implements PlaneContainer {
 
     @Override
     public PhysicalBlock getPhysicalAt(int x, int y) {
-        return new PhysicalBlock(getBlockAt(x, y, 0), getBodyAt(x, y));
+        BlockType block = getBlockAt(x, y, 0);
+        if(block == null || !block.isPhysical())
+            return null;
+        return new PhysicalBlock(block, getBodyAt(x, y));
     }
 
     @Override

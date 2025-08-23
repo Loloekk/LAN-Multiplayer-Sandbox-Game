@@ -1,7 +1,5 @@
 package io.github.terraria.logic.building;
 
-import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.IntVector2;
 import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
@@ -32,7 +30,7 @@ class BlockTypeTest {
     }
 
     void getLayer(int id) {
-        block = new BlockType(id);
+        block = new BlockTypeImpl(id);
         if(block.isPhysical())
             assertThat(block.getLayer() == 0).withFailMessage(
                 "Wrong layer for physical id: " + id).isTrue();
