@@ -2,12 +2,15 @@ package io.github.terraria.logic.building;
 
 import io.github.terraria.logic.physics.World;
 
+import java.util.ArrayList;
+
 public abstract class PlaneContainerBuilder {
     protected Integer width;
     protected Integer height;
     protected Integer zeroX;
     protected Integer zeroY;
     protected World world;
+    protected ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid;
 
     public PlaneContainerBuilder width(int width) {
         this.width = width;
@@ -27,6 +30,10 @@ public abstract class PlaneContainerBuilder {
     }
     public PlaneContainerBuilder world(World world) {
         this.world = world;
+        return this;
+    }
+    public PlaneContainerBuilder savedGrid(ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid) {
+        this.savedGrid = savedGrid;
         return this;
     }
 

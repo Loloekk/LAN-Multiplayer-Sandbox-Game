@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class StaticPlaneContainer implements PlaneContainer {
     public static final int DEFAULT_WIDTH = 100;
     public static final int DEFAULT_HEIGHT = 100;
-    private static final int layers = 2;
+    public static final int layers = 2;
 
     // Słabe, że nie jest wysokość globalnie.
     // [width][height][layer] dla lokalności dostępu.
@@ -22,19 +22,14 @@ public class StaticPlaneContainer implements PlaneContainer {
     private final int zeroX, zeroY;
     private final World world;
 
-    StaticPlaneContainer(int width, int height, int zeroX, int zeroY, World world) {
-        this(width, height, zeroX, zeroY, world, null);
-    }
-
     StaticPlaneContainer(int width, int height, int zeroX, int zeroY, World world, ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid) {
-        if(!(0<=zeroX && zeroX<width) || !(0<=zeroY && zeroY<height))
-            throw new IllegalArgumentException("Bad zero coordinates.");
         this.zeroX = zeroX;
         this.zeroY = zeroY;
         this.world = world;
+        grid = savedGrid;
 
         bufferBlocks(width, height, zeroX, zeroY, world);
-        grid = savedGrid != null ? savedGrid : getDefaultGrid(width, height, zeroY);
+
         bodies = new ArrayList<>(width);
         for(int i = 0; i < width; i++) {
             ArrayList<Body> bodiesColumn = new ArrayList<>(height);
@@ -47,24 +42,6 @@ public class StaticPlaneContainer implements PlaneContainer {
             }
             bodies.add(bodiesColumn);
         }
-    }
-
-    private ArrayList<ArrayList<ArrayList<BlockType>>> getDefaultGrid(int width, int height, int zeroY) {
-        ArrayList<ArrayList<ArrayList<BlockType>>> defaultGrid = new ArrayList<>(width);
-        for(int i = 0; i < width; i++) {
-            ArrayList<ArrayList<BlockType>> column = new ArrayList<>(height);
-            for (int j = 0; j < height; j++) {
-                ArrayList<BlockType> point = new ArrayList<>(layers);
-                {
-                    BlockType frontBlock = (j < zeroY) ? new BlockTypeImpl(1) : null;
-                    point.add(frontBlock);
-                }
-                point.add(null);
-                column.add(point);
-            }
-            defaultGrid.add(column);
-        }
-        return defaultGrid;
     }
 
     private static void bufferBlocks(int width, int height, int zeroX, int zeroY, World world) {

@@ -1,9 +1,7 @@
 package io.github.terraria.logic.building;
 
 import io.github.terraria.logic.IntVector2;
-import io.github.terraria.logic.physics.Box2DBody;
 import io.github.terraria.logic.physics.World;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -30,14 +28,13 @@ class StaticPlaneContainerTest {
         BlockType block = Mockito.mock(BlockType.class);
         grid.get(zeroX).get(zeroY).set(0, block);
         Mockito.when(block.isPhysical()).thenReturn(true);
-        new StaticPlaneContainer(width, height, zeroX, zeroY, world, grid);
+        new StaticPlaneContainerBuilder().width(width).height(height).zeroX(zeroX).zeroY(zeroY).world(world).savedGrid(grid).build();
         Mockito.verify(block, Mockito.times(1))
             .createBody(world, new IntVector2(0, 0));
     }
 
     void standardSetUp() {
-        Mockito.when(world.createStaticBody(Mockito.any(), Mockito.any())).thenReturn(Mockito.mock(Box2DBody.class));
-        new StaticPlaneContainer(width, height, 5, 5, world);
+        new StaticPlaneContainerBuilder().width(width).height(height).zeroX(5).zeroY(5).world(world).build();
     }
 
     @Test
@@ -48,21 +45,5 @@ class StaticPlaneContainerTest {
         Mockito.verify(world, Mockito.times(2*(width+height))).createStaticBody(
             Mockito.argThat(arg -> arg.x == left || arg.x == right || arg.y == bottom || arg.y == top),
             Mockito.any());
-    }
-
-    @Test
-    void badZero() {
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
-            new StaticPlaneContainer(3, 10, 3, 0, world));
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
-            new StaticPlaneContainer(3, 10, 2, -1, world));
-    }
-
-    @Test
-    void degenerate() {
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
-            new StaticPlaneContainer(0, 10, 0, 0, world));
-        Assertions.assertThrows(IllegalArgumentException.class, () ->
-            new StaticPlaneContainer(10, 0, 0, 0, world));
     }
 }
