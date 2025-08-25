@@ -110,7 +110,7 @@ public class StaticPlaneContainer implements PlaneContainer {
     @Override
     public boolean placeBlockAt(int x, int y, BlockType block) {
         return placeBlockAt(x, y, block,
-            block.isPhysical() ? null : block.createBody(world, new IntVector2(x, y)));
+            block.isPhysical() ? block.createBody(world, new IntVector2(x, y)) : null);
     }
 
     @Override
@@ -121,12 +121,8 @@ public class StaticPlaneContainer implements PlaneContainer {
             return false;
         point.set(layer, block);
         setPointAt(x, y, point);
-        if(block.isPhysical()) {
-            Body oldBody = getBodyAt(x, y);
-            if (oldBody != null)
-                oldBody.getWorld().destroyBody(oldBody);
+        if(block.isPhysical())
             setBodyAt(x, y, body);
-        }
         return true;
     }
 
@@ -136,7 +132,7 @@ public class StaticPlaneContainer implements PlaneContainer {
             // Zniszcz body.
             Body body = getBodyAt(x, y);
             if(body != null)
-                body.getWorld().destroyBody(body);
+                world.destroyBody(body);
             setBodyAt(x, y, null);
         }
         ArrayList<BlockType> point = getPointAt(x, y);
@@ -154,6 +150,7 @@ public class StaticPlaneContainer implements PlaneContainer {
 
     @Override
     public LocalPlaneContainer getLocal(IntRectangle neighbourhood) {
+        // Consider checking for out of bounds?
         ArrayList<ArrayList<ArrayList<BlockType>>> localGrid = new ArrayList<>();
         for (int x = neighbourhood.leftBottom().x(); x < neighbourhood.rightTop().x(); x++) {
             ArrayList<ArrayList<BlockType>> column = new ArrayList<>();
