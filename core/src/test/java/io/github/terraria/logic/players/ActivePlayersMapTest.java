@@ -32,7 +32,7 @@ class ActivePlayersMapTest {
     }
 
     void createPhysicalPlayer(Vector2 position) {
-        PhysicalPlayer physicalPlayer = new PhysicalPlayer(new PlayerImpl(n, position), createBody(position));
+        PhysicalPlayer physicalPlayer = new PhysicalPlayer(new PlayerImpl(n), createBody(position));
         physicalPlayers.add(physicalPlayer);
         map.add(physicalPlayer);
         n++;
@@ -89,7 +89,7 @@ class ActivePlayersMapTest {
 
     @Test
     void addIdDuplicateNoOp() {
-        map.add(new PhysicalPlayer(new PlayerImpl(0, new Vector2(4f, 3f)), Mockito.mock(Body.class)));
+        map.add(new PhysicalPlayer(new PlayerImpl(0), Mockito.mock(Body.class)));
         assertThat(map.getList()).containsExactlyInAnyOrderElementsOf(physicalPlayers);
     }
 

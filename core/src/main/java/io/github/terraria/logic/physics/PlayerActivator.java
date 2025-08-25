@@ -21,12 +21,13 @@ public abstract class PlayerActivator {
     // Sprawdzanie haseł poza modelem.
     public void loginPlayer(int playersId) {
         Player player = registry.getPlayer(playersId);
-        activePlayers.add(new PhysicalPlayer(player, getNewPlayerBody(player.getSpawnPosition())));
+        Vector2 spawnPosition = registry.spawnRegistry.getSpawnPosition(player);
+        activePlayers.add(new PhysicalPlayer(player, getNewPlayerBody(spawnPosition)));
     }
     public void logoutPlayer(int playersId) {
         PhysicalPlayer physicalPlayer = activePlayers.remove(playersId);
         Body body = physicalPlayer.body();
-        physicalPlayer.player().setSpawnPosition(body.getPosition());
+        registry.spawnRegistry.setSpawnPosition(physicalPlayer.player(), body.getPosition());
         // Destroy body.
         world.destroyBody(body);
     }

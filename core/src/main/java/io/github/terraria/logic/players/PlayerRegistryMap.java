@@ -5,10 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.List;
 import java.util.Map;
 
-public class PlayerRegistryMap implements PlayerRegistry {
+public class PlayerRegistryMap extends PlayerRegistry {
     private final Vector2 firstSpawn;
     private final Map<Integer, Player> map;
-    public PlayerRegistryMap(Map<Integer, Player> map, Vector2 firstSpawn) {
+    public PlayerRegistryMap(SpawnRegistry spawnRegistry, Map<Integer, Player> map, Vector2 firstSpawn) {
+        super(spawnRegistry);
         this.map = map;
         this.firstSpawn = firstSpawn;
     }
@@ -17,7 +18,9 @@ public class PlayerRegistryMap implements PlayerRegistry {
     public boolean registerPlayer(int id) {
         if(map.containsKey(id))
             return false;
-        map.putIfAbsent(id, new PlayerImpl(id, firstSpawn));
+        Player player = new PlayerImpl(id);
+        map.putIfAbsent(id, player);
+        spawnRegistry.setSpawnPosition(player, firstSpawn);
         // Initialize equipment...
         return true;
     }

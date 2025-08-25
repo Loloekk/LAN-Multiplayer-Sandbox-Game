@@ -1,11 +1,7 @@
 package io.github.terraria.logic.players;
 
-import com.badlogic.gdx.math.Vector2;
-
 public interface Player {
     int getId();
-    void setSpawnPosition(Vector2 spawnPosition);
-    Vector2 getSpawnPosition();
     // getEquipment();
     // Czy zarejestrowany gracz powinien mieć ekwipunek?
     // Co, jeśli mielibyśmy kilka map?

@@ -2,9 +2,13 @@ package io.github.terraria.logic.players;
 
 import java.util.List;
 
-public interface PlayerRegistry {
+public abstract class PlayerRegistry {
+    public final SpawnRegistry spawnRegistry;
+
+    protected PlayerRegistry(SpawnRegistry spawnRegistry) { this.spawnRegistry = spawnRegistry; }
+
     // Returns false if the id is occupied.
-    boolean registerPlayer(int id);// Imię trzymane na wyższym poziomie?
-    Player getPlayer(int id);
-    List<Player> getList();
+    public abstract boolean registerPlayer(int id);// Imię trzymane na wyższym poziomie?
+    public abstract Player getPlayer(int id);
+    public abstract List<Player> getList();
 }
