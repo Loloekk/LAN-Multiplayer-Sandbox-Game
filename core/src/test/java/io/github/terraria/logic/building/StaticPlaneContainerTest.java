@@ -105,13 +105,16 @@ class StaticPlaneContainerTest {
         grid.get(zeroX).get(zeroY).set(0, block);
 
         PlaneContainer container = getBuilder().savedGrid(grid).build();
-        assertFalse(container.placeBlockAt(0, 0, Mockito.mock(BlockType.class)));
+        BlockType otherBlock = Mockito.mock(BlockType.class);
+        Mockito.when(otherBlock.getLayer()).thenReturn(0);
+        assertFalse(container.placeBlockAt(0, 0, otherBlock));
     }
 
     @Test
     void placeBlockAtTest() {
         BlockType block = Mockito.mock(BlockType.class);
         Mockito.when(block.isPhysical()).thenReturn(true);
+        Mockito.when(block.getLayer()).thenReturn(0);
         Box2DBody body = Mockito.mock(Box2DBody.class);
         Mockito.when(block.createBody(world, new IntVector2(0, 0))).thenReturn(body);
 
@@ -142,9 +145,23 @@ class StaticPlaneContainerTest {
     }
 
     @Test
+    void removeFrontBlockAtDestroyBodyTest() {
+        PlaneContainer container = getBuilder().build();
+        BlockType block = Mockito.mock(BlockType.class);
+        Mockito.when(block.isPhysical()).thenReturn(true);
+        Mockito.when(block.getLayer()).thenReturn(0);
+        Box2DBody body = Mockito.mock(Box2DBody.class);
+        Mockito.when(block.createBody(world, new IntVector2(0, 0))).thenReturn(body);
+        container.placeBlockAt(0, 0, block);
+        container.removeFrontBlockAt(0, 0);
+        Mockito.verify(world, Mockito.times(1)).destroyBody(body);
+    }
+
+    @Test
     void getLocalConversionTest() {
         PlaneContainer container = getBuilder().build();
         BlockType block = Mockito.mock(BlockType.class);
+        Mockito.when(block.getLayer()).thenReturn(0);
         final int a = 0, b = 0;
         container.placeBlockAt(a, b, block);
 
@@ -158,6 +175,7 @@ class StaticPlaneContainerTest {
     void getLocalLeftBottomInclusiveTest() {
         PlaneContainer container = getBuilder().build();
         BlockType block = Mockito.mock(BlockType.class);
+        Mockito.when(block.getLayer()).thenReturn(0);
         container.placeBlockAt(0, 0, block);
 
         IntRectangle rectangle = new IntRectangle(0, 0, width - zeroX, height - zeroY);
@@ -169,7 +187,9 @@ class StaticPlaneContainerTest {
     void getLocalRightTopInclusiveTest() {
         PlaneContainer container = getBuilder().build();
         IntVector2 topRight = new IntVector2(width - zeroX - 1, height - zeroY - 1);
-        container.placeBlockAt(topRight, Mockito.mock(BlockType.class));
+        BlockType block = Mockito.mock(BlockType.class);
+        Mockito.when(block.getLayer()).thenReturn(0);
+        container.placeBlockAt(topRight, block);
         IntRectangle rectangle = new IntRectangle(new IntVector2(0, 0), topRight);
         LocalPlaneContainer local = container.getLocal(rectangle);
         assertThrows(IndexOutOfBoundsException.class, () -> local.getBlockAt(width - zeroX - 1, height - zeroY - 1, 0));
