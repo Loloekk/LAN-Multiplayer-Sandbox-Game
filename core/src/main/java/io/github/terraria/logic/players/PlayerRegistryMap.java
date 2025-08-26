@@ -18,10 +18,10 @@ public class PlayerRegistryMap extends PlayerRegistry {
     public boolean registerPlayer(int id) {
         if(map.containsKey(id))
             return false;
+        // TODO: Player factory and equipment initialization.
         Player player = new PlayerImpl(id);
-        map.putIfAbsent(id, player);
+        map.put(id, player);
         spawnRegistry.setSpawnPosition(player, firstSpawn);
-        // Initialize equipment...
         return true;
     }
 
