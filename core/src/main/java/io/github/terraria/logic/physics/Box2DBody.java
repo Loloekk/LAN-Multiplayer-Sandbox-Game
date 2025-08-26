@@ -35,8 +35,8 @@ public class Box2DBody implements Body {
     }
 
     @Override
-    public void applyLinearImpulse(float impulseX, float impulseY, float pointX, float pointY, boolean wake) {
-        body.applyLinearImpulse(impulseX, impulseY, pointX, pointY, wake);
+    public void applyLinearImpulse(Vector2 impulse, Vector2 point, boolean wake) {
+        body.applyLinearImpulse(impulse, point, wake);
     }
 
     @Override

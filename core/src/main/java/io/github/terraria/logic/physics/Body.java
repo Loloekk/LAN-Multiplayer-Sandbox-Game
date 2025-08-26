@@ -11,7 +11,7 @@ public interface Body {
 
     Vector2 getPosition();
 
-    void applyLinearImpulse(float impulseX, float impulseY, float pointX, float pointY, boolean wake);
+    void applyLinearImpulse(Vector2 impulse, Vector2 point, boolean wake);
 
     Vector2 getLinearVelocity();
 }
