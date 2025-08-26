@@ -7,11 +7,9 @@ public interface Body {
 
     World getWorld();
 
-    Vector2 getWorldCenter();
-
     Vector2 getPosition();
 
-    void applyLinearImpulse(Vector2 impulse, Vector2 point, boolean wake);
+    void applyLinearImpulse(Vector2 impulse);
 
     Vector2 getLinearVelocity();
 }

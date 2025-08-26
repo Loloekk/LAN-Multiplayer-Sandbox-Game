@@ -25,18 +25,13 @@ public class Box2DBody implements Body {
     }
 
     @Override
-    public Vector2 getWorldCenter() {
-        return body.getWorldCenter();
-    }
-
-    @Override
     public Vector2 getPosition() {
         return body.getPosition();
     }
 
     @Override
-    public void applyLinearImpulse(Vector2 impulse, Vector2 point, boolean wake) {
-        body.applyLinearImpulse(impulse, point, wake);
+    public void applyLinearImpulse(Vector2 impulse) {
+        body.applyLinearImpulse(impulse, body.getWorldCenter(), true);
     }
 
     @Override

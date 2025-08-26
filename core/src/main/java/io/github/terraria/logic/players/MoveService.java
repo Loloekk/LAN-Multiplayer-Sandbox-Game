@@ -13,17 +13,15 @@ public class MoveService {
     }
     public static void movePlayer(PhysicalPlayer player, Direction direction) {
         Body body = player.body();
-        Vector2 center = body.getWorldCenter();
-        body.applyLinearImpulse(MoveService.getMoveImpulse(direction), center, true);
+        body.applyLinearImpulse(MoveService.getMoveImpulse(direction));
     }
     private static final Vector2 JUMP_IMPULSE = new Vector2(0f, 5f);
     // Trzeba będzie pewnie pamiętać czas od opuszczenia ziemi, żeby móc jakieś bardziej skomplikowane skoki robić np.
     // Jakby to było potrzebne, to raczej na zewnątrz co world step trzeba by zbierać dane i tutaj już podawać jako argument metody, więc static ok.
     public void jumpPlayer(PhysicalPlayer player) {
         Body body = player.body();
-        Vector2 center = body.getWorldCenter();
         if (body.getLinearVelocity().y == 0) { // Only jump if on the ground
-            body.applyLinearImpulse(JUMP_IMPULSE, center, true);
+            body.applyLinearImpulse(JUMP_IMPULSE);
         }
     }
 }
