@@ -6,13 +6,7 @@ import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.BodyFactory;
 import io.github.terraria.logic.physics.World;
 
-public class BlockTypeImpl implements BlockType {
-    private final int id;
-    // Dostępne tylko dla craftingu i renderowania.
-    BlockTypeImpl(int id) {
-        this.id = id;
-    }
-
+public record BlockTypeImpl(int id) implements BlockType {
     @Override
     public boolean isPhysical() { return BodyFactory.isPhysical(this); }
 
