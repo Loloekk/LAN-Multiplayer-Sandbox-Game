@@ -1,26 +1,65 @@
 package io.github.terraria.server;
 
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.common.Network;
+import io.github.terraria.logic.GameState;
+import io.github.terraria.logic.IntRectangle;
+import io.github.terraria.logic.IntVector2;
+import io.github.terraria.logic.building.LocalPlaneContainer;
+import io.github.terraria.logic.building.PlaneContainer;
+import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
+import io.github.terraria.logic.physics.*;
+import io.github.terraria.logic.players.*;
+import io.github.terraria.view.Scene;
+
 import java.util.concurrent.*;
 import java.util.*;
 import java.io.IOException;
 
 public class GameServer {
     private Server server;
+    private ServerRenderer renderer;
+    private int xd = 0;
     private final Map<Connection, Queue<Network.PacketInput>> inputQueues = new ConcurrentHashMap<>();
     private final Map<Integer, Network.PlayerState> playerStates = new ConcurrentHashMap<>();
     private final Map<Connection, Integer> connectionIds = new ConcurrentHashMap<>();
     private volatile int nextPlayerId = 1;
     private static final float VIEW_RADIUS = 300f;
 
+    private GameState gameState;
+    private World world;
+    private SpawnRegistry spawnRegistry;
+    private PlayerRegistry playerRegistry;
+    private PlayerActivator playerActivator;
+    private PlayerActionService actionService;
+
     public void start() throws IOException, InterruptedException {
         server = new Server();
         Network.register(server);
         server.bind(Network.TCP_PORT, Network.UDP_PORT);
         server.start();
+        renderer = new ServerRenderer();
+
+        // initialize model
+        BodyFactory.load();
+        world = new Box2DWorld(new Vector2(0, -10), true);
+        StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
+        builder.world(world);
+        builder.width(1000).height(80).zeroX(500).zeroY(30);
+        PlaneContainer planeContainer = builder.build();
+        gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()));
+        System.out.println("Plane container " + planeContainer);
+        System.out.println("Gamestate grid = " + gameState.grid());
+
+
+        spawnRegistry = new SpawnRegistryMap(new HashMap<>());
+        playerRegistry = new PlayerRegistryList(spawnRegistry, new ArrayList<>(), new Vector2(0f, 0f));
+        playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers());
+
+        actionService = new PlayerActionServiceImpl(gameState);
 
         server.addListener(new Listener() {
             @Override public void connected(Connection connection) {}
@@ -49,9 +88,10 @@ public class GameServer {
 
         ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
         exec.scheduleAtFixedRate(() -> {
-            updateLogic();
-            broadcastFilteredStates();
-        }, 0, 50, TimeUnit.MILLISECONDS);
+            handleInput();
+            handlePhysics();
+            broadcastScenes();
+        }, 0, 20, TimeUnit.MILLISECONDS);
 
         System.out.println("Server started on TCP=" + Network.TCP_PORT + ", UDP=" + Network.UDP_PORT);
 
@@ -59,7 +99,7 @@ public class GameServer {
     }
 
 
-    private void updateLogic() {
+    private void handleInput() {
         for (Queue<Network.PacketInput> queue : inputQueues.values()) {
             Network.PacketInput in;
             while ((in = queue.poll()) != null) {
@@ -72,22 +112,25 @@ public class GameServer {
         }
     }
 
-    private void broadcastFilteredStates() {
-        long now = System.currentTimeMillis();
-        for (Map.Entry<Connection, Integer> entry : connectionIds.entrySet()) {
-            Connection conn = entry.getKey();
-            Network.PlayerState self = playerStates.get(entry.getValue());
-            if (self == null) continue;
-            List<Network.PlayerState> nearby = new ArrayList<>();
-            for (Network.PlayerState p : playerStates.values()) {
-                float dx = p.x - self.x, dy = p.y - self.y;
-                if (dx*dx + dy*dy <= VIEW_RADIUS*VIEW_RADIUS) nearby.add(p);
+    public void handlePhysics(){
+
+    }
+
+    private void broadcastScenes() {
+        try {
+            for (Map.Entry<Connection, Integer> entry : connectionIds.entrySet()) {
+                Connection conn = entry.getKey();
+                int id = entry.getValue();
+                System.out.println("Sending scene to player " + id);
+                System.out.println(gameState.grid() + " why?");
+                LocalPlaneContainer plane = gameState.grid().getLocal(new IntRectangle(new IntVector2(-10, -10), new IntVector2(10, 10)));
+                Scene scene = renderer.renderScene(plane);
+                conn.sendUDP(scene);
             }
-            Network.PacketState state = new Network.PacketState();
-            state.players = nearby;
-            state.timestamp = now;
-            conn.sendUDP(state);
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        xd++;
     }
 
     public static void main(String[] args) {

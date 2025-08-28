@@ -1,9 +1,13 @@
 package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import io.github.terraria.logic.IntRectangle;
 import io.github.terraria.logic.IntVector2;
 import io.github.terraria.logic.building.BlockType;
+import io.github.terraria.logic.building.BlockTypeImpl;
 
+import java.awt.geom.RectangularShape;
 import java.util.HashMap;
 import java.util.Map;
 
