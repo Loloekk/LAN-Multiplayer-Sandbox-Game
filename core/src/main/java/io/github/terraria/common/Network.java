@@ -2,6 +2,10 @@ package io.github.terraria.common;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
+import io.github.terraria.view.DrawableRectangle;
+import io.github.terraria.view.Scene;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Network {
@@ -16,6 +20,9 @@ public class Network {
         kryo.register(PacketState.class);
         kryo.register(java.util.ArrayList.class);
         kryo.register(PlayerState.class);
+        kryo.register(Scene.class);
+        kryo.register(DrawableRectangle.class);
+        kryo.register(ArrayList.class);
     }
 
     // Client → Server: join request with player name

@@ -5,22 +5,33 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.common.Network;
+import io.github.terraria.view.DrawableRectangle;
+import io.github.terraria.view.Renderer;
+import io.github.terraria.view.Scene;
+import io.github.terraria.view.TextureBank;
+import com.badlogic.gdx.graphics.Color;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.io.IOException;
 
 public class GameScreen implements Screen {
     private Client client;
+    private int playerId;
 
     private final Drop game;
-    private int playerId;
-    private Map<Integer, Network.PlayerState> players = new HashMap<>();
-    private ShapeRenderer renderer = new ShapeRenderer();
+    private final FitViewport viewport = new FitViewport(8, 5);
+    private TextureBank textureBank;
+    private Renderer renderer;
+    private Scene currentScene;
+    private final int PLAYER_TEXTURE;
+    private final int STONE_TEXTURE;
 
     public GameScreen(Drop game) {
         this.game = game;
@@ -34,10 +45,9 @@ public class GameScreen implements Screen {
                     Network.PacketJoinAck ack = (Network.PacketJoinAck)obj;
                     playerId = ack.playerId;
                     Gdx.app.log("GameScreen", "Joined as id=" + playerId + ", name=" + ack.name);
-                } else if (obj instanceof Network.PacketState) {
-                    Network.PacketState st = (Network.PacketState)obj;
-                    players.clear();
-                    for (Network.PlayerState ps : st.players) players.put(ps.id, ps);
+                } else if (obj instanceof Scene scene) {
+                    Gdx.app.log("GameScreen", "Scene update");
+                    currentScene = scene;
                 }
             }
         });
@@ -49,17 +59,18 @@ public class GameScreen implements Screen {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        textureBank = new TextureBank(new Texture("missing.png"));
+        PLAYER_TEXTURE = textureBank.registerTexture(new Texture("stefan.png"));
+        STONE_TEXTURE = textureBank.registerTexture(new Texture("stone.png"));
+        renderer = new Renderer(textureBank);
+        currentScene = new Scene();
     }
 
     @Override
     public void render(float delta) {
         handleInput();
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (Network.PlayerState p : players.values()) {
-            renderer.circle(p.x, p.y, 10);
-        }
-        renderer.end();
+        ScreenUtils.clear(Color.CYAN);
+        renderer.draw(viewport, currentScene);
     }
 
     private void handleInput() {
@@ -79,7 +90,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height, true);
     }
     @Override public void show()    {}
     @Override public void pause()   {}
