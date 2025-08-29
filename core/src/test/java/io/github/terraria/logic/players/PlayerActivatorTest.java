@@ -1,7 +1,8 @@
-package io.github.terraria.logic.physics;
+package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.players.*;
+import io.github.terraria.logic.physics.Body;
+import io.github.terraria.logic.physics.World;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
