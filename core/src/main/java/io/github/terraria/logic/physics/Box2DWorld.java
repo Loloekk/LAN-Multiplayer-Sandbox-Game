@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
+// TODO: Consider removing interface.
 public class Box2DWorld implements World {
     private final com.badlogic.gdx.physics.box2d.World world;
 
@@ -50,5 +51,10 @@ public class Box2DWorld implements World {
     @Override
     public void dispose() {
         world.dispose();
+    }
+
+    @Override
+    public com.badlogic.gdx.physics.box2d.Body createBody(BodyDef def) {
+        return world.createBody(def);
     }
 }

@@ -2,7 +2,9 @@ package io.github.terraria.logic.building;
 
 import io.github.terraria.logic.IntRectangle;
 import io.github.terraria.logic.IntVector2;
+import io.github.terraria.logic.physics.BodyFactory;
 import io.github.terraria.logic.physics.Box2DBody;
+import io.github.terraria.logic.physics.StaticBoundaryFactory;
 import io.github.terraria.logic.physics.World;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,6 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StaticPlaneContainerTest {
+    final BodyFactory bodyFactory = Mockito.mock(BodyFactory.class);
     final World world = Mockito.mock(World.class);
     final int width = 10;
     final int height = 20;
@@ -33,7 +36,10 @@ class StaticPlaneContainerTest {
     }
 
     PlaneContainerBuilder getBuilder() {
-        return new StaticPlaneContainerBuilder().width(width).height(height).zeroX(zeroX).zeroY(zeroY).world(world);
+        BlockFactory blockFactory = Mockito.mock(BlockFactory.class);
+        Mockito.when(blockFactory.create(1)).thenReturn(Mockito.mock(BlockType.class));
+        StaticBoundaryFactory boundaryFactory = Mockito.mock(StaticBoundaryFactory.class);
+        return new StaticPlaneContainerBuilder().boundaryFactory(boundaryFactory).blockFactory(blockFactory).bodyFactory(bodyFactory).width(width).height(height).zeroX(zeroX).zeroY(zeroY).world(world);
     }
 
     @Test
@@ -43,18 +49,8 @@ class StaticPlaneContainerTest {
         grid.get(zeroX).get(zeroY).set(0, block);
         Mockito.when(block.isPhysical()).thenReturn(true);
         getBuilder().savedGrid(grid).build();
-        Mockito.verify(block, Mockito.times(1))
-            .createBody(world, new IntVector2(0, 0));
-    }
-
-    @Test
-    void bufferBlocks() {
-        getBuilder().build();
-        final int left =  -1 - zeroX, right = width - zeroX;
-        final int bottom = -1 - zeroY, top = height - zeroY;
-        Mockito.verify(world, Mockito.times(2*(width+height))).createStaticBody(
-            Mockito.argThat(arg -> arg.x == left || arg.x == right || arg.y == bottom || arg.y == top),
-            Mockito.any());
+        Mockito.verify(bodyFactory, Mockito.times(1))
+            .create(block, world, new IntVector2(0, 0));
     }
 
     @Test
@@ -92,7 +88,7 @@ class StaticPlaneContainerTest {
 
         Mockito.when(block.isPhysical()).thenReturn(true);
         Box2DBody body = Mockito.mock(Box2DBody.class);
-        Mockito.when(block.createBody(world, new IntVector2(0, 0))).thenReturn(body);
+        Mockito.when(bodyFactory.create(block, world, new IntVector2(0, 0))).thenReturn(body);
 
         PlaneContainer container = getBuilder().savedGrid(grid).build();
         assertEquals(new PhysicalBlock(block, body), container.getPhysicalAt(0, 0));
@@ -116,7 +112,7 @@ class StaticPlaneContainerTest {
         Mockito.when(block.isPhysical()).thenReturn(true);
         Mockito.when(block.getLayer()).thenReturn(0);
         Box2DBody body = Mockito.mock(Box2DBody.class);
-        Mockito.when(block.createBody(world, new IntVector2(0, 0))).thenReturn(body);
+        Mockito.when(bodyFactory.create(block, world, new IntVector2(0, 0))).thenReturn(body);
 
         PlaneContainer container = getBuilder().build();
         container.placeBlockAt(0, 0, block);
@@ -151,7 +147,7 @@ class StaticPlaneContainerTest {
         Mockito.when(block.isPhysical()).thenReturn(true);
         Mockito.when(block.getLayer()).thenReturn(0);
         Box2DBody body = Mockito.mock(Box2DBody.class);
-        Mockito.when(block.createBody(world, new IntVector2(0, 0))).thenReturn(body);
+        Mockito.when(bodyFactory.create(block, world, new IntVector2(0, 0))).thenReturn(body);
         container.placeBlockAt(0, 0, block);
         container.removeFrontBlockAt(0, 0);
         Mockito.verify(world, Mockito.times(1)).destroyBody(body);
