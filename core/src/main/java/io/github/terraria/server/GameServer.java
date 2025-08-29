@@ -44,7 +44,6 @@ public class GameServer {
         renderer = new ServerRenderer();
 
         // initialize model
-        BodyFactory.load();
         world = new Box2DWorld(new Vector2(0, -10), true);
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
         builder.world(world);
