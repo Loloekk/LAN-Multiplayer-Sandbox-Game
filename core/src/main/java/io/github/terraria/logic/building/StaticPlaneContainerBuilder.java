@@ -1,20 +1,57 @@
 package io.github.terraria.logic.building;
 
+import io.github.terraria.logic.physics.BodyFactory;
 import io.github.terraria.logic.physics.BodyFactoryLoader;
 import io.github.terraria.logic.physics.StaticBoundaryFactory;
+import io.github.terraria.logic.physics.World;
 
 import java.util.ArrayList;
 
 public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
-    // TODO: Clean up the StaticPlaneContainerBuilder : PlaneContainerBuilder hierarchy.
+    private Integer width;
+    private Integer height;
+    private Integer zeroX;
+    private Integer zeroY;
+    private ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid;
     private BlockFactory blockFactory;
+    private StaticBoundaryFactory staticBoundaryFactory;
+    public StaticPlaneContainerBuilder width(int width) {
+        this.width = width;
+        return this;
+    }
+    public StaticPlaneContainerBuilder height(int height) {
+        this.height = height;
+        return this;
+    }
+    public StaticPlaneContainerBuilder zeroX(int zeroX) {
+        this.zeroX = zeroX;
+        return this;
+    }
+    public StaticPlaneContainerBuilder zeroY(int zeroY) {
+        this.zeroY = zeroY;
+        return this;
+    }
+    public PlaneContainerBuilder savedGrid(ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid) {
+        this.savedGrid = savedGrid;
+        return this;
+    }
     public StaticPlaneContainerBuilder blockFactory(BlockFactory blockFactory) {
         this.blockFactory = blockFactory;
         return this;
     }
-    private StaticBoundaryFactory staticBoundaryFactory;
     public StaticPlaneContainerBuilder boundaryFactory(StaticBoundaryFactory staticBoundaryFactory) {
         this.staticBoundaryFactory = staticBoundaryFactory;
+        return this;
+    }
+
+    @Override
+    public StaticPlaneContainerBuilder world(World world) {
+        this.world = world;
+        return this;
+    }
+    @Override
+    public StaticPlaneContainerBuilder bodyFactory(BodyFactory bodyFactory) {
+        this.bodyFactory = bodyFactory;
         return this;
     }
 

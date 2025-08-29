@@ -35,7 +35,7 @@ class StaticPlaneContainerTest {
         return grid;
     }
 
-    PlaneContainerBuilder getBuilder() {
+    StaticPlaneContainerBuilder getBuilder() {
         BlockFactory blockFactory = Mockito.mock(BlockFactory.class);
         Mockito.when(blockFactory.create(1)).thenReturn(Mockito.mock(BlockType.class));
         StaticBoundaryFactory boundaryFactory = Mockito.mock(StaticBoundaryFactory.class);

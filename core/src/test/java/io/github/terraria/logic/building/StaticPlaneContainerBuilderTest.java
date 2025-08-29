@@ -12,7 +12,7 @@ class StaticPlaneContainerBuilderTest {
     final StaticBoundaryFactory boundaryFactory = Mockito.mock(StaticBoundaryFactory.class);
     final World world = Mockito.mock(World.class);
 
-    PlaneContainerBuilder getBuilder() {
+    StaticPlaneContainerBuilder getBuilder() {
         BlockFactory blockFactory = Mockito.mock(BlockFactory.class);
         BodyFactory bodyFactory = Mockito.mock(BodyFactory.class);
         return new StaticPlaneContainerBuilder().boundaryFactory(boundaryFactory).blockFactory(blockFactory).bodyFactory(bodyFactory).world(world);
