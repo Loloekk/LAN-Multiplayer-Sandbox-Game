@@ -3,11 +3,12 @@ package io.github.terraria.logic.building;
 import io.github.terraria.logic.IntRectangle;
 import io.github.terraria.logic.IntVector2;
 import io.github.terraria.logic.physics.Body;
+import io.github.terraria.logic.physics.BodyFactory;
 import io.github.terraria.logic.physics.World;
 
 import java.util.ArrayList;
 
-public class StaticPlaneContainer implements PlaneContainer {
+public class StaticPlaneContainer extends PlaneContainer {
     public static final int DEFAULT_WIDTH = 100;
     public static final int DEFAULT_HEIGHT = 100;
     public static final int layers = 2;
@@ -15,20 +16,17 @@ public class StaticPlaneContainer implements PlaneContainer {
     // Słabe, że nie jest wysokość globalnie.
     // [width][height][layer] dla lokalności dostępu.
     // Blok pod [i][j] ma współrzędne w world i - zeroX, i - zeroY.
-    // TODO - rozważyć: Blok ma wymiary 1x1 w world. To raczej nie jest restrykcyjne, ale można ewentualnie uwzględniać skalowanie wszędzie.
+    // Współrzędne bloku to jego lewy dolny róg.
     // Argumenty do metod są we współrzędnych world.
     private final ArrayList<ArrayList<ArrayList<BlockType>>> grid;
     private final ArrayList<ArrayList<Body>> bodies;
     private final int zeroX, zeroY;
-    private final World world;
 
-    StaticPlaneContainer(int width, int height, int zeroX, int zeroY, World world, ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid) {
+    StaticPlaneContainer(int width, int height, int zeroX, int zeroY, World world, ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid, BodyFactory bodyFactory) {
+        super(world, bodyFactory);
         this.zeroX = zeroX;
         this.zeroY = zeroY;
-        this.world = world;
         grid = savedGrid;
-
-        bufferBlocks(width, height, zeroX, zeroY, world);
 
         bodies = new ArrayList<>(width);
         for(int i = 0; i < width; i++) {
@@ -36,34 +34,12 @@ public class StaticPlaneContainer implements PlaneContainer {
             for (int j = 0; j < height; j++) {
                 BlockType block = grid.get(i).get(j).get(0);
                 if(block != null && block.isPhysical()) {
-                    Body body = block.createBody(world, new IntVector2(i - zeroX, j - zeroY));
+                    Body body = bodyFactory.create(block, world, new IntVector2(i - zeroX, j - zeroY));
                     bodiesColumn.add(body);
                 }
                 else bodiesColumn.add(null);
             }
             bodies.add(bodiesColumn);
-        }
-    }
-
-    private static void bufferBlocks(int width, int height, int zeroX, int zeroY, World world) {
-        // Adding buffer blocks around the map.
-        {
-            final int bufferBlockId = -1;
-            BlockType block;
-            final int left =  -1 - zeroX, right = width - zeroX;
-            final int bottom = -1 - zeroY, top = height - zeroY;
-            for (int x = left + 1; x < right; x++) {
-                block = new BlockTypeImpl(bufferBlockId);
-                block.createBody(world, new IntVector2(x, bottom));
-                block = new BlockTypeImpl(bufferBlockId);
-                block.createBody(world, new IntVector2(x, top));
-            }
-            for (int y = bottom + 1; y < top; y++) {
-                block = new BlockTypeImpl(bufferBlockId);
-                block.createBody(world, new IntVector2(left, y));
-                block = new BlockTypeImpl(bufferBlockId);
-                block.createBody(world, new IntVector2(right, y));
-            }
         }
     }
 
@@ -110,7 +86,7 @@ public class StaticPlaneContainer implements PlaneContainer {
     @Override
     public boolean placeBlockAt(int x, int y, BlockType block) {
         return placeBlockAt(x, y, block,
-            block.isPhysical() ? block.createBody(world, new IntVector2(x, y)) : null);
+            block.isPhysical() ? bodyFactory.create(block, world, new IntVector2(x, y)) : null);
     }
 
     @Override
@@ -150,6 +126,7 @@ public class StaticPlaneContainer implements PlaneContainer {
 
     @Override
     public LocalPlaneContainer getLocal(IntRectangle neighbourhood) {
+        // TODO: Check with the "left bottom corner of a block" convention.
         // Consider checking for out of bounds?
         ArrayList<ArrayList<ArrayList<BlockType>>> localGrid = new ArrayList<>();
         for (int x = neighbourhood.leftBottom().x(); x < neighbourhood.rightTop().x(); x++) {

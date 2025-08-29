@@ -1,0 +1,32 @@
+[
+    {
+      "id": 1,
+      "name": "Stone",
+      "layer": 0,
+      "isPhysical": {},
+      "width": 64,
+      "height": 64
+    },
+    {
+      "id": 2,
+      "name": "Grass",
+      "layer": 0,
+      "isPhysical": {},
+      "width": 64,
+      "height": 64
+    },
+    {
+      "id": 3,
+      "name": "Water",
+      "layer": 1,
+      "width": 64,
+      "height": 64
+    },
+    {
+      "id": 4,
+      "name": "Decoration",
+      "layer": 1,
+      "width": 128,
+      "height": 32
+    }
+]

@@ -1,10 +1,12 @@
 package io.github.terraria.logic.building;
 
+import io.github.terraria.logic.physics.BodyFactory;
 import io.github.terraria.logic.physics.World;
 
 import java.util.ArrayList;
 
 public abstract class PlaneContainerBuilder {
+    protected BodyFactory bodyFactory;
     protected Integer width;
     protected Integer height;
     protected Integer zeroX;
@@ -12,6 +14,10 @@ public abstract class PlaneContainerBuilder {
     protected World world;
     protected ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid;
 
+    public PlaneContainerBuilder bodyFactory(BodyFactory bodyFactory) {
+        this.bodyFactory = bodyFactory;
+        return this;
+    }
     public PlaneContainerBuilder width(int width) {
         this.width = width;
         return this;
