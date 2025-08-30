@@ -26,6 +26,11 @@ class ItemHolderTest {
         public int hashCode() {
             return hash;
         }
+
+        @Override
+        public int id() {
+            return 0;
+        }
     }
     @Test
     void newItemHolderIsEmpty() {

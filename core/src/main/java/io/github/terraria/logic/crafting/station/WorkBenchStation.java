@@ -25,4 +25,9 @@ public class WorkBenchStation implements CraftingStation {
         }
         return recipe.craft(inventory);
     }
+
+    @Override
+    public int id() {
+        return 0;
+    }
 }

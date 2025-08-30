@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "ingredients": [
+      {"id":  0, "amount":  1}
+    ],
+    "output": {
+      "id":  0, "amount":  4
+    },
+    "station": "WORKBENCH"
+  }
+]

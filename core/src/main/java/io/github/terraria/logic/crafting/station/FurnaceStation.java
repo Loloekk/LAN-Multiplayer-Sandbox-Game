@@ -26,4 +26,9 @@ public class FurnaceStation implements CraftingStation {
         coal -= recipe.getOutput().getAmount();
         return recipe.craft(inventory);
     }
+
+    @Override
+    public int id() {
+        return 0;
+    }
 }

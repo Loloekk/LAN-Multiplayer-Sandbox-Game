@@ -27,6 +27,8 @@ public class Recipe {
         return recipeId;
     }
 
+    public List<Ingredient> getIngredients() { return ingredients; }
+
     public StationType getStation() {
         return station;
     }
