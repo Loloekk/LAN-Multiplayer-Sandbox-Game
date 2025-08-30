@@ -1,6 +1,8 @@
 package io.github.terraria.logic.building;
 
+import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.logic.IntVector2;
+import io.github.terraria.logic.RectangleNeighbourhood;
 import io.github.terraria.logic.physics.BodyFactory;
 import io.github.terraria.logic.physics.Box2DBody;
 import io.github.terraria.logic.physics.StaticBoundaryFactory;
@@ -151,7 +153,6 @@ class StaticPlaneContainerTest {
         container.removeFrontBlockAt(0, 0);
         Mockito.verify(world, Mockito.times(1)).destroyBody(body);
     }
-/*
 
     @Test
     void getLocalConversionTest() {
@@ -161,10 +162,10 @@ class StaticPlaneContainerTest {
         final int a = 0, b = 0;
         container.placeBlockAt(a, b, block);
 
-        final int x = -1, y = -1;
+        final int x = -1, y = -2;
         RectangleNeighbourhood rectangle = new RectangleNeighbourhood(x, y, width - zeroX, height - zeroY);
         LocalPlaneContainer local = container.getLocal(rectangle);
-        assertEquals(block, local.getBlockAt(a - x, b - y, 0));
+        assertEquals(block, local.getBlockAt(a, b, 0));
     }
 
     @Test
@@ -174,21 +175,16 @@ class StaticPlaneContainerTest {
         Mockito.when(block.getLayer()).thenReturn(0);
         container.placeBlockAt(0, 0, block);
 
-        RectangleNeighbourhood rectangle = new RectangleNeighbourhood(0, 0, width - zeroX, height - zeroY);
+        RectangleNeighbourhood rectangle = new RectangleNeighbourhood(0.5f, 0.6f, width - zeroX, height - zeroY);
         LocalPlaneContainer local = container.getLocal(rectangle);
         assertEquals(block, local.getBlockAt(0, 0, 0));
     }
 
     @Test
-    void getLocalRightTopInclusiveTest() {
+    void getLocalOutOfBoundsTest() {
         PlaneContainer container = getBuilder().build();
-        IntVector2 topRight = new IntVector2(width - zeroX - 1, height - zeroY - 1);
-        BlockType block = Mockito.mock(BlockType.class);
-        Mockito.when(block.getLayer()).thenReturn(0);
-        container.placeBlockAt(topRight, block);
-        RectangleNeighbourhood rectangle = new RectangleNeighbourhood(new Vector2(0f, 0f), topRight.toFloat());
-        LocalPlaneContainer local = container.getLocal(rectangle);
-        assertThrows(IndexOutOfBoundsException.class, () -> local.getBlockAt(width - zeroX - 1, height - zeroY - 1, 0));
+        Vector2 outOfBounds = new Vector2(-zeroX - 1, -zeroY - 1);
+        RectangleNeighbourhood rectangle = new RectangleNeighbourhood(outOfBounds, new Vector2());
+        container.getLocal(rectangle);
     }
-*/
 }

@@ -146,6 +146,6 @@ public class StaticPlaneContainer extends PlaneContainer {
             }
             localGrid.add(column);
         }
-        return new LocalPlaneContainerImpl(zeroX - beginX, zeroY - beginY, localGrid);
+        return new LocalPlaneContainerImpl(-beginX, -beginY, localGrid);
     }
 }
