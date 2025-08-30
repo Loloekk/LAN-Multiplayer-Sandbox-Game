@@ -20,7 +20,7 @@ public class CraftingService {
         this.stations.put(StationType.ANVIL, new AnvilStation());
     }
 
-    boolean canCraft(Recipe recipe, ItemHolder inventory) {
+    public boolean canCraft(Recipe recipe, ItemHolder inventory) {
         StationType type = recipe.getStation();
         CraftingStation station = stations.get(type);
         return station.canCraft(recipe, inventory);
@@ -30,7 +30,7 @@ public class CraftingService {
         return repo.findByStation(type);
     }
 
-    boolean craft(Recipe recipe, ItemHolder inventory) {
+    public boolean craft(Recipe recipe, ItemHolder inventory) {
         if (!canCraft(recipe, inventory)) {
             return false;
         }

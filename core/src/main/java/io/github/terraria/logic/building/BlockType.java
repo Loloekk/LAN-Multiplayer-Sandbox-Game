@@ -1,8 +1,9 @@
 package io.github.terraria.logic.building;
 
+import io.github.terraria.logic.Item;
 import io.github.terraria.logic.block.BlockBehavior;
 
-public interface BlockType {
+public interface BlockType extends Item {
     int id();
 
     boolean isPhysical();
