@@ -20,12 +20,12 @@ public class DefaultPlayerActivator extends PlayerActivator {
 
     @Override
     protected Body getNewPlayerBody(Vector2 spawnPosition) {
+        // TODO: Dispose of shape at a proper time.
         PolygonShape rectangle = new PolygonShape();
         rectangle.setAsBox(width, height);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = rectangle;
-        rectangle.dispose();
         fixtureDef.density = density;
         fixtureDef.friction = friction;
         fixtureDef.restitution = restitution;
