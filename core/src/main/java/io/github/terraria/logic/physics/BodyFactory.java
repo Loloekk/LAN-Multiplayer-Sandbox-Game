@@ -13,9 +13,17 @@ public class BodyFactory {
     private final Map<Integer, FixtureDef> map;
     public BodyFactory(Map<Integer, FixtureDef> map) { this.map = map; }
     public Body create(BlockType blockType, World world, IntVector2 intVector2) {
+        PolygonShape square = new PolygonShape();
+        square.setAsBox(0.5f, 0.5f);
+
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = new PolygonShape();
+        fixtureDef.shape = square;
+        fixtureDef.density = 0f;
+        fixtureDef.friction = 0.5f;
+
+        Body body = world.createStaticBody(intVector2.toFloat().add(0.5f, 0.5f), fixtureDef);
+        square.dispose();
+        return body;
         //TODO ten fixtureDef
-        return world.createStaticBody(intVector2.toFloat(), fixtureDef);
     }
 }
