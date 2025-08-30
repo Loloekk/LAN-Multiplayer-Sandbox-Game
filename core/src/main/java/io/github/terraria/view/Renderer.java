@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class Renderer {
+    private float scale = 0.3f;
     private SpriteBatch spriteBatch = new SpriteBatch();
     private TextureBank textureBank;
 
@@ -16,7 +17,11 @@ public class Renderer {
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
         for(DrawableRectangle rectangle : scene.objects){
-            spriteBatch.draw(textureBank.getTexture(rectangle.textureId), rectangle.centerX, rectangle.centerY, rectangle.width, rectangle.height);
+            spriteBatch.draw(textureBank.getTexture(rectangle.textureId),
+                rectangle.centerX*scale,
+                rectangle.centerY*scale,
+                rectangle.width*scale,
+                rectangle.height*scale);
         }
         spriteBatch.end();
     }

@@ -50,6 +50,7 @@ public class GameScreen implements Screen {
                     currentScene = scene;
                 } else if (obj instanceof Network.PlayerState pla)
                 {
+                    Gdx.app.log("GameScreen", "Player position" + pla.x+" "+ pla.y);
                     currentScene = new Scene();
                     currentScene.objects.add(new DrawableRectangle(pla.x, pla.y, 1, 2, 0));
                 }
@@ -89,6 +90,7 @@ public class GameScreen implements Screen {
             pi.moveX = mx;
             pi.moveY = my;
             client.sendUDP(pi);
+            System.out.println("Send moving " + playerId);
         }
     }
 

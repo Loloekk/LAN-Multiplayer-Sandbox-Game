@@ -71,15 +71,15 @@ public class GameServer {
                     Player pla = playerRegistry.registerPlayer();
                     int id = pla.getId();
                     playerActivator.loginPlayer(id);
-//                    connectionIds.put(connection, id);
-//                    inputQueues.put(connection, new ConcurrentLinkedQueue<>());
+                    connectionIds.put(connection, id);
+                    inputQueues.put(connection, new ConcurrentLinkedQueue<>());
 //                    Network.PlayerState ps = new Network.PlayerState();
 //                    ps.id = id; ps.x = 0; ps.y = 0; ps.name = join.name;
 //                    playerStates.put(id, ps);
-//                    Network.PacketJoinAck ack = new Network.PacketJoinAck();
-//                    ack.playerId = id; ack.name = join.name;
-//                    System.out.println("Player " + id + " dodany");
-//                    connection.sendTCP(ack);
+                    Network.PacketJoinAck ack = new Network.PacketJoinAck();
+                    ack.playerId = id; ack.name = join.name;
+                    System.out.println("Player " + id + " dodany");
+                    connection.sendTCP(ack);
                 } else if (obj instanceof Network.PacketInput) {
                     inputQueues.getOrDefault(connection, new ConcurrentLinkedQueue<>()).add((Network.PacketInput) obj);
                 }
@@ -103,11 +103,12 @@ public class GameServer {
         for (Queue<Network.PacketInput> queue : inputQueues.values()) {
             Network.PacketInput in;
             while ((in = queue.poll()) != null) {
-                Network.PlayerState ps = playerStates.get(in.playerId);
-                if (ps != null) {
-                    ps.x += in.moveX * 1f;
-                    ps.y += in.moveY * 1f;
-                }
+                System.out.println("Get moving " + in.moveX+ " "+ in.playerId);
+                if(in.moveX > 0)
+                    MoveService.movePlayer(gameState.activePlayers().get(in.playerId),MoveService.Direction.right);
+                else if (in.moveX < 0)
+                    MoveService.movePlayer(gameState.activePlayers().get(in.playerId),MoveService.Direction.left);
+
             }
         }
     }
@@ -126,12 +127,12 @@ public class GameServer {
 //                LocalPlaneContainer plane = gameState.grid().getLocal(new RectangleNeighbourhood(new Vector2(-10f, -10f), new Vector2(10f, 10f)));
 //                Scene scene = renderer.renderScene(plane);
 //                conn.sendUDP(scene);
-//                Network.PlayerState pla = new Network.PlayerState();
-//                pla.id = id;
-//                pla.x = gameState.activePlayers().get(id).getIntegerPosition().x();
-//                pla.y = gameState.activePlayers().get(id).getIntegerPosition().y();
-////                for(players : gameState.activePlayers()
-//                conn.sendUDP(pla);
+                Network.PlayerState pla = new Network.PlayerState();
+                pla.id = id;
+                pla.x = gameState.activePlayers().get(id).getIntegerPosition().x();
+                pla.y = gameState.activePlayers().get(id).getIntegerPosition().y();
+//                for(players : gameState.activePlayers()
+                conn.sendUDP(pla);
             }
         }catch (Exception e){
             e.printStackTrace();
