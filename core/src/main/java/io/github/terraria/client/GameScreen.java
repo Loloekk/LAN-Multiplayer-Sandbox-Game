@@ -48,6 +48,10 @@ public class GameScreen implements Screen {
                 } else if (obj instanceof Scene scene) {
                     Gdx.app.log("GameScreen", "Scene update");
                     currentScene = scene;
+                } else if (obj instanceof Network.PlayerState pla)
+                {
+                    currentScene = new Scene();
+                    currentScene.objects.add(new DrawableRectangle(pla.x, pla.y, 1, 2, 0));
                 }
             }
         });

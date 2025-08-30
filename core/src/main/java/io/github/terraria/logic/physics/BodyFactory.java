@@ -1,6 +1,7 @@
 package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import io.github.terraria.logic.IntVector2;
 import io.github.terraria.logic.building.BlockType;
 
@@ -12,6 +13,9 @@ public class BodyFactory {
     private final Map<Integer, FixtureDef> map;
     public BodyFactory(Map<Integer, FixtureDef> map) { this.map = map; }
     public Body create(BlockType blockType, World world, IntVector2 intVector2) {
-        return world.createStaticBody(intVector2.toFloat(), map.get(blockType.id()));
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = new PolygonShape();
+        //TODO ten fixtureDef
+        return world.createStaticBody(intVector2.toFloat(), fixtureDef);
     }
 }

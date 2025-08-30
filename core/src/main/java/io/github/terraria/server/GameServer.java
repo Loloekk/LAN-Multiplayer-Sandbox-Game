@@ -46,7 +46,7 @@ public class GameServer {
         world = new Box2DWorld(new Vector2(0, -10), true);
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
         builder.world(world);
-        builder.width(1000).height(80).zeroX(500).zeroY(30);
+        builder.width(1000).height(80).zeroX(500).zeroY(40);
         PlaneContainer planeContainer = builder.build();
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()));
         System.out.println("Plane container " + planeContainer);
@@ -56,7 +56,6 @@ public class GameServer {
         spawnRegistry = new SpawnRegistryMap(new HashMap<>());
         playerRegistry = new PlayerRegistryList(spawnRegistry, new ArrayList<>(), new Vector2(0f, 0f));
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers());
-
         actionService = new PlayerActionServiceImpl(gameState);
 
         server.addListener(new Listener() {
@@ -69,15 +68,18 @@ public class GameServer {
             @Override public void received(Connection connection, Object obj) {
                 if (obj instanceof Network.PacketJoin) {
                     Network.PacketJoin join = (Network.PacketJoin) obj;
-                    int id = nextPlayerId++;
-                    connectionIds.put(connection, id);
-                    inputQueues.put(connection, new ConcurrentLinkedQueue<>());
-                    Network.PlayerState ps = new Network.PlayerState();
-                    ps.id = id; ps.x = 0; ps.y = 0; ps.name = join.name;
-                    playerStates.put(id, ps);
-                    Network.PacketJoinAck ack = new Network.PacketJoinAck();
-                    ack.playerId = id; ack.name = join.name;
-                    connection.sendTCP(ack);
+                    Player pla = playerRegistry.registerPlayer();
+                    int id = pla.getId();
+                    playerActivator.loginPlayer(id);
+//                    connectionIds.put(connection, id);
+//                    inputQueues.put(connection, new ConcurrentLinkedQueue<>());
+//                    Network.PlayerState ps = new Network.PlayerState();
+//                    ps.id = id; ps.x = 0; ps.y = 0; ps.name = join.name;
+//                    playerStates.put(id, ps);
+//                    Network.PacketJoinAck ack = new Network.PacketJoinAck();
+//                    ack.playerId = id; ack.name = join.name;
+//                    System.out.println("Player " + id + " dodany");
+//                    connection.sendTCP(ack);
                 } else if (obj instanceof Network.PacketInput) {
                     inputQueues.getOrDefault(connection, new ConcurrentLinkedQueue<>()).add((Network.PacketInput) obj);
                 }
@@ -119,11 +121,17 @@ public class GameServer {
             for (Map.Entry<Connection, Integer> entry : connectionIds.entrySet()) {
                 Connection conn = entry.getKey();
                 int id = entry.getValue();
-                System.out.println("Sending scene to player " + id);
-                System.out.println(gameState.grid() + " why?");
-                LocalPlaneContainer plane = gameState.grid().getLocal(new RectangleNeighbourhood(new Vector2(-10f, -10f), new Vector2(10f, 10f)));
-                Scene scene = renderer.renderScene(plane);
-                conn.sendUDP(scene);
+//                System.out.println("Sending scene to player " + id);
+//                System.out.println(gameState.grid() + " why?");
+//                LocalPlaneContainer plane = gameState.grid().getLocal(new RectangleNeighbourhood(new Vector2(-10f, -10f), new Vector2(10f, 10f)));
+//                Scene scene = renderer.renderScene(plane);
+//                conn.sendUDP(scene);
+//                Network.PlayerState pla = new Network.PlayerState();
+//                pla.id = id;
+//                pla.x = gameState.activePlayers().get(id).getIntegerPosition().x();
+//                pla.y = gameState.activePlayers().get(id).getIntegerPosition().y();
+////                for(players : gameState.activePlayers()
+//                conn.sendUDP(pla);
             }
         }catch (Exception e){
             e.printStackTrace();
