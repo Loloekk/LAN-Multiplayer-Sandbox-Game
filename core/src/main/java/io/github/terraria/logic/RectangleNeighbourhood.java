@@ -6,7 +6,7 @@ import io.github.terraria.logic.players.PlayerActivator;
 
 public record RectangleNeighbourhood(Vector2 leftBottom, Vector2 rightTop) {
 
-    public RectangleNeighbourhood(int leftBottomX, int leftBottomY, int rightTopX, int rightTopY) {
+    public RectangleNeighbourhood(float leftBottomX, float leftBottomY, float rightTopX, float rightTopY) {
         this(new Vector2(leftBottomX, leftBottomY), new Vector2(rightTopX, rightTopY));
     }
 

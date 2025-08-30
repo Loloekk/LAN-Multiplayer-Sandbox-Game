@@ -63,12 +63,6 @@ public class StaticPlaneContainer extends PlaneContainer {
         bodies.get(x + zeroX).set(y + zeroY, body);
     }
 
-    private boolean withinBounds(int x, int y) {
-        int innerX = x + zeroX;
-        int innerY = y + zeroY;
-        return !(innerX < 0 || innerX >= width || innerY < 0 || innerY >= height);
-    }
-
     // Best thin, so can be used efficiently in other methods.
     @Override
     public BlockType getBlockAt(int x, int y, int layer) {
@@ -135,22 +129,23 @@ public class StaticPlaneContainer extends PlaneContainer {
 
     @Override
     public LocalPlaneContainer getLocal(RectangleNeighbourhood neighbourhood) {
-        // Consider checking for out of bounds?
+        RectangleNeighbourhood cutNeighbourhood = new RectangleNeighbourhood(
+            Math.max(neighbourhood.leftBottom().x, -zeroX),
+            Math.max(neighbourhood.leftBottom().y, -zeroY),
+            Math.min(neighbourhood.rightTop().x, width - zeroX - 1),
+            Math.min(neighbourhood.rightTop().y, height - zeroY - 1)
+        );
         ArrayList<ArrayList<ArrayList<BlockType>>> localGrid = new ArrayList<>();
-        for (int x = (int) Math.floor(neighbourhood.leftBottom().x);
-             x <= (int) Math.floor(neighbourhood.rightTop().x); x++) {
+        final int beginX = (int) Math.floor(cutNeighbourhood.leftBottom().x);
+        final int beginY = (int) Math.floor(cutNeighbourhood.leftBottom().y);
+        for (int x = beginX;
+             x <= (int) Math.floor(cutNeighbourhood.rightTop().x); x++) {
             ArrayList<ArrayList<BlockType>> column = new ArrayList<>();
-            for (int y = (int) Math.floor(neighbourhood.leftBottom().y); y <= (int) Math.floor(neighbourhood.rightTop().y); y++) {
-                if(withinBounds(x, y))
-                    column.add(new ArrayList<>(getPointAt(x, y)));
-                else
-                    column.add(new ArrayList<>(layers) {{
-                        add(null);
-                        add(null);
-                    }});
+            for (int y = beginY; y <= (int) Math.floor(cutNeighbourhood.rightTop().y); y++) {
+                column.add(new ArrayList<>(getPointAt(x, y)));
             }
             localGrid.add(column);
         }
-        return new LocalPlaneContainerImpl(zeroX, zeroY, localGrid);
+        return new LocalPlaneContainerImpl(zeroX - beginX, zeroY - beginY, localGrid);
     }
 }
