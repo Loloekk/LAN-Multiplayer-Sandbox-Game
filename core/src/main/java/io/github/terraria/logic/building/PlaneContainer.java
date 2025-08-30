@@ -1,6 +1,6 @@
 package io.github.terraria.logic.building;
 
-import io.github.terraria.logic.IntRectangle;
+import io.github.terraria.logic.RectangleNeighbourhood;
 import io.github.terraria.logic.IntVector2;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.BodyFactory;
@@ -44,5 +44,5 @@ public abstract class PlaneContainer {
     public BlockType removeFrontBlockAt(IntVector2 loc) {
         return removeFrontBlockAt(loc.x(), loc.y());
     }
-    public abstract LocalPlaneContainer getLocal(IntRectangle neighbourhood);
+    public abstract LocalPlaneContainer getLocal(RectangleNeighbourhood neighbourhood);
 }

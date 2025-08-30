@@ -1,7 +1,7 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.IntRectangle;
+import io.github.terraria.logic.RectangleNeighbourhood;
 
 import java.util.List;
 import java.util.Map;
@@ -42,9 +42,9 @@ public class ActivePlayersMap implements ActivePlayers {
     }
 
     @Override
-    public ActivePlayers getLocal(IntRectangle rectangle) {
+    public ActivePlayers getLocal(RectangleNeighbourhood rectangle) {
         Map<Integer, PhysicalPlayer> filteredMap = map.entrySet().stream()
-                .filter(entry -> rectangle.contains(entry.getValue().body().getPosition()))
+                .filter(entry -> rectangle.possiblyIntersects(entry.getValue()))
                 .collect(java.util.stream.Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         return new ActivePlayersMap(filteredMap);
     }

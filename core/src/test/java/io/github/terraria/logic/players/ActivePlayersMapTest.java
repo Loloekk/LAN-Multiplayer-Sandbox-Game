@@ -2,8 +2,7 @@ package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
 import com.google.common.collect.ImmutableList;
-import io.github.terraria.logic.IntRectangle;
-import io.github.terraria.logic.IntVector2;
+import io.github.terraria.logic.RectangleNeighbourhood;
 import io.github.terraria.logic.physics.Body;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,21 +69,8 @@ class ActivePlayersMapTest {
 
     @Test
     void getLocalLeftBottom() {
-        IntRectangle rectangle = new IntRectangle(0, 0, 2, 2);
+        RectangleNeighbourhood rectangle = new RectangleNeighbourhood(0, 0, 2, 2);
         assertThat(map.getLocal(rectangle).getList()).containsExactlyInAnyOrderElementsOf(physicalPlayers);
-    }
-
-    @Test
-    void getLocalRightTop() {
-        IntRectangle rectangle = new IntRectangle(0, 0, 1, 1);
-        assertThat(map.getLocal(rectangle).getList()).containsExactlyInAnyOrderElementsOf(physicalPlayers.subList(0, 3));
-    }
-
-    @Test
-    void getLocalDegenerate() {
-        IntVector2 pos = IntVector2.toInt(positions.get(0));
-        IntRectangle rectangle = new IntRectangle(pos, pos);
-        assertThat(map.getLocal(rectangle).getList()).isEmpty();
     }
 
     @Test

@@ -6,8 +6,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.common.Network;
 import io.github.terraria.logic.GameState;
-import io.github.terraria.logic.IntRectangle;
-import io.github.terraria.logic.IntVector2;
+import io.github.terraria.logic.RectangleNeighbourhood;
 import io.github.terraria.logic.building.LocalPlaneContainer;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
@@ -122,7 +121,7 @@ public class GameServer {
                 int id = entry.getValue();
                 System.out.println("Sending scene to player " + id);
                 System.out.println(gameState.grid() + " why?");
-                LocalPlaneContainer plane = gameState.grid().getLocal(new IntRectangle(new IntVector2(-10, -10), new IntVector2(10, 10)));
+                LocalPlaneContainer plane = gameState.grid().getLocal(new RectangleNeighbourhood(new Vector2(-10f, -10f), new Vector2(10f, 10f)));
                 Scene scene = renderer.renderScene(plane);
                 conn.sendUDP(scene);
             }

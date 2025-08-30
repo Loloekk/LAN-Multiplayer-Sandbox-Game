@@ -1,6 +1,6 @@
 package io.github.terraria.logic.building;
 
-import io.github.terraria.logic.IntRectangle;
+import io.github.terraria.logic.RectangleNeighbourhood;
 import io.github.terraria.logic.IntVector2;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.BodyFactory;
@@ -20,10 +20,13 @@ public class StaticPlaneContainer extends PlaneContainer {
     // Argumenty do metod są we współrzędnych world.
     private final ArrayList<ArrayList<ArrayList<BlockType>>> grid;
     private final ArrayList<ArrayList<Body>> bodies;
+    private final int width, height;
     private final int zeroX, zeroY;
 
     StaticPlaneContainer(int width, int height, int zeroX, int zeroY, World world, ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid, BodyFactory bodyFactory) {
         super(world, bodyFactory);
+        this.width = width;
+        this.height = height;
         this.zeroX = zeroX;
         this.zeroY = zeroY;
         grid = savedGrid;
@@ -58,6 +61,12 @@ public class StaticPlaneContainer extends PlaneContainer {
 
     private void setBodyAt(int x, int y, Body body) {
         bodies.get(x + zeroX).set(y + zeroY, body);
+    }
+
+    private boolean withinBounds(int x, int y) {
+        int innerX = x + zeroX;
+        int innerY = y + zeroY;
+        return !(innerX < 0 || innerX >= width || innerY < 0 || innerY >= height);
     }
 
     // Best thin, so can be used efficiently in other methods.
@@ -125,16 +134,23 @@ public class StaticPlaneContainer extends PlaneContainer {
     }
 
     @Override
-    public LocalPlaneContainer getLocal(IntRectangle neighbourhood) {
-        // TODO: Check with the "left bottom corner of a block" convention.
+    public LocalPlaneContainer getLocal(RectangleNeighbourhood neighbourhood) {
         // Consider checking for out of bounds?
         ArrayList<ArrayList<ArrayList<BlockType>>> localGrid = new ArrayList<>();
-        for (int x = neighbourhood.leftBottom().x(); x < neighbourhood.rightTop().x(); x++) {
+        for (int x = (int) Math.floor(neighbourhood.leftBottom().x);
+             x <= (int) Math.floor(neighbourhood.rightTop().x); x++) {
             ArrayList<ArrayList<BlockType>> column = new ArrayList<>();
-            for (int y = neighbourhood.leftBottom().y(); y < neighbourhood.rightTop().y(); y++)
-                column.add(new ArrayList<>(getPointAt(x, y)));
+            for (int y = (int) Math.floor(neighbourhood.leftBottom().y); y <= (int) Math.floor(neighbourhood.rightTop().y); y++) {
+                if(withinBounds(x, y))
+                    column.add(new ArrayList<>(getPointAt(x, y)));
+                else
+                    column.add(new ArrayList<>(layers) {{
+                        add(null);
+                        add(null);
+                    }});
+            }
             localGrid.add(column);
         }
-        return new LocalPlaneContainerImpl(localGrid);
+        return new LocalPlaneContainerImpl(zeroX, zeroY, localGrid);
     }
 }
