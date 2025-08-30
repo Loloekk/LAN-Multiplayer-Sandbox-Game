@@ -21,7 +21,6 @@ import java.io.IOException;
 public class GameServer {
     private Server server;
     private ServerRenderer renderer;
-    private int xd = 0;
     private final Map<Connection, Queue<Network.PacketInput>> inputQueues = new ConcurrentHashMap<>();
     private final Map<Integer, Network.PlayerState> playerStates = new ConcurrentHashMap<>();
     private final Map<Connection, Integer> connectionIds = new ConcurrentHashMap<>();
@@ -54,7 +53,7 @@ public class GameServer {
 
 
         spawnRegistry = new SpawnRegistryMap(new HashMap<>());
-        playerRegistry = new PlayerRegistryList(spawnRegistry, new ArrayList<>(), new Vector2(0f, 0f));
+        playerRegistry = new PlayerRegistryList(spawnRegistry, new ArrayList<>(), new Vector2(1f, 1f));
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers());
         actionService = new PlayerActionServiceImpl(gameState);
 
@@ -113,8 +112,11 @@ public class GameServer {
         }
     }
 
-    public void handlePhysics(){
-
+    public void handlePhysics() {
+        float timeStep = 1f / 50f; // skoro ticki są co 20 ms → 50 Hz
+        int velocityIterations = 6;
+        int positionIterations = 2;
+        world.step(timeStep,velocityIterations,positionIterations);
     }
 
     private void broadcastScenes() {
@@ -137,7 +139,6 @@ public class GameServer {
         }catch (Exception e){
             e.printStackTrace();
         }
-        xd++;
     }
 
     public static void main(String[] args) {
