@@ -12,4 +12,6 @@ public interface Body {
     void applyLinearImpulse(Vector2 impulse);
 
     Vector2 getLinearVelocity();
+
+    void addPlayerFixture(PlayerFixture playerFixture);
 }

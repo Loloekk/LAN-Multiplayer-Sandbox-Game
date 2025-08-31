@@ -67,15 +67,12 @@ public class Box2DWorld implements World {
         return new Box2DBody(box2DBody);
     }
 
-    // Not too nice...
     @Override
-    public Box2DBody createDynamicBody(Vector2 v, FixtureDef fixtureDef) {
+    public Box2DBody createDynamicBody(Vector2 v) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(v);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        com.badlogic.gdx.physics.box2d.Body box2DBody = world.createBody(bodyDef);
-        box2DBody.createFixture(fixtureDef);
-        return new Box2DBody(box2DBody);
+        return new Box2DBody(world.createBody(bodyDef));
     }
 
     @Override

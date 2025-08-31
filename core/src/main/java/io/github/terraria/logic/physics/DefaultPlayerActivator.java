@@ -1,8 +1,6 @@
 package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import io.github.terraria.logic.players.ActivePlayers;
 import io.github.terraria.logic.players.PlayerActivator;
 import io.github.terraria.logic.players.PlayerRegistry;
@@ -12,24 +10,13 @@ public class DefaultPlayerActivator extends PlayerActivator {
         super(registry, world, activePlayers);
     }
 
-    private static final float width = 1f, height = 2f;
-    private static final float density = 0.5f;
-    private static final float friction = 0.4f;
-    private static final float restitution = 0.6f;
-
+    private static final PlayerFixture playerFixture = new PlayerFixture(1f, 2f,
+        2f, 0.4f, 0.6f, new Vector2());
 
     @Override
     protected Body getNewPlayerBody(Vector2 spawnPosition) {
-        // TODO: Dispose of shape at a proper time.
-        PolygonShape rectangle = new PolygonShape();
-        rectangle.setAsBox(width, height);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = rectangle;
-        fixtureDef.density = density;
-        fixtureDef.friction = friction;
-        fixtureDef.restitution = restitution;
-
-        return world.createDynamicBody(spawnPosition, fixtureDef);
+        Body body = world.createDynamicBody(spawnPosition);
+        body.addPlayerFixture(playerFixture);
+        return body;
     }
 }

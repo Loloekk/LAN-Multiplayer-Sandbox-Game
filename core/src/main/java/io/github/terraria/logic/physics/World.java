@@ -1,7 +1,6 @@
 package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 public interface World {
     // left, bottom - coordinates of the bottom-left corner of the area to be enclosed
@@ -9,8 +8,7 @@ public interface World {
 
     Body createBlockBody(Vector2 v, BlockFixture blockFixture);
 
-    // TODO: Clean up interface.
-    Body createDynamicBody(Vector2 v, FixtureDef fixtureDef);
+    Body createDynamicBody(Vector2 v);
 
     void destroyBody(Body body);
 
