@@ -1,9 +1,6 @@
 package io.github.terraria.logic.building;
 
-import io.github.terraria.logic.physics.BodyFactory;
-import io.github.terraria.logic.physics.BodyFactoryLoader;
-import io.github.terraria.logic.physics.StaticBoundaryFactory;
-import io.github.terraria.logic.physics.World;
+import io.github.terraria.logic.physics.*;
 
 import java.util.ArrayList;
 
@@ -14,7 +11,6 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
     private Integer zeroY;
     private ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid;
     private BlockFactory blockFactory;
-    private StaticBoundaryFactory staticBoundaryFactory;
     public StaticPlaneContainerBuilder width(int width) {
         this.width = width;
         return this;
@@ -37,10 +33,6 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
     }
     public StaticPlaneContainerBuilder blockFactory(BlockFactory blockFactory) {
         this.blockFactory = blockFactory;
-        return this;
-    }
-    public StaticPlaneContainerBuilder boundaryFactory(StaticBoundaryFactory staticBoundaryFactory) {
-        this.staticBoundaryFactory = staticBoundaryFactory;
         return this;
     }
 
@@ -88,9 +80,7 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
         if(zeroX < 0 || zeroX >= width || zeroY < 0 || zeroY >= height || world == null)
             return null;
         // The above implies positivity of width and height.
-        if(staticBoundaryFactory == null)
-            staticBoundaryFactory = new StaticBoundaryFactory();
-        staticBoundaryFactory.createBoundaries(width, height, -zeroX, -zeroY, world);
+        world.createBoundaries(width, height, -zeroX, -zeroY);
         if(bodyFactory == null)
             bodyFactory = new BodyFactoryLoader().getBodyFactory();
         if(savedGrid == null)

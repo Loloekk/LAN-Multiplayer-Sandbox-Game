@@ -5,7 +5,6 @@ import io.github.terraria.logic.IntVector2;
 import io.github.terraria.logic.RectangleNeighbourhood;
 import io.github.terraria.logic.physics.BodyFactory;
 import io.github.terraria.logic.physics.Box2DBody;
-import io.github.terraria.logic.physics.StaticBoundaryFactory;
 import io.github.terraria.logic.physics.World;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -39,8 +38,7 @@ class StaticPlaneContainerTest {
     StaticPlaneContainerBuilder getBuilder() {
         BlockFactory blockFactory = Mockito.mock(BlockFactory.class);
         Mockito.when(blockFactory.create(1)).thenReturn(Mockito.mock(BlockType.class));
-        StaticBoundaryFactory boundaryFactory = Mockito.mock(StaticBoundaryFactory.class);
-        return new StaticPlaneContainerBuilder().boundaryFactory(boundaryFactory).blockFactory(blockFactory).bodyFactory(bodyFactory).width(width).height(height).zeroX(zeroX).zeroY(zeroY).world(world);
+        return new StaticPlaneContainerBuilder().blockFactory(blockFactory).bodyFactory(bodyFactory).width(width).height(height).zeroX(zeroX).zeroY(zeroY).world(world);
     }
 
     @Test
