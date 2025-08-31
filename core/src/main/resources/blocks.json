@@ -3,30 +3,22 @@
       "id": 1,
       "name": "Stone",
       "layer": 0,
-      "isPhysical": {},
-      "width": 64,
-      "height": 64
+      "isPhysical": {}
     },
     {
       "id": 2,
-      "name": "Grass",
+      "name": "Dirt",
       "layer": 0,
-      "isPhysical": {},
-      "width": 64,
-      "height": 64
+      "isPhysical": {}
     },
     {
       "id": 3,
       "name": "Water",
-      "layer": 1,
-      "width": 64,
-      "height": 64
+      "layer": 1
     },
     {
       "id": 4,
       "name": "Decoration",
-      "layer": 1,
-      "width": 128,
-      "height": 32
+      "layer": 1
     }
 ]

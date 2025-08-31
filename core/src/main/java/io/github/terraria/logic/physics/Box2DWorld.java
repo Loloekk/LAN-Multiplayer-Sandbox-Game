@@ -50,11 +50,20 @@ public class Box2DWorld implements World {
     }
 
     @Override
-    public Box2DBody createStaticBody(Vector2 v, FixtureDef fixtureDef) {
+    public Box2DBody createBlockBody(Vector2 v, BlockFixture blockFixture) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(v);
         com.badlogic.gdx.physics.box2d.Body box2DBody = world.createBody(bodyDef);
+
+        PolygonShape rectangle = new PolygonShape();
+        rectangle.setAsBox(blockFixture.width() / 2, blockFixture.height());
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = rectangle;
+        fixtureDef.friction = blockFixture.friction();
+        fixtureDef.restitution = blockFixture.restitution();
         box2DBody.createFixture(fixtureDef);
+        rectangle.dispose();
         return new Box2DBody(box2DBody);
     }
 
