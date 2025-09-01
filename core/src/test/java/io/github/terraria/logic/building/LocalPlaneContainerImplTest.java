@@ -1,7 +1,6 @@
 package io.github.terraria.logic.building;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +28,7 @@ class LocalPlaneContainerImplTest {
     @Test
     void getBlockAt() {
         var grid = getDummyGrid();
-        Block block = Mockito.mock(Block.class);
+        Block block = new BlockBuilder().layer(0).build();
         grid.get(zeroX).get(zeroY).set(0, block);
         LocalPlaneContainer container = new LocalPlaneContainerImpl(zeroX, zeroY, grid);
         assertEquals(block, container.getBlockAt(0, 0, 0));
