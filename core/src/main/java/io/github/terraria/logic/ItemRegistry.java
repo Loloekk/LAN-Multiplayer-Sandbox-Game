@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ItemRegistry {
-    private final Map<Integer, Item> items = new HashMap<>();
+    private final Map<String, Item> items = new HashMap<>();
 
     public void register(Item item) {
-        items.put(item.type().id(), item);
+        items.put(item.type().name(), item);
     }
 
-    public Item get(int id) {
-        return items.get(id);
+    public Item get(String name) {
+        return items.get(name);
     }
 }

@@ -3,7 +3,7 @@ package io.github.terraria.logic.building;
 import java.util.Map;
 
 public class BlockFactory {
-    private final Map<Integer, BlockType> map;
-    public BlockFactory(Map<Integer, BlockType> map) { this.map = map; }
-    public Block create(int id) { return new Block(map.get(id)); }
+    private final Map<String, BlockType> map;
+    public BlockFactory(Map<String, BlockType> map) { this.map = map; }
+    public Block create(String name) { return new Block(map.get(name)); }
 }

@@ -21,16 +21,16 @@ public class RecipeRepoImpl implements RecipeRepo {
             List<Ingredient> ingredients = new ArrayList<>();
             for (JsonElement el : obj.getAsJsonArray("ingredients")) {
                 JsonObject ingrObj = el.getAsJsonObject();
-                int itemId = ingrObj.get("id").getAsInt();
+                String itemName = ingrObj.get("name").getAsString();
                 int amount = ingrObj.get("amount").getAsInt();
-                Item item = itemRegistry.get(itemId);
+                Item item = itemRegistry.get(itemName);
                 ingredients.add(new Ingredient(item, amount));
             }
 
             JsonObject outObj = obj.getAsJsonObject("output");
-            int outId = outObj.get("item").getAsInt();
+            String outName = outObj.get("item").getAsString();
             int outAmount = outObj.get("amount").getAsInt();
-            Ingredient output = new Ingredient(itemRegistry.get(outId), outAmount);
+            Ingredient output = new Ingredient(itemRegistry.get(outName), outAmount);
 
             StationType station = StationType.valueOf(outObj.get("station").getAsString());
 
