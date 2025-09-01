@@ -28,8 +28,8 @@ class ItemHolderTest {
         }
 
         @Override
-        public int id() {
-            return 0;
+        public ItemType type() {
+            return null;
         }
     }
     @Test

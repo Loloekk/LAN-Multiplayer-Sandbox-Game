@@ -3,8 +3,6 @@ package io.github.terraria.logic.crafting.station;
 import io.github.terraria.logic.ItemHolder;
 import io.github.terraria.logic.crafting.Recipe;
 
-import java.util.List;
-
 public class AnvilStation implements CraftingStation {
     @Override
     public StationType getStationType() {
@@ -23,10 +21,5 @@ public class AnvilStation implements CraftingStation {
         }
 
         return recipe.craft(inventory);
-    }
-
-    @Override
-    public int id() {
-        return 0;
     }
 }

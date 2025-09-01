@@ -9,7 +9,7 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
     private Integer height;
     private Integer zeroX;
     private Integer zeroY;
-    private ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid;
+    private ArrayList<ArrayList<ArrayList<Block>>> savedGrid;
     private BlockFactory blockFactory;
     public StaticPlaneContainerBuilder width(int width) {
         this.width = width;
@@ -27,7 +27,7 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
         this.zeroY = zeroY;
         return this;
     }
-    public PlaneContainerBuilder savedGrid(ArrayList<ArrayList<ArrayList<BlockType>>> savedGrid) {
+    public PlaneContainerBuilder savedGrid(ArrayList<ArrayList<ArrayList<Block>>> savedGrid) {
         this.savedGrid = savedGrid;
         return this;
     }
@@ -47,16 +47,16 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
         return this;
     }
 
-    private ArrayList<ArrayList<ArrayList<BlockType>>> getDefaultGrid(int width, int height, int zeroY) {
+    private ArrayList<ArrayList<ArrayList<Block>>> getDefaultGrid(int width, int height, int zeroY) {
         if(blockFactory == null)
             blockFactory = new BlockFactoryLoader().getBlockFactory();
-        ArrayList<ArrayList<ArrayList<BlockType>>> defaultGrid = new ArrayList<>(width);
+        ArrayList<ArrayList<ArrayList<Block>>> defaultGrid = new ArrayList<>(width);
         for(int i = 0; i < width; i++) {
-            ArrayList<ArrayList<BlockType>> column = new ArrayList<>(height);
+            ArrayList<ArrayList<Block>> column = new ArrayList<>(height);
             for (int j = 0; j < height; j++) {
-                ArrayList<BlockType> point = new ArrayList<>(StaticPlaneContainer.layers);
+                ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
                 {
-                    BlockType frontBlock = (j < zeroY) ? blockFactory.create(1) : null;
+                    Block frontBlock = (j < zeroY) ? blockFactory.create(1) : null;
                     point.add(frontBlock);
                 }
                 point.add(null);

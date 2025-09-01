@@ -1,6 +1,5 @@
 package io.github.terraria.logic;
 
 public interface Item {
-    int id();
-
+    ItemType type();
 }

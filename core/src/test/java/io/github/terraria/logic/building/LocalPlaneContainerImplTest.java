@@ -14,10 +14,10 @@ class LocalPlaneContainerImplTest {
     final int zeroX = 5;
     final int zeroY = 5;
 
-    ArrayList<ArrayList<ArrayList<BlockType>>> getDummyGrid() {
-        ArrayList<ArrayList<ArrayList<BlockType>>> grid = new ArrayList<>(width);
+    ArrayList<ArrayList<ArrayList<Block>>> getDummyGrid() {
+        ArrayList<ArrayList<ArrayList<Block>>> grid = new ArrayList<>(width);
         for(int i = 0; i < width; i++) {
-            ArrayList<ArrayList<BlockType>> column = new ArrayList<>(height);
+            ArrayList<ArrayList<Block>> column = new ArrayList<>(height);
             for (int j = 0; j < height; j++) {
                 column.add(new ArrayList<>(Collections.nCopies(StaticPlaneContainer.layers, null)));
             }
@@ -29,7 +29,7 @@ class LocalPlaneContainerImplTest {
     @Test
     void getBlockAt() {
         var grid = getDummyGrid();
-        BlockType block = Mockito.mock(BlockType.class);
+        Block block = Mockito.mock(Block.class);
         grid.get(zeroX).get(zeroY).set(0, block);
         LocalPlaneContainer container = new LocalPlaneContainerImpl(zeroX, zeroY, grid);
         assertEquals(block, container.getBlockAt(0, 0, 0));

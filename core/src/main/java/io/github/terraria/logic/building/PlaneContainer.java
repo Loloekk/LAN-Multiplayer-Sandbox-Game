@@ -17,12 +17,12 @@ public abstract class PlaneContainer {
         this.bodyFactory = bodyFactory;
     }
 
-    public abstract BlockType getBlockAt(int x, int y, int layer);
-    public BlockType getBlockAt(IntVector2 loc, int layer) {
+    public abstract Block getBlockAt(int x, int y, int layer);
+    public Block getBlockAt(IntVector2 loc, int layer) {
         return getBlockAt(loc.x(), loc.y(), layer);
     }
-    public abstract BlockType getFrontBlockAt(int x, int y);
-    public BlockType getFrontBlockAt(IntVector2 loc) {
+    public abstract Block getFrontBlockAt(int x, int y);
+    public Block getFrontBlockAt(IntVector2 loc) {
         return getFrontBlockAt(loc.x(), loc.y());
     }
     // Współrzędnie Bodies konsekwencją położenia w tym kontenerze.
@@ -30,18 +30,18 @@ public abstract class PlaneContainer {
     public PhysicalBlock getPhysicalAt(IntVector2 loc) {
         return getPhysicalAt(loc.x(), loc.y());
     }
-    public abstract boolean placeBlockAt(int x, int y, BlockType block);
-    public boolean placeBlockAt(IntVector2 loc, BlockType block) {
+    public abstract boolean placeBlockAt(int x, int y, Block block);
+    public boolean placeBlockAt(IntVector2 loc, Block block) {
         return placeBlockAt(loc.x(), loc.y(), block);
     }
     // Ignores body if block not physical.
-    public abstract boolean placeBlockAt(int x, int y, BlockType block, Body body);
-    public boolean placeBlockAt(IntVector2 loc, BlockType block, Body body) {
+    public abstract boolean placeBlockAt(int x, int y, Block block, Body body);
+    public boolean placeBlockAt(IntVector2 loc, Block block, Body body) {
         return placeBlockAt(loc.x(), loc.y(), block, body);
     }
     // Zdejmuje z wierzchniej warstwy.
-    public abstract BlockType removeFrontBlockAt(int x, int y);
-    public BlockType removeFrontBlockAt(IntVector2 loc) {
+    public abstract Block removeFrontBlockAt(int x, int y);
+    public Block removeFrontBlockAt(IntVector2 loc) {
         return removeFrontBlockAt(loc.x(), loc.y());
     }
     public abstract LocalPlaneContainer getLocal(RectangleNeighbourhood neighbourhood);

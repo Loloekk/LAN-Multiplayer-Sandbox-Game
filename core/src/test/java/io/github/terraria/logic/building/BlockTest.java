@@ -1,11 +1,10 @@
 package io.github.terraria.logic.building;
 
-import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-class BlockTypeTest {
+class BlockTest {
     static final int idMin = 0, idMax = 10;
-    BlockType block;
+    Block block;
 
     void createBody(int id) {
 /*

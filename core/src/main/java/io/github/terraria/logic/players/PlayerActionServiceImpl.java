@@ -3,7 +3,7 @@ package io.github.terraria.logic.players;
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.logic.GameState;
 import io.github.terraria.logic.IntVector2;
-import io.github.terraria.logic.building.BlockType;
+import io.github.terraria.logic.building.Block;
 
 public class PlayerActionServiceImpl extends PlayerActionService {
     public PlayerActionServiceImpl(GameState gameState) {
@@ -16,7 +16,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
             return;
 
         {
-            BlockType block = gameState.grid().removeFrontBlockAt(IntVector2.toInt(loc));
+            Block block = gameState.grid().removeFrontBlockAt(IntVector2.toInt(loc));
             if (block != null) {
                 // Dodaj do ekwipunku (albo ustaw na mapie do zebrania).
                 return;
@@ -32,7 +32,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
     }
 
     @Override
-    public void specialAt(PhysicalPlayer physicalPlayer, BlockType block, Vector2 loc) {
+    public void specialAt(PhysicalPlayer physicalPlayer, Block block, Vector2 loc) {
         if(!loc.epsilonEquals(physicalPlayer.body().getPosition(), (float) rangeRadius))
             return;
 

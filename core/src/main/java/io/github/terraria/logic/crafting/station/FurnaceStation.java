@@ -3,8 +3,6 @@ package io.github.terraria.logic.crafting.station;
 import io.github.terraria.logic.ItemHolder;
 import io.github.terraria.logic.crafting.Recipe;
 
-import java.util.List;
-
 public class FurnaceStation implements CraftingStation {
     private int coal;
 
@@ -25,10 +23,5 @@ public class FurnaceStation implements CraftingStation {
         }
         coal -= recipe.getOutput().getAmount();
         return recipe.craft(inventory);
-    }
-
-    @Override
-    public int id() {
-        return 0;
     }
 }

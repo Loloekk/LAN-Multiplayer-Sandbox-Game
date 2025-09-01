@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class LocalPlaneContainerImpl implements LocalPlaneContainer {
     // [width][height][layer] dla lokalności dostępu.
     private final int zeroX, zeroY;
-    private final ArrayList<ArrayList<ArrayList<BlockType>>> grid;
-    LocalPlaneContainerImpl(int zeroX, int zeroY, ArrayList<ArrayList<ArrayList<BlockType>>> grid) {
+    private final ArrayList<ArrayList<ArrayList<Block>>> grid;
+    LocalPlaneContainerImpl(int zeroX, int zeroY, ArrayList<ArrayList<ArrayList<Block>>> grid) {
         this.zeroX = zeroX;
         this.zeroY = zeroY;
         this.grid = grid;
@@ -25,7 +25,7 @@ public class LocalPlaneContainerImpl implements LocalPlaneContainer {
     }
 
     @Override
-    public BlockType getBlockAt(int x, int y, int layer) {
+    public Block getBlockAt(int x, int y, int layer) {
         return grid.get(x + zeroX).get(y + zeroY).get(layer);
     }
 }

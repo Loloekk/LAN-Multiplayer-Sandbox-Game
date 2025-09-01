@@ -1,10 +1,7 @@
 package io.github.terraria.logic.crafting.station;
 
 import io.github.terraria.logic.ItemHolder;
-import io.github.terraria.logic.crafting.Ingredient;
 import io.github.terraria.logic.crafting.Recipe;
-
-import java.util.List;
 
 public class WorkBenchStation implements CraftingStation {
 
@@ -24,10 +21,5 @@ public class WorkBenchStation implements CraftingStation {
             return false;
         }
         return recipe.craft(inventory);
-    }
-
-    @Override
-    public int id() {
-        return 0;
     }
 }

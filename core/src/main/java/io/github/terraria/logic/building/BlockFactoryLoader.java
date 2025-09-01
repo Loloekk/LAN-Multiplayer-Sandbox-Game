@@ -8,15 +8,15 @@ import java.util.Map;
 public class BlockFactoryLoader {
     private final BlockFactory blockFactory;
     public BlockFactoryLoader() {
-        final Map<Integer, BlockProperties> propertiesMap = new HashMap<>();
+        final Map<Integer, BlockType> propertiesMap = new HashMap<>();
         JsonLoader.loadJson("/blocks.json", obj -> {
+            int id = obj.get("id").getAsInt();
             final boolean isPhysical = obj.has("isPhysical");
             int layer = 1;
             if(isPhysical || obj.get("layer").getAsInt() == 0)
                 layer = 0;
-            BlockProperties properties = new BlockProperties(isPhysical, layer,
-                obj.get("name").getAsString());
-            propertiesMap.put(obj.get("id").getAsInt(), properties);
+            BlockType properties = new BlockType(id, obj.get("name").getAsString(), isPhysical, layer);
+            propertiesMap.put(id, properties);
         });
         blockFactory = new BlockFactory(propertiesMap);
     }

@@ -6,8 +6,8 @@ public interface LocalPlaneContainer {
     int getWidth();
     int getHeight();
     // Współrzędne z modelu globalne.
-    BlockType getBlockAt(int x, int y, int layer);
-    default BlockType getBlockAt(IntVector2 loc, int layer) {
+    Block getBlockAt(int x, int y, int layer);
+    default Block getBlockAt(IntVector2 loc, int layer) {
         return getBlockAt(loc.x(), loc.y(), layer);
     }
 }

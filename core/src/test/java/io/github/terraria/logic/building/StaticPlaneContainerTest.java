@@ -23,10 +23,10 @@ class StaticPlaneContainerTest {
     final int zeroX = 5;
     final int zeroY = 5;
 
-    ArrayList<ArrayList<ArrayList<BlockType>>> getDummyGrid() {
-        ArrayList<ArrayList<ArrayList<BlockType>>> grid = new ArrayList<>(width);
+    ArrayList<ArrayList<ArrayList<Block>>> getDummyGrid() {
+        ArrayList<ArrayList<ArrayList<Block>>> grid = new ArrayList<>(width);
         for(int i = 0; i < width; i++) {
-            ArrayList<ArrayList<BlockType>> column = new ArrayList<>(height);
+            ArrayList<ArrayList<Block>> column = new ArrayList<>(height);
             for (int j = 0; j < height; j++) {
                 column.add(new ArrayList<>(Collections.nCopies(StaticPlaneContainer.layers, null)));
             }
@@ -37,16 +37,16 @@ class StaticPlaneContainerTest {
 
     StaticPlaneContainerBuilder getBuilder() {
         BlockFactory blockFactory = Mockito.mock(BlockFactory.class);
-        Mockito.when(blockFactory.create(1)).thenReturn(Mockito.mock(BlockType.class));
+        Mockito.when(blockFactory.create(1)).thenReturn(Mockito.mock(Block.class));
         return new StaticPlaneContainerBuilder().blockFactory(blockFactory).bodyFactory(bodyFactory).width(width).height(height).zeroX(zeroX).zeroY(zeroY).world(world);
     }
 
     @Test
     void checkBodyCreation() {
         var grid = getDummyGrid();
-        BlockType block = Mockito.mock(BlockType.class);
+        Block block = Mockito.mock(Block.class);
         grid.get(zeroX).get(zeroY).set(0, block);
-        Mockito.when(block.isPhysical()).thenReturn(true);
+        // Mockito.when(block.isPhysical()).thenReturn(true);
         getBuilder().savedGrid(grid).build();
         Mockito.verify(bodyFactory, Mockito.times(1))
             .create(block, world, new IntVector2(0, 0));
@@ -55,7 +55,7 @@ class StaticPlaneContainerTest {
     @Test
     void conversionTest() {
         var grid = getDummyGrid();
-        BlockType block = Mockito.mock(BlockType.class);
+        Block block = Mockito.mock(Block.class);
         grid.get(zeroX).get(zeroY).set(0, block);
         PlaneContainer container = getBuilder().savedGrid(grid).build();
         assertEquals(block, container.getBlockAt(0, 0, 0));
@@ -64,7 +64,7 @@ class StaticPlaneContainerTest {
     @Test
     void getFrontBlockAtTest() {
         var grid = getDummyGrid();
-        BlockType block = Mockito.mock(BlockType.class);
+        Block block = Mockito.mock(Block.class);
         grid.get(zeroX).get(zeroY).set(1, block);
         PlaneContainer container = getBuilder().savedGrid(grid).build();
         assertEquals(block, container.getFrontBlockAt(0, 0));
@@ -73,7 +73,7 @@ class StaticPlaneContainerTest {
     @Test
     void getPhysicalNoFrontBlockTest() {
         var grid = getDummyGrid();
-        BlockType block = Mockito.mock(BlockType.class);
+        Block block = Mockito.mock(Block.class);
         grid.get(zeroX).get(zeroY).set(1, block);
         PlaneContainer container = getBuilder().savedGrid(grid).build();
         assertNull(container.getPhysicalAt(0, 0));
@@ -82,10 +82,10 @@ class StaticPlaneContainerTest {
     @Test
     void getPhysicalAtTest() {
         var grid = getDummyGrid();
-        BlockType block = Mockito.mock(BlockType.class);
+        Block block = Mockito.mock(Block.class);
         grid.get(zeroX).get(zeroY).set(0, block);
 
-        Mockito.when(block.isPhysical()).thenReturn(true);
+        // Mockito.when(block.isPhysical()).thenReturn(true);
         Box2DBody body = Mockito.mock(Box2DBody.class);
         Mockito.when(bodyFactory.create(block, world, new IntVector2(0, 0))).thenReturn(body);
 
@@ -96,20 +96,20 @@ class StaticPlaneContainerTest {
     @Test
     void placeBlockAtOccupiedTest() {
         var grid = getDummyGrid();
-        BlockType block = Mockito.mock(BlockType.class);
+        Block block = Mockito.mock(Block.class);
         grid.get(zeroX).get(zeroY).set(0, block);
 
         PlaneContainer container = getBuilder().savedGrid(grid).build();
-        BlockType otherBlock = Mockito.mock(BlockType.class);
-        Mockito.when(otherBlock.getLayer()).thenReturn(0);
+        Block otherBlock = Mockito.mock(Block.class);
+        // Mockito.when(otherBlock.getLayer()).thenReturn(0);
         assertFalse(container.placeBlockAt(0, 0, otherBlock));
     }
 
     @Test
     void placeBlockAtTest() {
-        BlockType block = Mockito.mock(BlockType.class);
-        Mockito.when(block.isPhysical()).thenReturn(true);
-        Mockito.when(block.getLayer()).thenReturn(0);
+        Block block = Mockito.mock(Block.class);
+        // Mockito.when(block.isPhysical()).thenReturn(true);
+        // Mockito.when(block.getLayer()).thenReturn(0);
         Box2DBody body = Mockito.mock(Box2DBody.class);
         Mockito.when(bodyFactory.create(block, world, new IntVector2(0, 0))).thenReturn(body);
 
@@ -118,7 +118,7 @@ class StaticPlaneContainerTest {
         assertEquals(new PhysicalBlock(block, body), container.getPhysicalAt(0, 0));
     }
 
-    PlaneContainer prepareRemoveFrontBlockAtTest(ArrayList<BlockType> point) {
+    PlaneContainer prepareRemoveFrontBlockAtTest(ArrayList<Block> point) {
         var grid = getDummyGrid();
         grid.get(zeroX).set(zeroY, point);
         return getBuilder().savedGrid(grid).build();
@@ -126,14 +126,14 @@ class StaticPlaneContainerTest {
 
     @Test
     void removeFrontBlockAtTest() {
-        var point = new ArrayList<>(List.of(Mockito.mock(BlockType.class), Mockito.mock(BlockType.class)));
+        var point = new ArrayList<>(List.of(Mockito.mock(Block.class), Mockito.mock(Block.class)));
         PlaneContainer container = prepareRemoveFrontBlockAtTest(point);
         assertEquals(point.get(0), container.removeFrontBlockAt(0, 0));
     }
 
     @Test
     void removeFrontBlockAtBlockLeftTest() {
-        var point = new ArrayList<>(List.of(Mockito.mock(BlockType.class), Mockito.mock(BlockType.class)));
+        var point = new ArrayList<>(List.of(Mockito.mock(Block.class), Mockito.mock(Block.class)));
         PlaneContainer container = prepareRemoveFrontBlockAtTest(point);
         container.removeFrontBlockAt(0, 0);
         assertEquals(point.get(1), container.getFrontBlockAt(0, 0));
@@ -142,9 +142,9 @@ class StaticPlaneContainerTest {
     @Test
     void removeFrontBlockAtDestroyBodyTest() {
         PlaneContainer container = getBuilder().build();
-        BlockType block = Mockito.mock(BlockType.class);
-        Mockito.when(block.isPhysical()).thenReturn(true);
-        Mockito.when(block.getLayer()).thenReturn(0);
+        Block block = Mockito.mock(Block.class);
+        // Mockito.when(block.isPhysical()).thenReturn(true);
+        // Mockito.when(block.getLayer()).thenReturn(0);
         Box2DBody body = Mockito.mock(Box2DBody.class);
         Mockito.when(bodyFactory.create(block, world, new IntVector2(0, 0))).thenReturn(body);
         container.placeBlockAt(0, 0, block);
@@ -155,8 +155,8 @@ class StaticPlaneContainerTest {
     @Test
     void getLocalConversionTest() {
         PlaneContainer container = getBuilder().build();
-        BlockType block = Mockito.mock(BlockType.class);
-        Mockito.when(block.getLayer()).thenReturn(0);
+        Block block = Mockito.mock(Block.class);
+        // Mockito.when(block.getLayer()).thenReturn(0);
         final int a = 0, b = 0;
         container.placeBlockAt(a, b, block);
 
@@ -169,8 +169,8 @@ class StaticPlaneContainerTest {
     @Test
     void getLocalLeftBottomInclusiveTest() {
         PlaneContainer container = getBuilder().build();
-        BlockType block = Mockito.mock(BlockType.class);
-        Mockito.when(block.getLayer()).thenReturn(0);
+        Block block = Mockito.mock(Block.class);
+        // Mockito.when(block.getLayer()).thenReturn(0);
         container.placeBlockAt(0, 0, block);
 
         RectangleNeighbourhood rectangle = new RectangleNeighbourhood(0.5f, 0.6f, width - zeroX, height - zeroY);
