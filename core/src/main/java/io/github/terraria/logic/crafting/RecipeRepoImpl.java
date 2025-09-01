@@ -28,7 +28,7 @@ public class RecipeRepoImpl implements RecipeRepo {
             }
 
             JsonObject outObj = obj.getAsJsonObject("output");
-            String outName = outObj.get("item").getAsString();
+            String outName = outObj.get("name").getAsString();
             int outAmount = outObj.get("amount").getAsInt();
             Ingredient output = new Ingredient(itemRegistry.get(outName), outAmount);
 
