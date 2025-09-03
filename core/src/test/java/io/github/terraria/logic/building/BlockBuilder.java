@@ -7,7 +7,7 @@ class BlockBuilder {
     int layer = 0;
     BlockBuilder isPhysical(boolean isPhysical) {
         this.isPhysical = isPhysical;
-        this.layer = 0;
+        // this.layer = 0; No longer necessary thanks to post-constructor.
         return this;
     }
     BlockBuilder layer(int layer) {

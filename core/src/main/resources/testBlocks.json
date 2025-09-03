@@ -1,0 +1,16 @@
+[
+  {
+    "id": 2,
+    "name": "Dirt",
+    "layer": 1,
+    "isPhysical": 1
+  },
+  {
+    "id": 4,
+    "name": "Decoration",
+    "isPhysical": 1,
+    "fixture": {
+      "width": 0.9
+    }
+  }
+]
