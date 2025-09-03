@@ -10,5 +10,8 @@ public record PhysicalPlayer(Player player, Body body) {
     public IntVector2 getIntegerPosition() {
         Vector2 pos = body.getPosition();
         return new IntVector2((int) pos.x, (int) pos.y);
+    }public Vector2 getPosition() {
+        Vector2 pos = body.getPosition();
+        return new Vector2(pos.x, pos.y);
     }
 }

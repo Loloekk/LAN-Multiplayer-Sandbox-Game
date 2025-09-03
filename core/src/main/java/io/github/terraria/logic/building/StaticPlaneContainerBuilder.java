@@ -56,7 +56,7 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
             for (int j = 0; j < height; j++) {
                 ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
                 {
-                    Block frontBlock = (j < zeroY) ? blockFactory.create("Stone") : null;
+                    Block frontBlock = (j < zeroY) ? blockFactory.create("Stone") : blockFactory.create("Air");
                     point.add(frontBlock);
                 }
                 point.add(null);
@@ -80,7 +80,8 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
         if(zeroX < 0 || zeroX >= width || zeroY < 0 || zeroY >= height || world == null)
             return null;
         // The above implies positivity of width and height.
-        world.createBoundaries(width, height, -zeroX, -zeroY);
+        world.createBoundaries(width, height, 0, 0);
+//        world.createBoundaries();
         if(bodyFactory == null)
             bodyFactory = new BodyFactoryLoader().getBodyFactory();
         if(savedGrid == null)

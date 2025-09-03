@@ -14,6 +14,7 @@ import io.github.terraria.logic.physics.*;
 import io.github.terraria.logic.players.*;
 import io.github.terraria.view.Scene;
 
+import java.lang.reflect.Array;
 import java.util.concurrent.*;
 import java.util.*;
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class GameServer {
         world = new Box2DWorld(new Vector2(0, -10), true);
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
         builder.world(world);
-        builder.width(1000).height(80).zeroX(500).zeroY(40);
+        builder.width(20).height(10).zeroX(0).zeroY(5);
         PlaneContainer planeContainer = builder.build();
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()));
         System.out.println("Plane container " + planeContainer);
@@ -53,7 +54,7 @@ public class GameServer {
 
 
         spawnRegistry = new SpawnRegistryMap(new HashMap<>());
-        playerRegistry = new PlayerRegistryList(spawnRegistry, new ArrayList<>(), new Vector2(1f, 1f));
+        playerRegistry = new PlayerRegistryList(spawnRegistry, new ArrayList<>(), new Vector2(3f, 3f));
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers());
         actionService = new PlayerActionServiceImpl(gameState);
 
@@ -92,9 +93,15 @@ public class GameServer {
             broadcastScenes();
         }, 0, 20, TimeUnit.MILLISECONDS);
 
-        System.out.println("Server started on TCP=" + Network.TCP_PORT + ", UDP=" + Network.UDP_PORT);
-
+//        for(int j = 4; j >=-5; j --)
+//        {
+//            for(int i = 0; i < 20 ;i ++)
+//                System.out.print(gameState.grid().getFrontBlockAt(i,j)+ " ");
+//            System.out.println();
+//        }
+//        ArrayList<ArrayList<ArrayList>> Wejscie = GameState.grid.
         new CountDownLatch(1).await();
+            System.out.println("Server started on TCP=" + Network.TCP_PORT + ", UDP=" + Network.UDP_PORT);
     }
 
 
@@ -113,7 +120,7 @@ public class GameServer {
     }
 
     public void handlePhysics() {
-        float timeStep = 1f / 50f; // skoro ticki są co 20 ms → 50 Hz
+        float timeStep = 0.02f;
         int velocityIterations = 6;
         int positionIterations = 2;
         world.step(timeStep,velocityIterations,positionIterations);
@@ -131,8 +138,8 @@ public class GameServer {
 //                conn.sendUDP(scene);
                 Network.PlayerState pla = new Network.PlayerState();
                 pla.id = id;
-                pla.x = gameState.activePlayers().get(id).getIntegerPosition().x();
-                pla.y = gameState.activePlayers().get(id).getIntegerPosition().y();
+                pla.x = gameState.activePlayers().get(id).getPosition().x;
+                pla.y = gameState.activePlayers().get(id).getPosition().y;
 //                for(players : gameState.activePlayers()
                 conn.sendUDP(pla);
             }
