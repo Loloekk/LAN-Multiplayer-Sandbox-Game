@@ -6,6 +6,11 @@
     "isPhysical": 1
   },
   {
+    "id": 3,
+    "name": "Water",
+    "layer": 1
+  },
+  {
     "id": 4,
     "name": "Decoration",
     "isPhysical": 1,
