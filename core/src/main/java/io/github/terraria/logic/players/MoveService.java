@@ -7,13 +7,16 @@ public class MoveService {
     public enum Direction {
         right, left
     }
-    private static final float MOVE_IMPULSE_X = 0.8f;
+    // TODO: Consider loading constants from config file and making MoveService instance dependent.
+    private static final float MOVE_IMPULSE_X = 1f;
+    private static final float MAX_VELOCITY_X = 5f;
     private static Vector2 getMoveImpulse(Direction direction) {
         return new Vector2(direction == Direction.right ? MOVE_IMPULSE_X : -MOVE_IMPULSE_X, 0f);
     }
     public static void movePlayer(PhysicalPlayer player, Direction direction) {
         Body body = player.body();
-        body.applyLinearImpulse(MoveService.getMoveImpulse(direction));
+        if (Math.abs(body.getLinearVelocity().x) < MAX_VELOCITY_X)
+            body.applyLinearImpulse(MoveService.getMoveImpulse(direction));
     }
     private static final Vector2 JUMP_IMPULSE = new Vector2(0f, 5f);
     // Trzeba będzie pewnie pamiętać czas od opuszczenia ziemi, żeby móc jakieś bardziej skomplikowane skoki robić np.

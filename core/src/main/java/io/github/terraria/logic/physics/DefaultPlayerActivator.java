@@ -11,7 +11,7 @@ public class DefaultPlayerActivator extends PlayerActivator {
     }
 
     private static final PlayerFixture playerFixture = new PlayerFixture(1f, 2f,
-        2f, 0.4f, 0.6f, new Vector2());
+        2f, 0.9f, 0.1f, new Vector2());
 
     @Override
     protected Body getNewPlayerBody(Vector2 spawnPosition) {

@@ -1,8 +1,8 @@
 package io.github.terraria.logic.physics;
 
 public record BlockFixture(float width, float height, float friction, float restitution) {
-    static final float defaultFriction = 0.4f;
-    static final float defaultRestitution = 0.6f;
+    static final float defaultFriction = 0.9f;
+    static final float defaultRestitution = 0.1f;
     public BlockFixture {
         if(width == 0f)
             width = 1f;
