@@ -12,23 +12,22 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RecipeRepoImplTest {
-    private static ItemRegistry itemRegistry;
+    private static RecipeRepoImpl recipeRepo;
 
     @BeforeAll
     static void setup() {
         BlockFactory blockFactory = new BlockFactoryLoader("testBlocks.json").getBlockFactory();
-        itemRegistry = new ItemRegistry(blockFactory);
+        ItemRegistry itemRegistry = new ItemRegistry(blockFactory);
+        recipeRepo = new RecipeRepoImpl(itemRegistry, "/testRecipes.json");
     }
 
     @Test
     void constructorTest() {
-        RecipeRepoImpl recipeRepo = new RecipeRepoImpl(itemRegistry);
         assertNotNull(recipeRepo);
     }
 
     @Test
     void getAllRecipeTest() {
-        RecipeRepoImpl recipeRepo = new RecipeRepoImpl(itemRegistry);
         List<Recipe> recipes = recipeRepo.getAll();
         assertFalse(recipes.isEmpty());
         assertEquals("Stone", recipes.get(0).getOutput().getItem().type().name());
@@ -36,7 +35,6 @@ class RecipeRepoImplTest {
 
     @Test
     void getByIdRecipeTest() {
-        RecipeRepoImpl recipeRepo = new RecipeRepoImpl(itemRegistry);
         Recipe recipe = recipeRepo.getById(1);
         assertEquals("Stone", recipe.getOutput().getItem().type().name());
         assertNull(recipeRepo.getById(999));
@@ -44,7 +42,6 @@ class RecipeRepoImplTest {
 
     @Test
     void findByStationTest() {
-        RecipeRepoImpl recipeRepo = new RecipeRepoImpl(itemRegistry);
         List<Recipe> recipes = recipeRepo.findByStation(StationType.WORKBENCH);
         assertEquals("Stone", recipes.get(0).getOutput().getItem().type().name());
     }

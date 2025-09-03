@@ -12,9 +12,10 @@ import java.util.List;
 
 public class RecipeRepoImpl implements RecipeRepo {
     final private List<Recipe> all;
-    public RecipeRepoImpl(ItemRegistry itemRegistry) {
+
+    public RecipeRepoImpl(ItemRegistry itemRegistry, String path) {
         all = new ArrayList<>();
-        JsonLoader.loadJson("/recipes.json", obj -> {
+        JsonLoader.loadJson(path, obj -> {
             int id = obj.get("id").getAsInt();
 
             List<Ingredient> ingredients = new ArrayList<>();
@@ -35,6 +36,10 @@ public class RecipeRepoImpl implements RecipeRepo {
 
             all.add(new Recipe(id, ingredients, output, station));
         });
+    }
+
+    public RecipeRepoImpl(ItemRegistry itemRegistry) {
+        this(itemRegistry, "/recipes.json");
     }
     @Override
     public List<Recipe> getAll() {
