@@ -74,14 +74,13 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
         if(height == null)
             height = StaticPlaneContainer.DEFAULT_HEIGHT;
         if(zeroX == null)
-            zeroX = width / 2;
+            zeroX = 0;
         if(zeroY == null)
-            zeroY = height / 2;
+            zeroY = 0;
         if(zeroX < 0 || zeroX >= width || zeroY < 0 || zeroY >= height || world == null)
             return null;
         // The above implies positivity of width and height.
-        world.createBoundaries(width, height, 0, 0);
-//        world.createBoundaries();
+        world.createBoundaries(width, height, -zeroX, -zeroY);
         if(bodyFactory == null)
             bodyFactory = new BodyFactoryLoader().getBodyFactory();
         if(savedGrid == null)
