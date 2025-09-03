@@ -1,32 +1,27 @@
 package io.github.terraria.logic.physics;
 
-import com.google.gson.JsonObject;
-import io.github.terraria.logic.JsonLoader;
-import java.util.HashMap;
+import io.github.terraria.logic.RecordLoader;
+
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BodyFactoryLoader {
-    private static final float defaultFriction = 0.4f;
-    private static final float defaultRestitution = 0.6f;
-    private static float getOrDefault(JsonObject obj, String key, float defaultValue) {
-        return obj.has(key) ? obj.get(key).getAsFloat() : defaultValue;
-    }
-
     private final BodyFactory bodyFactory;
-    public BodyFactoryLoader() {
-        final Map<Integer, BlockFixture> fixtureMap = new HashMap<>();
-        JsonLoader.loadJson("/blocks.json", obj -> {
-            // Clean up explicit constants?
-            if(obj.has("isPhysical")) {
-                int id = obj.get("id").getAsInt();
-                float width = getOrDefault(obj, "width", 1f);
-                float height = getOrDefault(obj, "height", 1f);
-                float friction = getOrDefault(obj, "friction", defaultFriction);
-                float restitution = getOrDefault(obj, "restitution", defaultRestitution);
-                fixtureMap.put(id, new BlockFixture(width, height, friction, restitution));
+    public BodyFactoryLoader(String jsonName) {
+        record BlockFixtureId(int id, boolean isPhysical, BlockFixture fixture) {
+            BlockFixtureId {
+                if(isPhysical && fixture == null)
+                    fixture = new BlockFixture();
             }
-        });
-        bodyFactory = new BodyFactory(fixtureMap);
+        }
+        var list = RecordLoader.loadList(jsonName, BlockFixtureId.class);
+        Map<Integer, BlockFixture> map = list.stream()
+            .filter(b -> b.isPhysical)
+            .collect(Collectors.toMap(BlockFixtureId::id, BlockFixtureId::fixture));
+        bodyFactory = new BodyFactory(map);
+    }
+    public BodyFactoryLoader() {
+        this("blocks.json");
     }
 
     public BodyFactory getBodyFactory() {

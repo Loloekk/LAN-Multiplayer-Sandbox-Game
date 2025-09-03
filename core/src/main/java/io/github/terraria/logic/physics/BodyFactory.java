@@ -8,7 +8,7 @@ import java.util.Map;
 public class BodyFactory {
     // Większość bloków to będzie pełny kwadrat.
     // Część bloków jest niefizyczna, null tutaj musi być zwracany.
-    private final Map<Integer, BlockFixture> map;
+    final Map<Integer, BlockFixture> map;
     public BodyFactory(Map<Integer, BlockFixture> map) { this.map = map; }
     public Body create(Block block, World world, IntVector2 intVector2) {
         // Necessary to center the block in the cell.

@@ -7,23 +7,24 @@
     {
       "id": 1,
       "name": "Stone",
-      "layer": 0,
-      "isPhysical": {}
+      "isPhysical": 1
     },
     {
       "id": 2,
       "name": "Dirt",
-      "layer": 0,
-      "isPhysical": {}
+      "isPhysical": 1
     },
     {
       "id": 3,
       "name": "Water",
-      "layer": 1
+      "layer": 0
     },
     {
       "id": 4,
       "name": "Decoration",
-      "layer": 1
+      "isPhysical": 1,
+      "fixture": {
+        "width": 0.9
+      }
     }
 ]
