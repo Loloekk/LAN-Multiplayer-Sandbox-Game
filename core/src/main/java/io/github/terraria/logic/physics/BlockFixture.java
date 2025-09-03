@@ -13,4 +13,5 @@ public record BlockFixture(float width, float height, float friction, float rest
         if(restitution == 0f)
             restitution = defaultRestitution;
     }
+    public BlockFixture() { this(0f, 0f, 0f, 0f); }
 }
