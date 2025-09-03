@@ -1,16 +1,18 @@
 package io.github.terraria.logic;
 
+import io.github.terraria.logic.building.BlockFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class ItemRegistry {
-    private final Map<String, Item> items = new HashMap<>();
+    BlockFactory blockFactory;
 
-    public void register(Item item) {
-        items.put(item.type().name(), item);
+    public ItemRegistry(BlockFactory blockFactory) {
+        this.blockFactory = blockFactory;
     }
 
-    public Item get(String name) {
-        return items.get(name);
+    public Item create(String name) {
+        return blockFactory.create(name);
     }
 }

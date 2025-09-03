@@ -12,9 +12,8 @@ import java.util.List;
 
 public class RecipeRepoImpl implements RecipeRepo {
     final private List<Recipe> all;
-    public RecipeRepoImpl() {
+    public RecipeRepoImpl(ItemRegistry itemRegistry) {
         all = new ArrayList<>();
-        ItemRegistry itemRegistry = new ItemRegistry(); // fix
         JsonLoader.loadJson("/recipes.json", obj -> {
             int id = obj.get("id").getAsInt();
 
@@ -23,16 +22,16 @@ public class RecipeRepoImpl implements RecipeRepo {
                 JsonObject ingrObj = el.getAsJsonObject();
                 String itemName = ingrObj.get("name").getAsString();
                 int amount = ingrObj.get("amount").getAsInt();
-                Item item = itemRegistry.get(itemName);
+                Item item = itemRegistry.create(itemName);
                 ingredients.add(new Ingredient(item, amount));
             }
 
             JsonObject outObj = obj.getAsJsonObject("output");
             String outName = outObj.get("name").getAsString();
             int outAmount = outObj.get("amount").getAsInt();
-            Ingredient output = new Ingredient(itemRegistry.get(outName), outAmount);
+            Ingredient output = new Ingredient(itemRegistry.create(outName), outAmount);
 
-            StationType station = StationType.valueOf(outObj.get("station").getAsString());
+            StationType station = StationType.valueOf(obj.get("station").getAsString());
 
             all.add(new Recipe(id, ingredients, output, station));
         });

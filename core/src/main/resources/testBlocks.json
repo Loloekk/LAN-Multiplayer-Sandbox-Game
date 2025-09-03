@@ -17,5 +17,10 @@
     "fixture": {
       "width": 0.9
     }
+  },
+  {
+    "id": 5,
+    "name": "Stone",
+    "isPhysical": 1
   }
 ]
