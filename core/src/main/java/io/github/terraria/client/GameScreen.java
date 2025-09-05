@@ -93,11 +93,8 @@ public class GameScreen implements Screen {
         licz ++;
         if(licz%120 == 0)
         {
-            for(int j = 4; j >=-5; j --) {
-                for (int i = 0; i < 10; i++)
-                    System.out.print(playerData.getBlockId(i,j,0));
-            System.out.println();
-            }
+            playerData.throwTrash();
+            licz = 0;
         }
     }
 

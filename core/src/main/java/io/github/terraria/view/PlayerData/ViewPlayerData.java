@@ -3,16 +3,20 @@ package io.github.terraria.view.PlayerData;
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.controler.Network.Network;
 import io.github.terraria.controler.Network.PacketPlayerDisappear;
+import io.github.terraria.controler.PlayerNetworkData.BlockState;
+import io.github.terraria.controler.PlayerNetworkData.Chunk;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 
+import static java.lang.Math.abs;
+
 
 public class ViewPlayerData {
-    public static int CHUNK_WIDTH_RADIUS = 3;
-    public static int CHUNK_HEIGHT_RADIUS = 2;
+    public static int CHUNK_WIDTH_RADIUS = 6;
+    public static int CHUNK_HEIGHT_RADIUS = 4;
     private int playerId;
     private float x;
     private float y;
@@ -85,6 +89,28 @@ public class ViewPlayerData {
             playersList.add(entry.getValue());
         }
         return playersList;
+    }
+    public void throwTrash()
+    {
+        int X = ViewChunk.getX(x);
+        int Y = ViewChunk.getX(y);
+        List<Integer> chunksToDelete = new ArrayList<>();
+        for(ViewChunk chunk : chunks.values())
+        {
+            if(chunk.zeroX < X - CHUNK_WIDTH_RADIUS*ViewChunk.DEFAULT_WIDTH ||
+                chunk.zeroX > X + CHUNK_WIDTH_RADIUS*ViewChunk.DEFAULT_WIDTH ||
+                chunk.zeroY < Y - CHUNK_HEIGHT_RADIUS*ViewChunk.DEFAULT_HEIGHT ||
+                chunk.zeroY > Y + CHUNK_HEIGHT_RADIUS*ViewChunk.DEFAULT_HEIGHT
+            )
+            {
+                chunksToDelete.add(chunk.getId());
+            }
+        }
+        for(Integer chunkId : chunksToDelete)
+        {
+            chunks.remove(chunkId);
+        }
+
     }
 
 }
