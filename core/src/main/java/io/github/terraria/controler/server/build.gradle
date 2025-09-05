@@ -1,4 +1,4 @@
-package io.github.terraria.server
+package io.github.terraria.controler.server
 
 plugins {
   id 'java'

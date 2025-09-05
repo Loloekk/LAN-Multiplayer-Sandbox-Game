@@ -48,4 +48,9 @@ public class ActivePlayersMap implements ActivePlayers {
                 .collect(java.util.stream.Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         return new ActivePlayersMap(filteredMap);
     }
+    @Override
+    public Boolean isActive(int playersId)
+    {
+        return map.containsKey(playersId);
+    }
 }

@@ -1,7 +1,8 @@
-package io.github.terraria.common;
+package io.github.terraria.controler.Network;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
+import io.github.terraria.controler.PlayerNetworkData.BlockState;
 import io.github.terraria.view.DrawableRectangle;
 import io.github.terraria.view.Scene;
 
@@ -23,18 +24,9 @@ public class Network {
         kryo.register(Scene.class);
         kryo.register(DrawableRectangle.class);
         kryo.register(ArrayList.class);
+        kryo.register(BlockState.class);
+        kryo.register(PacketPlayerDisappear.class);
     }
-
-    // Client → Server: join request with player name
-    public static class PacketJoin {
-        public String name;
-    }
-    // Server → Client: join acknowledgement with assigned ID
-    public static class PacketJoinAck {
-        public int playerId;
-        public String name;
-    }
-    // Client → Server: input/movement
     public static class PacketInput {
         public int playerId;
         public float moveX, moveY;
@@ -42,7 +34,6 @@ public class Network {
     // Server → Client: state update
     public static class PacketState {
         public List<PlayerState> players;
-        public long timestamp;
     }
     // Individual player state
     public static class PlayerState {

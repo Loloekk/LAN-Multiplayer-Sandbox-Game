@@ -1,20 +1,19 @@
-package io.github.terraria.server;
+package io.github.terraria.controler.server;
 
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import io.github.terraria.common.Network;
+import io.github.terraria.controler.Network.Network;
+import io.github.terraria.controler.Network.PacketJoin;
+import io.github.terraria.controler.Network.PacketJoinAck;
+import io.github.terraria.controler.PlayerNetworkData.PlayerData;
 import io.github.terraria.logic.GameState;
-import io.github.terraria.logic.RectangleNeighbourhood;
-import io.github.terraria.logic.building.LocalPlaneContainer;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
 import io.github.terraria.logic.physics.*;
 import io.github.terraria.logic.players.*;
-import io.github.terraria.view.Scene;
 
-import java.lang.reflect.Array;
 import java.util.concurrent.*;
 import java.util.*;
 import java.io.IOException;
@@ -23,10 +22,7 @@ public class GameServer {
     private Server server;
     private ServerRenderer renderer;
     private final Map<Connection, Queue<Network.PacketInput>> inputQueues = new ConcurrentHashMap<>();
-    private final Map<Integer, Network.PlayerState> playerStates = new ConcurrentHashMap<>();
-    private final Map<Connection, Integer> connectionIds = new ConcurrentHashMap<>();
-    private volatile int nextPlayerId = 1;
-    private static final float VIEW_RADIUS = 300f;
+    private final Map<Connection, PlayerData> connectionIds = new ConcurrentHashMap<>();
 
     private GameState gameState;
     private World world;
@@ -46,11 +42,11 @@ public class GameServer {
         world = new Box2DWorld(new Vector2(0, -10), true);
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
         builder.world(world);
-        builder.width(20).height(10).zeroX(0).zeroY(5);
+        builder.width(27).height(20).zeroX(0).zeroY(10);
         PlaneContainer planeContainer = builder.build();
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()));
-        System.out.println("Plane container " + planeContainer);
-        System.out.println("Gamestate grid = " + gameState.grid());
+//        System.out.println("Plane container " + planeContainer);
+//        System.out.println("Gamestate grid = " + gameState.grid());
 
 
         spawnRegistry = new SpawnRegistryMap(new HashMap<>());
@@ -61,22 +57,24 @@ public class GameServer {
         server.addListener(new Listener() {
             @Override public void connected(Connection connection) {}
             @Override public void disconnected(Connection connection) {
-                Integer id = connectionIds.remove(connection);
+                Integer id = connectionIds.get(connection).getPlayerId();
+                connectionIds.remove(connection);
                 inputQueues.remove(connection);
-                if (id != null) playerStates.remove(id);
+                playerActivator.logoutPlayer(id);
+                System.out.println("Player " + id + " dissconected");
             }
             @Override public void received(Connection connection, Object obj) {
-                if (obj instanceof Network.PacketJoin) {
-                    Network.PacketJoin join = (Network.PacketJoin) obj;
+                if (obj instanceof PacketJoin join) {
                     Player pla = playerRegistry.registerPlayer();
                     int id = pla.getId();
+                    PlayerData playerState = new PlayerData(connection,gameState,id);
                     playerActivator.loginPlayer(id);
-                    connectionIds.put(connection, id);
+                    connectionIds.put(connection, playerState);
                     inputQueues.put(connection, new ConcurrentLinkedQueue<>());
 //                    Network.PlayerState ps = new Network.PlayerState();
 //                    ps.id = id; ps.x = 0; ps.y = 0; ps.name = join.name;
 //                    playerStates.put(id, ps);
-                    Network.PacketJoinAck ack = new Network.PacketJoinAck();
+                    PacketJoinAck ack = new PacketJoinAck();
                     ack.playerId = id; ack.name = join.name;
                     System.out.println("Player " + id + " dodany");
                     connection.sendTCP(ack);
@@ -109,7 +107,7 @@ public class GameServer {
         for (Queue<Network.PacketInput> queue : inputQueues.values()) {
             Network.PacketInput in;
             while ((in = queue.poll()) != null) {
-                System.out.println("Get moving " + in.moveX+ " "+ in.playerId);
+                //System.out.println("Get moving " + in.moveX+ " "+ in.playerId);
                 if(in.moveX > 0)
                     MoveService.movePlayer(gameState.activePlayers().get(in.playerId),MoveService.Direction.right);
                 else if (in.moveX < 0)
@@ -125,23 +123,17 @@ public class GameServer {
         int positionIterations = 2;
         world.step(timeStep,velocityIterations,positionIterations);
     }
-
+    int licz=0;
     private void broadcastScenes() {
         try {
-            for (Map.Entry<Connection, Integer> entry : connectionIds.entrySet()) {
-                Connection conn = entry.getKey();
-                int id = entry.getValue();
+            for (Map.Entry<Connection, PlayerData> entry : connectionIds.entrySet()) {
+                PlayerData playerState = entry.getValue();
 //                System.out.println("Sending scene to player " + id);
 //                System.out.println(gameState.grid() + " why?");
 //                LocalPlaneContainer plane = gameState.grid().getLocal(new RectangleNeighbourhood(new Vector2(-10f, -10f), new Vector2(10f, 10f)));
 //                Scene scene = renderer.renderScene(plane);
 //                conn.sendUDP(scene);
-                Network.PlayerState pla = new Network.PlayerState();
-                pla.id = id;
-                pla.x = gameState.activePlayers().get(id).getPosition().x;
-                pla.y = gameState.activePlayers().get(id).getPosition().y;
-//                for(players : gameState.activePlayers()
-                conn.sendUDP(pla);
+                playerState.actualize();
             }
         }catch (Exception e){
             e.printStackTrace();

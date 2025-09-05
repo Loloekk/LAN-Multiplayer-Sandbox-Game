@@ -66,7 +66,15 @@ public class StaticPlaneContainer extends PlaneContainer {
     // Best thin, so can be used efficiently in other methods.
     @Override
     public Block getBlockAt(int x, int y, int layer) {
-        return getPointAt(x, y).get(layer);
+        //TODO: blad przy pobiaraniu spoza granicy
+        try
+        {
+            return getPointAt(x, y).get(layer);
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 
     @Override

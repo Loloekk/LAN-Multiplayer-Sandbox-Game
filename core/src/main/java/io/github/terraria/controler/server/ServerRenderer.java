@@ -1,4 +1,4 @@
-package io.github.terraria.server;
+package io.github.terraria.controler.server;
 
 import io.github.terraria.logic.building.LocalPlaneContainer;
 import io.github.terraria.view.DrawableRectangle;

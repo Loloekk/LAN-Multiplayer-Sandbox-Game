@@ -4,32 +4,33 @@ package io.github.terraria.client;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
-import io.github.terraria.common.Network;
-import io.github.terraria.view.DrawableRectangle;
+import io.github.terraria.controler.Network.Network;
+import io.github.terraria.controler.Network.PacketJoin;
+import io.github.terraria.controler.Network.PacketJoinAck;
+import io.github.terraria.view.PlayerData.ViewPlayerData;
 import io.github.terraria.view.Renderer;
 import io.github.terraria.view.Scene;
+import io.github.terraria.view.SceneGenerator;
 import io.github.terraria.view.TextureBank;
 import com.badlogic.gdx.graphics.Color;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameScreen implements Screen {
     private Client client;
     private int playerId;
-
+    private ViewPlayerData playerData;
     private final Drop game;
     private final FitViewport viewport = new FitViewport(8, 5);
     private TextureBank textureBank;
     private Renderer renderer;
-    private Scene currentScene;
+    private Scene currentScene = new Scene();
     private final int PLAYER_TEXTURE;
     private final int STONE_TEXTURE;
 
@@ -41,24 +42,38 @@ public class GameScreen implements Screen {
         client.addListener(new Listener() {
             @Override
             public void received(com.esotericsoftware.kryonet.Connection c, Object obj) {
-                if (obj instanceof Network.PacketJoinAck) {
-                    Network.PacketJoinAck ack = (Network.PacketJoinAck)obj;
+                if (obj instanceof PacketJoinAck ack ) {
                     playerId = ack.playerId;
+                    playerData = new ViewPlayerData(client,playerId);
                     Gdx.app.log("GameScreen", "Joined as id=" + playerId + ", name=" + ack.name);
-                } else if (obj instanceof Scene scene) {
-                    Gdx.app.log("GameScreen", "Scene update");
-                    currentScene = scene;
-                } else if (obj instanceof Network.PlayerState pla)
+                }
+                else if (obj instanceof ArrayList list)
                 {
-                    Gdx.app.log("GameScreen", "Player position" + pla.x+" "+ pla.y);
-                    currentScene = new Scene();
-                    currentScene.objects.add(new DrawableRectangle(pla.x, pla.y, 1, 2, 0));
+                    if(playerData == null) {
+                        Gdx.app.log("communication error","XD");
+                    }
+                    for(Object objj : list)
+                    {
+                        System.out.println("mamy liste" + objj);
+                        playerData.actualize(objj);
+
+                    }
+//                    Gdx.app.log("GameScreen", "Player position" + pla.x+" "+ pla.y);
+//                    currentScene.objects.add(new DrawableRectangle(pla.x, pla.y, 1, 2, 0));
+                }
+                else {
+                    Gdx.app.log("GameScreen", "Scene update");
+                    if(playerData == null) {
+                        Gdx.app.log("communication error","XD");
+                    }
+                    playerData.actualize(obj);
+                    System.out.println(obj);
                 }
             }
         });
         try {
             client.connect(5000, "localhost", Network.TCP_PORT, Network.UDP_PORT);
-            Network.PacketJoin pj = new Network.PacketJoin();
+            PacketJoin pj = new PacketJoin();
             pj.name = "Gamer";
             client.sendTCP(pj);
         } catch (IOException e) {
@@ -68,14 +83,22 @@ public class GameScreen implements Screen {
         PLAYER_TEXTURE = textureBank.registerTexture(new Texture("stefan.png"));
         STONE_TEXTURE = textureBank.registerTexture(new Texture("stone.png"));
         renderer = new Renderer(textureBank);
-        currentScene = new Scene();
     }
-
+    int licz = 0;
     @Override
     public void render(float delta) {
         handleInput();
         ScreenUtils.clear(Color.CYAN);
-        renderer.draw(viewport, currentScene);
+        renderer.draw(viewport, SceneGenerator.generate(playerData));
+        licz ++;
+        if(licz%120 == 0)
+        {
+            for(int j = 4; j >=-5; j --) {
+                for (int i = 0; i < 10; i++)
+                    System.out.print(playerData.getBlockId(i,j,0));
+            System.out.println();
+            }
+        }
     }
 
     private void handleInput() {

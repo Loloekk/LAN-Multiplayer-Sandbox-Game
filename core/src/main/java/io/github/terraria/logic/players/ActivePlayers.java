@@ -13,4 +13,5 @@ public interface ActivePlayers {
     PhysicalPlayer getAt(Vector2 desired);
     // Docelowo to pewnie może być coś uboższego niż ActivePlayers (pod względem metod i lista zamiast mapy).
     ActivePlayers getLocal(RectangleNeighbourhood rectangle);
+    Boolean isActive(int playersId);
 }
