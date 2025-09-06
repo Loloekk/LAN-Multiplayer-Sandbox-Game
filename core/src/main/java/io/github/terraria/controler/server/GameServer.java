@@ -119,8 +119,8 @@ public class GameServer {
 
     public void handlePhysics() {
         float timeStep = 0.02f;
-        int velocityIterations = 6;
-        int positionIterations = 2;
+        int velocityIterations = 8;
+        int positionIterations = 4;
         world.step(timeStep,velocityIterations,positionIterations);
     }
     int licz=0;
