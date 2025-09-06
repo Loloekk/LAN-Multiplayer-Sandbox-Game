@@ -1,10 +1,5 @@
 [
     {
-      "id": 0,
-      "name": "Air",
-      "layer": 0
-    },
-    {
       "id": 1,
       "name": "Stone",
       "isPhysical": 1

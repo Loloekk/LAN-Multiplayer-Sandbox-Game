@@ -56,7 +56,7 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
             for (int j = 0; j < height; j++) {
                 ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
                 {
-                    Block frontBlock = (j < zeroY || i == 0 || i == width-1) ? blockFactory.create("Stone") : blockFactory.create("Air");
+                    Block frontBlock = (j < zeroY || i == 0 || i == width-1) ? blockFactory.create("Stone") : null;
                     point.add(frontBlock);
                 }
                 point.add(null);
