@@ -77,5 +77,4 @@ public class Box2DBody implements Body {
         corner.dispose();
         body.setBullet(true); // Costly.
     }
-    }
 }
