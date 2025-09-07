@@ -11,9 +11,9 @@ public class PhysicalPlayer {
     private final ItemHolder equipment;
     private Item heldItem; // Tylko takie pole spełnia nasze wymagania. Trzeba uważać przy używaniu.
     private final Body body;
-    public PhysicalPlayer(Player player, Body body) {
-        this.id = player.id();
-        this.equipment = player.equipment();
+    public PhysicalPlayer(PlayerRecord playerRecord, Body body) {
+        this.id = playerRecord.id();
+        this.equipment = playerRecord.equipment();
         this.body = body;
         // this.spawn = player.spawn(); This might be important once players can die.
     }

@@ -63,7 +63,7 @@ public class GameServer {
             }
             @Override public void received(Connection connection, Object obj) {
                 if (obj instanceof PacketJoin join) {
-                    Player pla = playerRegistry.registerPlayer();
+                    PlayerRecord pla = playerRegistry.registerPlayer();
                     int id = pla.getId();
                     PlayerData playerState = new PlayerData(connection,gameState,id);
                     playerActivator.loginPlayer(id);

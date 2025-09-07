@@ -24,19 +24,19 @@ class PlayerActivatorTest {
     void loginPlayerTest() {
         final int playersId = 10;
         final Vector2 spawnPosition = new Vector2(1f, 0f);
-        final Player player = new Player(playersId, spawnPosition);
-        Mockito.when(playerRegistry.getPlayer(playersId)).thenReturn(player);
+        final PlayerRecord playerRecord = new PlayerRecord(playersId, spawnPosition);
+        Mockito.when(playerRegistry.getPlayer(playersId)).thenReturn(playerRecord);
 
         playerActivator.loginPlayer(playersId);
-        Mockito.verify(activePlayers).add(Mockito.argThat(p -> p.id() == player.id()));
+        Mockito.verify(activePlayers).add(Mockito.argThat(p -> p.id() == playerRecord.id()));
     }
 
     @Test
     void logoutPlayerSetSpawnPositionTest() {
         final int playersId = 10;
-        final Player player = new Player(playersId, new Vector2());
+        final PlayerRecord playerRecord = new PlayerRecord(playersId, new Vector2());
         final Body body = Mockito.mock(Body.class);
-        Mockito.when(activePlayers.remove(playersId)).thenReturn(new PhysicalPlayer(player, body));
+        Mockito.when(activePlayers.remove(playersId)).thenReturn(new PhysicalPlayer(playerRecord, body));
         final Vector2 spawnPosition = new Vector2(1f, 0f);
         Mockito.when(body.getPosition()).thenReturn(spawnPosition);
 
@@ -48,9 +48,9 @@ class PlayerActivatorTest {
     @Test
     void logoutPlayerDestroyBodyTest() {
         final int playersId = 10;
-        final Player player = new Player(playersId, new Vector2());
+        final PlayerRecord playerRecord = new PlayerRecord(playersId, new Vector2());
         final Body body = Mockito.mock(Body.class);
-        Mockito.when(activePlayers.remove(playersId)).thenReturn(new PhysicalPlayer(player, body));
+        Mockito.when(activePlayers.remove(playersId)).thenReturn(new PhysicalPlayer(playerRecord, body));
 
         playerActivator.logoutPlayer(playersId);
         Mockito.verify(body).destroy();

@@ -13,7 +13,7 @@ class PlayerRegistryListTest {
 
     @Test
     void registerPlayerSpawnTest() {
-        Player player = playerRegistry.registerPlayer();
-        assertEquals(firstSpawn, player.spawn());
+        PlayerRecord playerRecord = playerRegistry.registerPlayer();
+        assertEquals(firstSpawn, playerRecord.spawn());
     }
 }

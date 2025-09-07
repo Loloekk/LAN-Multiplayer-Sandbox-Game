@@ -3,7 +3,7 @@ package io.github.terraria.logic;
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.players.PhysicalPlayer;
-import io.github.terraria.logic.players.Player;
+import io.github.terraria.logic.players.PlayerRecord;
 import io.github.terraria.logic.players.PlayerActivator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class RectangleNeighbourhoodTest {
         rightTop = new Vector2(9f, 9f);
         rectangle = new RectangleNeighbourhood(leftBottom, rightTop);
         body = Mockito.mock(Body.class);
-        player = new PhysicalPlayer(new Player(0, new Vector2()), body);
+        player = new PhysicalPlayer(new PlayerRecord(0, new Vector2()), body);
     }
 
     @Test

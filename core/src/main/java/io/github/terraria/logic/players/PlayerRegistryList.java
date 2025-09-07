@@ -6,29 +6,29 @@ import java.util.List;
 
 public class PlayerRegistryList implements PlayerRegistry {
     private final Vector2 firstSpawn;
-    private final List<Player> list;
-    public PlayerRegistryList(List<Player> list, Vector2 firstSpawn) {
+    private final List<PlayerRecord> list;
+    public PlayerRegistryList(List<PlayerRecord> list, Vector2 firstSpawn) {
         this.list = list;
         this.firstSpawn = firstSpawn;
     }
 
     @Override
-    public Player registerPlayer() {
-        Player player = new Player(list.size(), firstSpawn);
-        list.add(player);
-        return player;
+    public PlayerRecord registerPlayer() {
+        PlayerRecord playerRecord = new PlayerRecord(list.size(), firstSpawn);
+        list.add(playerRecord);
+        return playerRecord;
     }
 
     @Override
-    public void updateRecord(int id, Player player) { list.set(id, player); }
+    public void updateRecord(int id, PlayerRecord playerRecord) { list.set(id, playerRecord); }
 
     @Override
-    public Player getPlayer(int id) {
+    public PlayerRecord getPlayer(int id) {
         return list.get(id);
     }
 
     @Override
-    public List<Player> getList() {
+    public List<PlayerRecord> getList() {
         return List.copyOf(list);
     }
 }
