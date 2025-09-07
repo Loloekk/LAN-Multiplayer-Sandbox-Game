@@ -12,7 +12,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
 
     @Override
     public void hitAt(PhysicalPlayer physicalPlayer, Vector2 loc) {
-        if(!loc.epsilonEquals(physicalPlayer.body().getPosition(), (float) rangeRadius))
+        if(!loc.epsilonEquals(physicalPlayer.getPosition(), (float) rangeRadius))
             return;
 
         {
@@ -33,7 +33,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
 
     @Override
     public void specialAt(PhysicalPlayer physicalPlayer, Block block, Vector2 loc) {
-        if(!loc.epsilonEquals(physicalPlayer.body().getPosition(), (float) rangeRadius))
+        if(!loc.epsilonEquals(physicalPlayer.getPosition(), (float) rangeRadius))
             return;
 
         if(gameState.grid().placeBlockAt(IntVector2.toInt(loc), block)) {

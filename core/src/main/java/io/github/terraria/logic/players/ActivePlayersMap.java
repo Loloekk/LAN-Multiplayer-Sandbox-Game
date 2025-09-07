@@ -14,7 +14,7 @@ public class ActivePlayersMap implements ActivePlayers {
 
     @Override
     public void add(PhysicalPlayer player) {
-        map.putIfAbsent(player.player().getId(), player);
+        map.putIfAbsent(player.id(), player);
     }
 
     @Override

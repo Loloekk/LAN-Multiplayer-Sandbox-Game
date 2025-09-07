@@ -4,23 +4,23 @@ import com.badlogic.gdx.math.Vector2;
 
 import java.util.List;
 
-public class PlayerRegistryList extends PlayerRegistry {
+public class PlayerRegistryList implements PlayerRegistry {
     private final Vector2 firstSpawn;
     private final List<Player> list;
-    public PlayerRegistryList(SpawnRegistry spawnRegistry, List<Player> list, Vector2 firstSpawn) {
-        super(spawnRegistry);
+    public PlayerRegistryList(List<Player> list, Vector2 firstSpawn) {
         this.list = list;
         this.firstSpawn = firstSpawn;
     }
 
     @Override
     public Player registerPlayer() {
-        // TODO: Player factory and equipment initialization.
-        Player player = new Player(list.size());
+        Player player = new Player(list.size(), firstSpawn);
         list.add(player);
-        spawnRegistry.setSpawnPosition(player, firstSpawn);
         return player;
     }
+
+    @Override
+    public void updateRecord(int id, Player player) { list.set(id, player); }
 
     @Override
     public Player getPlayer(int id) {

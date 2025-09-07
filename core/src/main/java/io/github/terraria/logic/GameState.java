@@ -9,8 +9,7 @@ public record GameState(PlaneContainer grid, ActivePlayers activePlayers) {
     public LocalPlaneContainer getLocalPlaneRelativeToPlayer(int playersId, Vector2 offsetToCorner) {
         var player = activePlayers.get(playersId);
         if (player == null) return null;
-        var body = player.body();
-        var center = body.getPosition();
+        var center = player.getPosition();
         var rectangle = new RectangleNeighbourhood(
             center.sub(offsetToCorner),
             center.add(offsetToCorner)

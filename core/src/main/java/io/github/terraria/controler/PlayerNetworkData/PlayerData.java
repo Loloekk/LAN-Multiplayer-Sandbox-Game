@@ -93,7 +93,7 @@ public class PlayerData {
         for(PhysicalPlayer player : gameState.activePlayers().getList())
         {
             Network.PlayerState pla = new Network.PlayerState();
-            pla.id = player.player().getId();
+            pla.id = player.id();
             pla.x = player.getPosition().x;
             pla.y = player.getPosition().y;
             pla.name = "ala";

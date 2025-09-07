@@ -24,7 +24,7 @@ class RectangleNeighbourhoodTest {
         rightTop = new Vector2(9f, 9f);
         rectangle = new RectangleNeighbourhood(leftBottom, rightTop);
         body = Mockito.mock(Body.class);
-        player = new PhysicalPlayer(new Player(0), body);
+        player = new PhysicalPlayer(new Player(0, new Vector2()), body);
     }
 
     @Test

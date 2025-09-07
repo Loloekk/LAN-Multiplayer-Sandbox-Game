@@ -26,7 +26,6 @@ public class GameServer {
 
     private GameState gameState;
     private World world;
-    private SpawnRegistry spawnRegistry;
     private PlayerRegistry playerRegistry;
     private PlayerActivator playerActivator;
     private PlayerActionService actionService;
@@ -49,8 +48,7 @@ public class GameServer {
 //        System.out.println("Gamestate grid = " + gameState.grid());
 
 
-        spawnRegistry = new SpawnRegistryMap(new HashMap<>());
-        playerRegistry = new PlayerRegistryList(spawnRegistry, new ArrayList<>(), new Vector2(3f, 3f));
+        playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(3f, 3f));
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers());
         actionService = new PlayerActionServiceImpl(gameState);
 
