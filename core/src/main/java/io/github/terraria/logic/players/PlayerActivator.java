@@ -27,7 +27,6 @@ public abstract class PlayerActivator {
         PhysicalPlayer physicalPlayer = activePlayers.remove(playersId);
         Body body = physicalPlayer.body();
         registry.spawnRegistry.setSpawnPosition(physicalPlayer.player(), body.getPosition());
-        // Destroy body.
-        world.destroyBody(body);
+        body.destroy();
     }
 }

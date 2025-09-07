@@ -146,7 +146,7 @@ class StaticPlaneContainerTest {
         Mockito.when(bodyFactory.create(block, world, new IntVector2(0, 0))).thenReturn(body);
         container.placeBlockAt(0, 0, block);
         container.removeFrontBlockAt(0, 0);
-        Mockito.verify(world, Mockito.times(1)).destroyBody(body);
+        Mockito.verify(body).destroy();
     }
 
     @Test

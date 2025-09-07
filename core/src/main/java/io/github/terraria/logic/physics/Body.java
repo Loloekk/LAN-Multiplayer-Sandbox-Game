@@ -14,4 +14,6 @@ public interface Body {
     Vector2 getLinearVelocity();
 
     void addPlayerFixture(PlayerFixture playerFixture);
+
+    void destroy();
 }

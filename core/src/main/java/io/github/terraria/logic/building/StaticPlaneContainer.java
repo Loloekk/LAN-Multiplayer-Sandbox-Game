@@ -119,7 +119,7 @@ public class StaticPlaneContainer extends PlaneContainer {
             // Zniszcz body.
             Body body = getBodyAt(x, y);
             if(body != null)
-                world.destroyBody(body);
+                body.destroy();
             setBodyAt(x, y, null);
         }
         ArrayList<Block> point = getPointAt(x, y);

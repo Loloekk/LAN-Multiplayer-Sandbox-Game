@@ -76,12 +76,6 @@ public class Box2DWorld implements World {
     }
 
     @Override
-    public void destroyBody(Body body) {
-        if(body instanceof Box2DBody box2DBody)
-            world.destroyBody(box2DBody.body);
-    }
-
-    @Override
     public void step(float timeStep, int velocityIterations, int positionIterations) {
         world.step(timeStep, velocityIterations, positionIterations);
     }

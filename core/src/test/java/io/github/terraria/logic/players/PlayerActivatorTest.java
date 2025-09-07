@@ -59,6 +59,6 @@ class PlayerActivatorTest {
         Mockito.when(activePlayers.remove(playersId)).thenReturn(new PhysicalPlayer(player, body));
 
         playerActivator.logoutPlayer(playersId);
-        Mockito.verify(world).destroyBody(body);
+        Mockito.verify(body).destroy();
     }
 }

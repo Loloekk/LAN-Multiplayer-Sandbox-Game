@@ -10,8 +10,6 @@ public interface World {
 
     Body createDynamicBody(Vector2 v);
 
-    void destroyBody(Body body);
-
     void step(float timeStep, int velocityIterations, int positionIterations);
 
     void dispose();
