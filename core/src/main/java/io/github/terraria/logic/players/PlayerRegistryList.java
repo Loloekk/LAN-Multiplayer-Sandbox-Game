@@ -16,7 +16,7 @@ public class PlayerRegistryList extends PlayerRegistry {
     @Override
     public Player registerPlayer() {
         // TODO: Player factory and equipment initialization.
-        Player player = new PlayerImpl(list.size());
+        Player player = new Player(list.size());
         list.add(player);
         spawnRegistry.setSpawnPosition(player, firstSpawn);
         return player;

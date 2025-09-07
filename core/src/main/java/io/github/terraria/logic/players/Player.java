@@ -1,16 +1,18 @@
 package io.github.terraria.logic.players;
 
-public interface Player {
-    int getId();
-    String getName();
-    // getEquipment();
-    // Czy zarejestrowany gracz powinien mieć ekwipunek?
-    // Co, jeśli mielibyśmy kilka map?
-    // Wtedy raczej kilka instancji modeli i tak.
-    // Klasa PlayerRegister z modelu ma sens
-    // dla powrotu do tej samej mapy.
+import com.badlogic.gdx.math.Vector2;
+import io.github.terraria.logic.ItemHolder;
+import io.github.terraria.logic.MultisetItemHolder;
 
-    // getHeldItem();
-    // Przyjmujemy, że zachowuje się pomiędzy logowaniami.
-    // Przy śmierci ręcznie zerowany ekwipunek oraz trzymany przedmiot.
+// The player part exported to PlayerRegistry (in between logging)
+// should be a record for easy serialization.
+// It may (and probably should as fields of active players may not be final)
+// be exported through a custom method.
+public record Player(int id, ItemHolder equipment, Vector2 spawn) {
+    private static final int defaultEquipmentCap = 50;
+    public Player(int id) {
+        this(id, new MultisetItemHolder(defaultEquipmentCap), new Vector2());
+    }
+    // TODO: Refactor to only use id().
+    public int getId() { return id; }
 }

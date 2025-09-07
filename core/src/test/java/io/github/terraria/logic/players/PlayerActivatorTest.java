@@ -27,7 +27,7 @@ class PlayerActivatorTest {
     @Test
     void loginPlayerTest() {
         final int playersId = 10;
-        final Player player = Mockito.mock(Player.class);
+        final Player player = new Player(0);
         Mockito.when(playerRegistry.getPlayer(playersId)).thenReturn(player);
         final Vector2 spawnPosition = new Vector2(1f, 0f);
         Mockito.when(spawnRegistry.getSpawnPosition(player)).thenReturn(spawnPosition);
@@ -41,7 +41,7 @@ class PlayerActivatorTest {
     @Test
     void logoutPlayerSetSpawnPositionTest() {
         final int playersId = 10;
-        final Player player = Mockito.mock(Player.class);
+        final Player player = new Player(0);
         final Body body = Mockito.mock(Body.class);
         Mockito.when(activePlayers.remove(playersId)).thenReturn(new PhysicalPlayer(player, body));
         final Vector2 spawnPosition = new Vector2(1f, 0f);
@@ -54,7 +54,7 @@ class PlayerActivatorTest {
     @Test
     void logoutPlayerDestroyBodyTest() {
         final int playersId = 10;
-        final Player player = Mockito.mock(Player.class);
+        final Player player = new Player(0);
         final Body body = Mockito.mock(Body.class);
         Mockito.when(activePlayers.remove(playersId)).thenReturn(new PhysicalPlayer(player, body));
 
