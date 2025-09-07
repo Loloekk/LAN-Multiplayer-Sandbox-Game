@@ -5,24 +5,15 @@ import org.mockito.Mockito;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
-class ItemHolderTest {
-    private static final int cap = 10;
-    private static class DummyItemHolder extends ItemHolder {
-        public DummyItemHolder() {
-            super(cap);
-        }
-        public DummyItemHolder(int cap) {
-            super(cap);
-        }
-    }
+class MultisetItemHolderTest {
     @Test
     void newItemHolderIsEmpty() {
-        ItemHolder holder = new DummyItemHolder();
+        ItemHolder holder = new MultisetItemHolder(10);
         assertThat(holder.browse()).isEmpty();
     }
     @Test
     void constructorArgumentCoalescesToNonnegative() {
-        ItemHolder holder = new DummyItemHolder(-3);
+        ItemHolder holder = new MultisetItemHolder(-3);
         assertThat(holder.browse()).isEmpty();
         assertFalse(holder.insert(Mockito.mock(Item.class)));
     }

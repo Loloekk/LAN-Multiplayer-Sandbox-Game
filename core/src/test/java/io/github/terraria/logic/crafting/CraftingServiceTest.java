@@ -2,6 +2,7 @@ package io.github.terraria.logic.crafting;
 
 import io.github.terraria.logic.ItemHolder;
 import io.github.terraria.logic.ItemRegistry;
+import io.github.terraria.logic.MultisetItemHolder;
 import io.github.terraria.logic.building.BlockFactory;
 import io.github.terraria.logic.building.BlockFactoryLoader;
 import io.github.terraria.logic.crafting.station.StationType;
@@ -15,11 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CraftingServiceTest {
     private static final int cap = 10;
-    private static class DummyItemHolder extends ItemHolder {
+    private static class DummyItemHolder extends MultisetItemHolder {
         public DummyItemHolder() {
-            super(cap);
-        }
-        public DummyItemHolder(int cap) {
             super(cap);
         }
     }
