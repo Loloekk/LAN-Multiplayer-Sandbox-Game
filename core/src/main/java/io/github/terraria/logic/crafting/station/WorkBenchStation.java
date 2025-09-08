@@ -12,7 +12,7 @@ public class WorkBenchStation implements CraftingStation {
 
     @Override
     public boolean canCraft(Recipe recipe, ItemHolder inventory) {
-        return recipe.getStation() == getStationType() && recipe.canCraft(inventory);
+        return recipe.station() == getStationType() && recipe.canCraft(inventory);
     }
 
     @Override

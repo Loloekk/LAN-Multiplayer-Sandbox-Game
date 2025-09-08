@@ -13,7 +13,7 @@ public class FurnaceStation implements CraftingStation {
 
     @Override
     public boolean canCraft(Recipe recipe, ItemHolder inventory) {
-        return coal >= recipe.getOutput().getAmount() && recipe.getStation() == getStationType() && recipe.canCraft(inventory);
+        return coal >= recipe.output().getAmount() && recipe.station() == getStationType() && recipe.canCraft(inventory);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class FurnaceStation implements CraftingStation {
         if (!canCraft(recipe, inventory)) {
             return false;
         }
-        coal -= recipe.getOutput().getAmount();
+        coal -= recipe.output().getAmount();
         return recipe.craft(inventory);
     }
 }

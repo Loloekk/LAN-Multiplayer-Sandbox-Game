@@ -3,7 +3,6 @@ package io.github.terraria.logic.crafting;
 import io.github.terraria.logic.ItemHolder;
 import io.github.terraria.logic.crafting.station.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,7 @@ public class CraftingService {
     }
 
     public boolean canCraft(Recipe recipe, ItemHolder inventory) {
-        StationType type = recipe.getStation();
+        StationType type = recipe.station();
         CraftingStation station = stations.get(type);
         return station.canCraft(recipe, inventory);
     }
@@ -34,7 +33,7 @@ public class CraftingService {
         if (!canCraft(recipe, inventory)) {
             return false;
         }
-        stations.get(recipe.getStation()).craft(recipe, inventory);
+        stations.get(recipe.station()).craft(recipe, inventory);
         return true;
     }
 }

@@ -57,7 +57,7 @@ class CraftingServiceTest {
     void getAvailableRecipes() {
         List<Recipe> workbenchRecipes = service.getAvailableRecipes(StationType.WORKBENCH);
         assertFalse(workbenchRecipes.isEmpty());
-        assertEquals(StationType.WORKBENCH, workbenchRecipes.get(0).getStation());
+        assertEquals(StationType.WORKBENCH, workbenchRecipes.get(0).station());
     }
 
     @Test

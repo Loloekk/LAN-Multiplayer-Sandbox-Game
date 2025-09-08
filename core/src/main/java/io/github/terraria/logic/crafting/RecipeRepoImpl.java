@@ -1,45 +1,30 @@
 package io.github.terraria.logic.crafting;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import io.github.terraria.logic.Item;
 import io.github.terraria.logic.ItemRegistry;
-import io.github.terraria.logic.JsonLoader;
+import io.github.terraria.logic.RecordLoader;
 import io.github.terraria.logic.crafting.station.StationType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeRepoImpl implements RecipeRepo {
     final private List<Recipe> all;
 
     public RecipeRepoImpl(ItemRegistry itemRegistry, String path) {
-        all = new ArrayList<>();
-        JsonLoader.loadJson(path, obj -> {
-            int id = obj.get("id").getAsInt();
-
-            List<Ingredient> ingredients = new ArrayList<>();
-            for (JsonElement el : obj.getAsJsonArray("ingredients")) {
-                JsonObject ingrObj = el.getAsJsonObject();
-                String itemName = ingrObj.get("name").getAsString();
-                int amount = ingrObj.get("amount").getAsInt();
-                Item item = itemRegistry.create(itemName);
-                ingredients.add(new Ingredient(item, amount));
-            }
-
-            JsonObject outObj = obj.getAsJsonObject("output");
-            String outName = outObj.get("name").getAsString();
-            int outAmount = outObj.get("amount").getAsInt();
-            Ingredient output = new Ingredient(itemRegistry.create(outName), outAmount);
-
-            StationType station = StationType.valueOf(obj.get("station").getAsString());
-
-            all.add(new Recipe(id, ingredients, output, station));
-        });
+        // using data transfer objects, json takes items by name
+        record IngredientDto(String name, int amount) {}
+        record RecipeDto(int id, List<IngredientDto> ingredients, IngredientDto output, String station) {}
+        List<RecipeDto> recipeDtos = RecordLoader.loadList(path, RecipeDto.class);
+        all = recipeDtos.stream().map(dto -> {
+            List<Ingredient> ingredients = dto.ingredients().stream()
+                .map(i -> new Ingredient(itemRegistry.create(i.name()), i.amount()))
+                .toList();
+            Ingredient output = new Ingredient(itemRegistry.create(dto.output().name()), dto.output().amount());
+            return new Recipe(dto.id(), ingredients, output, StationType.valueOf(dto.station()));
+        }).toList();
     }
 
     public RecipeRepoImpl(ItemRegistry itemRegistry) {
-        this(itemRegistry, "/recipes.json");
+        this(itemRegistry, "recipes.json");
     }
     @Override
     public List<Recipe> getAll() {
@@ -48,11 +33,11 @@ public class RecipeRepoImpl implements RecipeRepo {
 
     @Override
     public Recipe getById(int id) {
-        return all.stream().filter(r -> r.getRecipeId() == id).findFirst().orElse(null);
+        return all.stream().filter(r -> r.recipeId() == id).findFirst().orElse(null);
     }
 
     @Override
     public List<Recipe> findByStation(StationType station) {
-        return all.stream().filter(r -> r.getStation() == station).toList();
+        return all.stream().filter(r -> r.station() == station).toList();
     }
 }
