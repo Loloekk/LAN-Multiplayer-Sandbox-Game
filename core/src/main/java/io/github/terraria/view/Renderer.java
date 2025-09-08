@@ -18,8 +18,8 @@ public class Renderer {
         spriteBatch.begin();
         for(DrawableRectangle rectangle : scene.objects){
             spriteBatch.draw(textureBank.getTexture(rectangle.textureId),
-                rectangle.centerX*scale,
-                rectangle.centerY*scale,
+                rectangle.centerX*scale - scale * rectangle.width/2,
+                rectangle.centerY*scale - scale * rectangle.height/2,
                 rectangle.width*scale,
                 rectangle.height*scale);
         }

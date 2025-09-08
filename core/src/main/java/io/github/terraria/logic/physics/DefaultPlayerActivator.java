@@ -10,7 +10,7 @@ public class DefaultPlayerActivator extends PlayerActivator {
         super(registry, world, activePlayers);
     }
 
-    private static final PlayerFixture playerFixture = new PlayerFixture(0.8f, 2f,
+    private static final PlayerFixture playerFixture = new PlayerFixture(0.8f, 1.8f,
         2f, 1.3f, 0.1f, new Vector2());
 
     @Override

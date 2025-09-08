@@ -111,6 +111,7 @@ public class GameServer {
                 else if (in.moveX < 0)
                     MoveService.movePlayer(gameState.activePlayers().get(in.playerId),MoveService.Direction.left);
 
+                if(in.moveY > 0)MoveService.jumpPlayer(gameState.activePlayers().get(in.playerId));
             }
         }
     }

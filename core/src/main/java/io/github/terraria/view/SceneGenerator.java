@@ -26,7 +26,7 @@ public class SceneGenerator {
             }
         for(Network.PlayerState pla : data.getPlayers())
         {
-            scene.objects.add(new DrawableRectangle(pla.x+diffX,pla.y-1+diffY,1,2,0));
+            scene.objects.add(new DrawableRectangle(pla.x+diffX,pla.y+diffY,0.8f,1.8f,0));
         }
         return scene;
     }

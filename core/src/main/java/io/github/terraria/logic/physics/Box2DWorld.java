@@ -56,7 +56,7 @@ public class Box2DWorld implements World {
         com.badlogic.gdx.physics.box2d.Body box2DBody = world.createBody(bodyDef);
 
         PolygonShape rectangle = new PolygonShape();
-        rectangle.setAsBox(blockFixture.width() / 2, blockFixture.height());
+        rectangle.setAsBox(blockFixture.width() / 2, blockFixture.height() / 2);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = rectangle;

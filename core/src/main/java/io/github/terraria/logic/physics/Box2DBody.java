@@ -1,10 +1,7 @@
 package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 
 public class Box2DBody implements Body {
     final com.badlogic.gdx.physics.box2d.Body body;
@@ -76,6 +73,7 @@ public class Box2DBody implements Body {
         }
         corner.dispose();
         body.setBullet(true); // Costly.
+        body.setFixedRotation(true);
     }
 
     @Override
