@@ -38,7 +38,7 @@ class StaticPlaneContainerTest {
     StaticPlaneContainerBuilder getBuilder() {
         BlockFactory blockFactory = Mockito.mock(BlockFactory.class);
         Mockito.when(blockFactory.create("Stone")).thenReturn(new BlockBuilder().build());
-        return new StaticPlaneContainerBuilder().blockFactory(blockFactory).bodyFactory(bodyFactory).width(width).height(height).zeroX(zeroX).zeroY(zeroY).world(world);
+        return new StaticPlaneContainerBuilder().blockFactory(blockFactory).savedGrid(getDummyGrid()).bodyFactory(bodyFactory).width(width).height(height).zeroX(zeroX).zeroY(zeroY).world(world);
     }
 
     @Test

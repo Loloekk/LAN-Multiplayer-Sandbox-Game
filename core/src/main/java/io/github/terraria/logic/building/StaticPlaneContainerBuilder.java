@@ -27,7 +27,7 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
         this.zeroY = zeroY;
         return this;
     }
-    public PlaneContainerBuilder savedGrid(ArrayList<ArrayList<ArrayList<Block>>> savedGrid) {
+    public StaticPlaneContainerBuilder savedGrid(ArrayList<ArrayList<ArrayList<Block>>> savedGrid) {
         this.savedGrid = savedGrid;
         return this;
     }
