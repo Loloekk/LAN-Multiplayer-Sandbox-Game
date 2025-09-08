@@ -15,7 +15,7 @@ public class MoveService {
     }
     public static void movePlayer(PhysicalPlayer player, Direction direction) {
         Body body = player.body();
-        if (Math.abs(body.getLinearVelocity().x) < MAX_VELOCITY_X)
+        if ((direction == Direction.right && body.getLinearVelocity().x < MAX_VELOCITY_X) || (direction == Direction.left && body.getLinearVelocity().x > -MAX_VELOCITY_X))
             body.applyLinearImpulse(MoveService.getMoveImpulse(direction));
     }
     private static final Vector2 JUMP_IMPULSE = new Vector2(0f, 20f);
