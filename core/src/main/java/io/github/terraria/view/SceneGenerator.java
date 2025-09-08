@@ -22,7 +22,7 @@ public class SceneGenerator {
                 Integer blockId = data.getBlockId(i+x,j+y,0);
                 if(blockId == null || blockId.equals(0))
                     continue;
-                scene.objects.add(new DrawableRectangle(i+x+diffX,j+y+diffY,1,1,1));
+                scene.objects.add(new DrawableRectangle(i+x+diffX + 0.5f,j+y+diffY + 0.5f,1,1,1));
             }
         for(Network.PlayerState pla : data.getPlayers())
         {
