@@ -2,10 +2,21 @@
   {
     "id": 1,
     "ingredients": [
-      {"name":  "Stone", "amount":  1}
+      {"name": "Stone", "amount":  1}
     ],
     "output": {
-      "name":  "Stone", "amount":  4
+      "name": "Stone", "amount":  4
+    },
+    "station": "WORKBENCH"
+  },
+  {
+    "id": 2,
+    "ingredients": [
+      {"name": "Stone", "amount":  1},
+      {"name": "Dirt", "amount": 1}
+    ],
+    "output": {
+      "name":  "Water", "amount":  1
     },
     "station": "WORKBENCH"
   }

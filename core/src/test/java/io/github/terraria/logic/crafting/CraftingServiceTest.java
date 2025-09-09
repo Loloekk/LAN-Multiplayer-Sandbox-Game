@@ -31,7 +31,7 @@ class CraftingServiceTest {
     static void setup() {
         BlockFactory blockFactory = new BlockFactoryLoader("testBlocks.json").getBlockFactory();
         itemRegistry = new ItemRegistry(blockFactory);
-        recipeRepo = new RecipeRepoImpl(itemRegistry);
+        recipeRepo = new RecipeRepoImpl(itemRegistry, "testRecipes.json");
     }
 
     @BeforeEach
@@ -75,5 +75,14 @@ class CraftingServiceTest {
         boolean crafted = service.craft(recipe, itemHolder);
         assertFalse(crafted);
         assertEquals(0, itemHolder.browse().count(itemRegistry.create("Stone")));
+    }
+
+    @Test
+    void craftTwoInput() {
+        Recipe recipe = recipeRepo.getById(2);
+        itemHolder.insert(itemRegistry.create("Stone"), 1);
+        assertFalse(service.canCraft(recipe, itemHolder));
+        itemHolder.insert(itemRegistry.create("Dirt"), 1);
+        assertTrue(service.canCraft(recipe, itemHolder));
     }
 }

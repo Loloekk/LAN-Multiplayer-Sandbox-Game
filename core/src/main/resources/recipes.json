@@ -2,11 +2,176 @@
   {
     "id": 1,
     "ingredients": [
-      {"name":  "Stone", "amount":  1}
+      {"name": "Wood", "amount": 10}
     ],
     "output": {
-      "name":  "Stone", "amount":  4
+      "name": "WORKBENCH", "amount": 1
+    },
+    "station": "NONE"
+  },
+  {
+    "id": 2,
+    "ingredients": [
+      {"name": "Iron Bar", "amount": 5},
+      {"name": "Rock", "amount": 15}
+    ],
+    "output": {
+      "name": "ANVIL", "amount": 1
     },
     "station": "WORKBENCH"
+  },
+  {
+    "id": 3,
+    "ingredients": [
+      {"name": "Wood", "amount": 5}
+    ],
+    "output": {
+      "name": "Bark", "amount": 5
+    },
+    "station": "WORKBENCH"
+  },
+  {
+    "id": 4,
+    "ingredients": [
+      {"name": "Wood", "amount": 20},
+      {"name": "Rock", "amount": 10}
+    ],
+    "output": {
+      "name": "Chest", "amount": 1
+    },
+    "station": "WORKBENCH"
+  },
+  {
+    "id": 5,
+    "ingredients": [
+      {"name": "Rock", "amount": 15}
+    ],
+    "output": {
+      "name": "FURNACE", "amount": 1
+    },
+    "station": "WORKBENCH"
+  },
+  {
+    "id": 6,
+    "ingredients": [
+      {"name": "Wood", "amount": 2},
+      {"name": "Coal", "amount": 1}
+    ],
+    "output": {
+      "name": "Torch", "amount": 5
+    },
+    "station": "WORKBENCH"
+  },
+  {
+    "id": 7,
+    "ingredients": [
+      {"name": "Bark", "amount": 5},
+      {"name": "Wood", "amount": 5}
+    ],
+    "output": {
+      "name": "Wood Pickaxe", "amount": 1
+    },
+    "station": "WORKBENCH"
+  },
+  {
+    "id": 8,
+    "ingredients": [
+      {"name": "Bark", "amount": 5},
+      {"name": "Wood", "amount": 5}
+    ],
+    "output": {
+      "name": "Wood Axe", "amount": 1
+    },
+    "station": "WORKBENCH"
+  },
+  {
+    "id": 9,
+    "ingredients": [
+      {"name": "Wood", "amount": 5},
+      {"name": "Gold Bar", "amount": 5}
+    ],
+    "output": {
+      "name": "Gold Sword", "amount": 1
+    },
+    "station": "ANVIL"
+  },
+  {
+    "id": 10,
+    "ingredients": [
+      {"name":  "Bark", "amount":  5},
+      {"name": "Wood", "amount": 10},
+      {"name": "Gold Bar", "amount": 5}
+    ],
+    "output": {
+      "name": "Gold Axe", "amount": 1
+    },
+    "station": "ANVIL"
+  },
+  {
+    "id": 11,
+    "ingredients": [
+      {"name":  "Bark", "amount":  5},
+      {"name": "Wood", "amount": 10},
+      {"name": "Gold Bar", "amount": 5}
+    ],
+    "output": {
+      "name": "Gold Pickaxe", "amount": 1
+    },
+    "station": "ANVIL"
+  },
+  {
+    "id": 9,
+    "ingredients": [
+      {"name": "Birch Wood", "amount": 5},
+      {"name": "Steel Bar", "amount": 5}
+    ],
+    "output": {
+      "name": "Steel Sword", "amount": 1
+    },
+    "station": "ANVIL"
+  },
+  {
+    "id": 12,
+    "ingredients": [
+      {"name": "Bark", "amount":  5},
+      {"name": "Birch Wood", "amount": 10},
+      {"name": "Iron Bar", "amount": 5}
+    ],
+    "output": {
+      "name": "Steel Axe", "amount": 1
+    },
+    "station": "ANVIL"
+  },
+  {
+    "id": 13,
+    "ingredients": [
+      {"name": "Bark", "amount":  5},
+      {"name": "Birch Wood", "amount": 10},
+      {"name": "Iron Bar", "amount": 5}
+    ],
+    "output": {
+      "name": "Steel Pickaxe", "amount": 1
+    },
+    "station": "ANVIL"
+  },
+  {
+    "id": 14,
+    "ingredients": [
+      {"name": "Iron Ore", "amount": 1}
+    ],
+    "output": {
+      "name": "Iron Bar", "amount": 1
+    },
+    "station": "FURNACE"
+  },
+  {
+    "id": 15,
+    "ingredients": [
+      {"name": "Gold Ore", "amount": 1}
+    ],
+    "output": {
+      "name": "Gold Bar", "amount": 1
+    },
+    "station": "FURNACE"
   }
 ]
