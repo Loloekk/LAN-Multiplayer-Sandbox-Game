@@ -1,6 +1,6 @@
 package io.github.terraria.logic.building;
 
-class BlockBuilder {
+public class BlockBuilder {
     int id = 1;
     String name = "Stone";
     boolean isPhysical = true;
@@ -15,5 +15,6 @@ class BlockBuilder {
         if(layer > 0) this.isPhysical = false;
         return this;
     }
-    Block build() { return new Block(new BlockType(id, name, isPhysical, layer)); }
+    public BlockBuilder name(String name) { this.name = name; return this; }
+    public Block build() { return new Block(new BlockType(id, name, isPhysical, layer)); }
 }

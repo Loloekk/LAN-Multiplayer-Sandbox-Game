@@ -1,3 +1,4 @@
+/*
 package io.github.terraria.logic.block;
 
 public interface BlockBehavior {
@@ -6,3 +7,4 @@ public interface BlockBehavior {
     // void onPlace(int x, int y);
     // void onBreak(int x, int y);
 }
+*/

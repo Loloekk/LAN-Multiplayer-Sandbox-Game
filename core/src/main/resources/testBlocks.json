@@ -22,5 +22,11 @@
     "id": 5,
     "name": "Stone",
     "isPhysical": 1
+  },
+  {
+    "id": 6,
+    "name": "Anvil",
+    "layer": 0,
+    "station": "ANVIL"
   }
 ]
