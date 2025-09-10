@@ -156,4 +156,7 @@ public class StaticPlaneContainer extends PlaneContainer {
         }
         return new LocalPlaneContainerImpl(-beginX, -beginY, localGrid);
     }
+
+    @Override
+    public int getTopY() { return height - 1 - zeroY; }
 }

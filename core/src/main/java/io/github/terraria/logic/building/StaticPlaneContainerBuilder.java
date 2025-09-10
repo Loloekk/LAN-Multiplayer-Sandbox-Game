@@ -47,26 +47,6 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
         return this;
     }
 
-    private ArrayList<ArrayList<ArrayList<Block>>> getDefaultGrid(int width, int height, int zeroY) {
-        if(blockFactory == null)
-            blockFactory = new BlockFactoryLoader().getBlockFactory();
-        ArrayList<ArrayList<ArrayList<Block>>> defaultGrid = new ArrayList<>(width);
-        for(int i = 0; i < width; i++) {
-            ArrayList<ArrayList<Block>> column = new ArrayList<>(height);
-            for (int j = 0; j < height; j++) {
-                ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
-                {
-                    Block frontBlock = (j < zeroY || i == 0 || i == width-1 || (i == 6 && j < zeroY + 3) || (i == 7 && j == zeroY + 3) || (i == 8 && j == zeroY + 3)) ? blockFactory.create("Stone") : null;
-                    point.add(frontBlock);
-                }
-                point.add(null);
-                column.add(point);
-            }
-            defaultGrid.add(column);
-        }
-        return defaultGrid;
-    }
-
     @Override
     public StaticPlaneContainer build() {
         if(width == null)
@@ -83,8 +63,10 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
         world.createBoundaries(width, height, -zeroX, -zeroY);
         if(bodyFactory == null)
             bodyFactory = new BodyFactoryLoader().getBodyFactory();
+        if(blockFactory == null)
+            blockFactory = new BlockFactoryLoader().getBlockFactory();
         if(savedGrid == null)
-            savedGrid = getDefaultGrid(width, height, zeroY);
+            savedGrid = GridGenerator.getRandomGrid(width, height, zeroY, blockFactory);
 
         return new StaticPlaneContainer(width, height, zeroX, zeroY, world, savedGrid, bodyFactory);
     }

@@ -5,7 +5,7 @@ import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.World;
 
 public abstract class PlayerActivator {
-    public static final float MAX_PLAYERS_RADIUS = 1.2f; // Z jakimś zapasem dla float błędów.
+    public static final float MAX_PLAYERS_RADIUS = 0.99f; // Z jakimś zapasem dla float błędów.
     private final PlayerRegistry registry;
     protected final World world;
     private final ActivePlayers activePlayers;
