@@ -5,8 +5,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.controler.Network.Network;
@@ -27,7 +32,11 @@ public class GameScreen implements Screen {
     private int playerId;
     private ViewPlayerData playerData;
     private final Drop game;
-    private final FitViewport viewport = new FitViewport(8, 5);
+//    private final FitViewport viewport = new FitViewport(8, 5);
+
+//    private final ScreenViewport viewport = new ScreenViewport();
+//    private final StretchViewport viewport = new StretchViewport(8,5);
+    private final ScalingViewport viewport = new ScalingViewport(Scaling.fill, 30, 20);
     private TextureBank textureBank;
     private Renderer renderer;
     private Scene currentScene = new Scene();
@@ -113,6 +122,11 @@ public class GameScreen implements Screen {
             pi.moveY = my;
             client.sendUDP(pi);
             System.out.println("Send moving " + playerId);
+        }
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            viewport.unproject(mousePos);
+            System.out.println("Klik LPM w świecie gry: " + mousePos.x + ", " + mousePos.y);
         }
     }
 

@@ -42,7 +42,7 @@ public class GameServer {
         world = new Box2DWorld(new Vector2(0, -10), true);
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
         builder.world(world);
-        builder.width(27).height(20).zeroX(0).zeroY(10);
+        builder.width(30).height(20).zeroX(0).zeroY(10);
         PlaneContainer planeContainer = builder.build();
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()));
 //        System.out.println("Plane container " + planeContainer);
@@ -114,18 +114,23 @@ public class GameServer {
                     MoveService.movePlayer(gameState.activePlayers().get(in.playerId),MoveService.Direction.left);
 
                 if(in.moveY > 0)MoveService.jumpPlayer(gameState.activePlayers().get(in.playerId));
-                licz++;
-                if(licz%100 == 0)
-                {
-                    System.out.println("liczy " + licz);
-                }
-                if(licz%200 == 0)
-                {
-                    IntVector2 Intloc = new IntVector2(1,-1);
-                    Vector2 loc = new Vector2(1,-1);
-                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
+//                licz++;
+//                if(licz%100 == 0)
+//                {
+//                    System.out.println("liczy " + licz);
+//                }
+//                if(licz%200 == 0)
+//                {
+//                    IntVector2 Intloc = new IntVector2(1,-1);
+//                    Vector2 loc = new Vector2(1,-1);
+////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
+////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
+////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
+////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
+////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
+////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
 //                    gameState.grid().removeFrontBlockAt(Intloc);
-                }
+//                }
             }
         }
     }

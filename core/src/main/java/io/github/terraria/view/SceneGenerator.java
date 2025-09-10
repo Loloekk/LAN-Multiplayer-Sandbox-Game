@@ -4,10 +4,10 @@ import io.github.terraria.controler.Network.Network;
 import io.github.terraria.view.PlayerData.ViewPlayerData;
 
 public class SceneGenerator {
-    public static int SCENE_WIDTH = 40;
-    public static int SCENE_HEIGHT = 30;
-    private static float centerX = 13;
-    private static float centerY = 9;
+    public static int SCENE_WIDTH = 30;
+    public static int SCENE_HEIGHT = 20;
+    private static float centerX = 15;
+    private static float centerY = 10;
 
     public static Scene generate(ViewPlayerData data)
     {
@@ -27,6 +27,7 @@ public class SceneGenerator {
         for(Network.PlayerState pla : data.getPlayers())
         {
             scene.objects.add(new DrawableRectangle(pla.x+diffX,pla.y+diffY,0.8f,1.8f,0));
+//            System.out.println("player " + pla.id + " x " + pla.x + " " + pla.y);
         }
         return scene;
     }
