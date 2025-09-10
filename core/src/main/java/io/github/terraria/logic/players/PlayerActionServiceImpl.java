@@ -39,7 +39,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
         Block block = gameState.grid().getFrontBlockAt(intLoc);
         if (block != null) {
             MiningAction action = currentMining.get(player.id());
-            if(intLoc != currentMining.get(player.id()).location()) {
+            if(action == null  || !intLoc.equals(action.location())) {
                 action = new MiningAction(intLoc);
                 currentMining.put(player.id(), action);
             }
@@ -47,7 +47,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
                 Block block1 = gameState.grid().removeFrontBlockAt(intLoc);
                 // If equipment is full block1 is garbage collected.
                 // This is acceptable as PlaneContainer handles destruction of the body.
-                player.equipment().insert(block1);
+                player.collectItem(block1);
             }
         }
         else currentMining.remove(player.id());
