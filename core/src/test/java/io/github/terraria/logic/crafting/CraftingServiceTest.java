@@ -85,4 +85,13 @@ class CraftingServiceTest {
         itemHolder.insert(itemRegistry.create("Dirt"), 1);
         assertTrue(service.canCraft(recipe, itemHolder));
     }
+
+    @Test
+    void stationCraft() {
+        Recipe recipe = recipeRepo.getById(3);
+        itemHolder.insert(itemRegistry.create("Stone"), 1);
+        boolean crafted = service.craft(recipe, itemHolder);
+        assertTrue(crafted);
+        assertEquals(1, itemHolder.browse().count(itemRegistry.create("Anvil")));
+    }
 }

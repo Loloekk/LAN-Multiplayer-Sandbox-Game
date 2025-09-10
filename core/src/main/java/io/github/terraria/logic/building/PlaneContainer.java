@@ -45,4 +45,5 @@ public abstract class PlaneContainer {
         return removeFrontBlockAt(loc.x(), loc.y());
     }
     public abstract LocalPlaneContainer getLocal(RectangleNeighbourhood neighbourhood);
+    public abstract int getTopY();
 }

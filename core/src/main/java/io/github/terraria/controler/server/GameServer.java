@@ -53,7 +53,7 @@ public class GameServer {
 
 
         playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(3f, 3f));
-        playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers());
+        playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer);
         actionService = new PlayerActionServiceImpl(gameState);
 
         server.addListener(new Listener() {

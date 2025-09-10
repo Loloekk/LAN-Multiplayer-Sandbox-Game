@@ -48,6 +48,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
                 // If equipment is full block1 is garbage collected.
                 // This is acceptable as PlaneContainer handles destruction of the body.
                 player.collectItem(block1);
+                currentMining.remove(player.id());
             }
         }
         else currentMining.remove(player.id());

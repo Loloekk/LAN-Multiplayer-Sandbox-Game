@@ -4,5 +4,5 @@ public enum StationType {
     WORKBENCH,
     FURNACE,
     ANVIL,
-    NONE
+    INVENTORY
 }

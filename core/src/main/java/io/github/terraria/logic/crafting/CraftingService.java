@@ -17,6 +17,7 @@ public class CraftingService {
         this.stations.put(StationType.WORKBENCH, new WorkBenchStation());
         this.stations.put(StationType.FURNACE, new FurnaceStation());
         this.stations.put(StationType.ANVIL, new AnvilStation());
+        this.stations.put(StationType.INVENTORY, new InventoryStation());
     }
 
     public boolean canCraft(Recipe recipe, ItemHolder inventory) {
