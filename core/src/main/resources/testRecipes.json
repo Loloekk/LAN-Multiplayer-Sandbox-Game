@@ -19,5 +19,15 @@
       "name":  "Water", "amount":  1
     },
     "station": "WORKBENCH"
+  },
+  {
+    "id": 3,
+    "ingredients": [
+      {"name":  "Stone", "amount":  1}
+    ],
+    "output":{
+      "name": "Anvil", "amount": 1
+    },
+    "station": "INVENTORY"
   }
 ]
