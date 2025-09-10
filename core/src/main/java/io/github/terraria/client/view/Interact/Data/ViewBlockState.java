@@ -1,4 +1,4 @@
-package io.github.terraria.client.view.PlayerData;
+package io.github.terraria.client.view.Interact.Data;
 
 public class ViewBlockState {
     public int x,y,z;

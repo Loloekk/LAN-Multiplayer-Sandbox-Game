@@ -1,5 +1,6 @@
 package io.github.terraria.controler.PlayerNetworkData;
 
+import io.github.terraria.common.BlockState;
 import io.github.terraria.logic.building.Block;
 import io.github.terraria.logic.building.PlaneContainer;
 

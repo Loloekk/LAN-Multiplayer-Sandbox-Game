@@ -1,4 +1,5 @@
-package io.github.terraria.controler.PlayerNetworkData;
+package io.github.terraria.common;
+
 
 public class BlockState {
     public int x,y,z;

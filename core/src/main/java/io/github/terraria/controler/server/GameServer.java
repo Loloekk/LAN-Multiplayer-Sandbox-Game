@@ -5,6 +5,9 @@ import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.controler.Network.Network;
+import io.github.terraria.controler.Network.PacketPlayer.PacketPlayer;
+import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerHit;
+import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerMove;
 import io.github.terraria.controler.Network.PacketJoin;
 import io.github.terraria.controler.Network.PacketJoinAck;
 import io.github.terraria.controler.PlayerNetworkData.PlayerData;
@@ -22,7 +25,7 @@ import java.io.IOException;
 public class GameServer {
     private Server server;
     private ServerRenderer renderer;
-    private final Map<Connection, Queue<Network.PacketInput>> inputQueues = new ConcurrentHashMap<>();
+    private final Map<Connection, Queue<PacketPlayer>> inputQueues = new ConcurrentHashMap<>();
     private final Map<Connection, PlayerData> connectionIds = new ConcurrentHashMap<>();
 
     private GameState gameState;
@@ -78,8 +81,8 @@ public class GameServer {
 //                    Network.PlayerState ps = new Network.PlayerState();
 //                    ps.id = id; ps.x = 0; ps.y = 0; ps.name = join.name;
 //                    playerStates.put(id, ps);
-                } else if (obj instanceof Network.PacketInput) {
-                    inputQueues.getOrDefault(connection, new ConcurrentLinkedQueue<>()).add((Network.PacketInput) obj);
+                } else if (obj instanceof PacketPlayer) {
+                    inputQueues.getOrDefault(connection, new ConcurrentLinkedQueue<>()).add((PacketPlayer) obj);
                 }
             }
         });
@@ -97,28 +100,29 @@ public class GameServer {
 
     int licz = 0;
     private void handleInput() {
-        for (Queue<Network.PacketInput> queue : inputQueues.values()) {
-            Network.PacketInput in;
+        for (Map.Entry<Connection ,Queue<PacketPlayer>> entry : inputQueues.entrySet()) {
+            PacketPlayer in;
+            int playerId = connectionIds.get(entry.getKey()).getPlayerId();
+            Queue<PacketPlayer> queue = entry.getValue();
             while ((in = queue.poll()) != null) {
-                //System.out.println("Get moving " + in.moveX+ " "+ in.playerId);
-                if(in.moveX > 0)
-                    MoveService.movePlayer(gameState.activePlayers().get(in.playerId),MoveService.Direction.right);
-                else if (in.moveX < 0)
-                    MoveService.movePlayer(gameState.activePlayers().get(in.playerId),MoveService.Direction.left);
+                System.out.println(in);
+                if(in.getPlayerId() != playerId) {
+                    continue;
+                }
+                if(in instanceof PacketPlayerMove move) {
+                    if (move.moveX > 0)
+                        MoveService.movePlayer(gameState.activePlayers().get(playerId), MoveService.Direction.right);
+                    else if (move.moveX < 0)
+                        MoveService.movePlayer(gameState.activePlayers().get(playerId), MoveService.Direction.left);
 
-                if(in.moveY > 0)MoveService.jumpPlayer(gameState.activePlayers().get(in.playerId));
-//                licz++;
-//                if(licz%100 == 0)
-//                {
-//                    System.out.println("liczy " + licz);
-//                }
-//                if(licz%200 == 0)
-//                {
-//                    IntVector2 Intloc = new IntVector2(1,-1);
-//                    Vector2 loc = new Vector2(1,-1);
-//                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
-//                    gameState.grid().removeFrontBlockAt(Intloc);
-//                }
+                    if (move.jump == true) MoveService.jumpPlayer(gameState.activePlayers().get(playerId));
+                }
+                if(in instanceof PacketPlayerHit hit)
+                {
+                    Vector2 pos = new Vector2(hit.x,hit.y);
+                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
+                    actionService.hitAt(gameState.activePlayers().get(playerId),pos);
+                }
             }
         }
     }
@@ -133,11 +137,6 @@ public class GameServer {
         try {
             for (Map.Entry<Connection, PlayerData> entry : connectionIds.entrySet()) {
                 PlayerData playerState = entry.getValue();
-//                System.out.println("Sending scene to player " + id);
-//                System.out.println(gameState.grid() + " why?");
-//                LocalPlaneContainer plane = gameState.grid().getLocal(new RectangleNeighbourhood(new Vector2(-10f, -10f), new Vector2(10f, 10f)));
-//                Scene scene = renderer.renderScene(plane);
-//                conn.sendUDP(scene);
                 playerState.actualize();
             }
         }catch (Exception e){

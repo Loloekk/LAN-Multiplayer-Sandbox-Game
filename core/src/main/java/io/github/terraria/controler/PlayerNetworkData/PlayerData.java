@@ -1,5 +1,7 @@
 package io.github.terraria.controler.PlayerNetworkData;
 
+import io.github.terraria.common.BlockState;
+import io.github.terraria.common.PlayerState;
 import io.github.terraria.controler.Network.Network;
 import io.github.terraria.controler.Network.PacketPlayerDisappear;
 import io.github.terraria.logic.GameState;
@@ -21,7 +23,7 @@ public class PlayerData {
     Connection conn;
 
     public Map<Integer, Chunk> chunks = new HashMap<>();
-    public Map<Integer,Network.PlayerState> players = new HashMap<>();
+    public Map<Integer, PlayerState> players = new HashMap<>();
     public PlayerData(Connection conn, GameState gameState, int playerId)
     {
         this.conn = conn;
@@ -73,9 +75,9 @@ public class PlayerData {
             chunks.remove(chunk);
         }
         List<Integer> playersToDelete = new ArrayList<>();
-        for(Map.Entry<Integer, Network.PlayerState> entry : players.entrySet())
+        for(Map.Entry<Integer, PlayerState> entry : players.entrySet())
         {
-            Network.PlayerState pla = entry.getValue();
+            PlayerState pla = entry.getValue();
             if(abs(x-pla.x) > Chunk.DEFAULT_WIDTH*CHUNK_WIDTH_RADIUS ||
                 abs(y-pla.y) > Chunk.DEFAULT_HEIGHT*CHUNK_HEIGHT_RADIUS ||
                 (!gameState.activePlayers().isActive(pla.id)))
@@ -94,14 +96,14 @@ public class PlayerData {
         }
         for(PhysicalPlayer player : gameState.activePlayers().getList())
         {
-            Network.PlayerState pla = new Network.PlayerState();
+            PlayerState pla = new PlayerState();
             pla.id = player.id();
             pla.x = player.getPosition().x;
             pla.y = player.getPosition().y;
             pla.name = "ala";
             if(players.containsKey(pla.id))
             {
-                Network.PlayerState tmppla = players.get(pla.id);
+                PlayerState tmppla = players.get(pla.id);
                 if(tmppla.x != pla.x || tmppla.y != pla.y)
                 {
                     players.put(pla.id, pla);

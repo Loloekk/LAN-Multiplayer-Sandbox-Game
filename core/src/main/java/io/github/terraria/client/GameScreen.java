@@ -11,10 +11,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
+import io.github.terraria.client.view.Interact.ViewPlayer;
 import io.github.terraria.controler.Network.Network;
 import io.github.terraria.controler.Network.PacketJoin;
 import io.github.terraria.controler.Network.PacketJoinAck;
-import io.github.terraria.client.view.PlayerData.ViewPlayerData;
+import io.github.terraria.client.view.Interact.Data.ViewPlayerData;
 import io.github.terraria.client.view.Renderer;
 import io.github.terraria.client.view.Scene;
 import io.github.terraria.client.view.SceneGenerator;
@@ -28,6 +29,7 @@ public class GameScreen implements Screen {
     private Client client;
     private int playerId;
     private ViewPlayerData playerData;
+    private ViewPlayer viewPlayer;
     private final Drop game;
 //    private final FitViewport viewport = new FitViewport(8, 5);
 
@@ -50,28 +52,28 @@ public class GameScreen implements Screen {
             public void received(com.esotericsoftware.kryonet.Connection c, Object obj) {
                 if (obj instanceof PacketJoinAck ack ) {
                     playerId = ack.playerId;
-                    playerData = new ViewPlayerData(client,playerId);
+                    viewPlayer = new ViewPlayer(client, playerId,viewport);
                     Gdx.app.log("GameScreen", "Joined as id=" + playerId + ", name=" + ack.name);
 
                 }
                 else if (obj instanceof ArrayList list)
                 {
-                    if(playerData == null) {
+                    if(viewPlayer == null) {
                         Gdx.app.log("communication error","XD");
                     }
                     for(Object objj : list)
                     {
 //                        System.out.println("mamy liste" + objj);
-                        playerData.actualize(objj);
+                        viewPlayer.actualize(objj);
 
                     }
                 }
                 else {
                     Gdx.app.log("GameScreen", "Scene update");
-                    if(playerData == null) {
+                    if(viewPlayer == null) {
                         Gdx.app.log("communication error","XD");
                     }
-                    playerData.actualize(obj);
+                    viewPlayer.actualize(obj);
                     System.out.println(obj);
                 }
             }
@@ -92,40 +94,20 @@ public class GameScreen implements Screen {
     int licz = 0;
     @Override
     public void render(float delta) {
-        handleInput();
         ScreenUtils.clear(Color.CYAN);
-        if(playerData == null)
+        if(viewPlayer == null)
             return;
-        SceneGenerator.generate(playerData);
-        renderer.draw(viewport, SceneGenerator.generate(playerData));
+        viewPlayer.handleInput();
+        renderer.draw(viewport, SceneGenerator.generate(viewPlayer.getData()));
         licz ++;
         if(licz%120 == 0)
         {
-            playerData.throwTrash();
+            viewPlayer.throwTrash();
             licz = 0;
         }
     }
 
-    private void handleInput() {
-        float mx=0, my=0;
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))  mx=-1;
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) mx=1;
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))  my=-1;
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))    my=1;
-        if (mx!=0 || my!=0) {
-            Network.PacketInput pi = new Network.PacketInput();
-            pi.playerId = playerId;
-            pi.moveX = mx;
-            pi.moveY = my;
-            client.sendUDP(pi);
-            System.out.println("Send moving " + playerId);
-        }
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-            Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            viewport.unproject(mousePos);
-            System.out.println("Klik LPM w świecie gry: " + mousePos.x + ", " + mousePos.y);
-        }
-    }
+
 
     @Override
     public void resize(int width, int height) {

@@ -1,8 +1,10 @@
-package io.github.terraria.client.view.PlayerData;
+package io.github.terraria.client.view.Interact.Data;
 
 import com.esotericsoftware.kryonet.Connection;
+import io.github.terraria.common.BlockState;
 import io.github.terraria.controler.Network.Network;
 import io.github.terraria.controler.Network.PacketPlayerDisappear;
+import io.github.terraria.common.PlayerState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +23,7 @@ public class ViewPlayerData {
     Connection conn;
 
     public Map<Integer, ViewChunk> chunks = new HashMap<>();
-    public Map<Integer,Network.PlayerState> players = new HashMap<>();
+    public Map<Integer,PlayerState> players = new HashMap<>();
     public ViewPlayerData(Connection conn, int playerId)
     {
         this.conn = conn;
@@ -29,14 +31,8 @@ public class ViewPlayerData {
     }
     public void actualize(Object obj)
     {
-        if(obj instanceof io.github.terraria.controler.PlayerNetworkData.BlockState block)
+        if(obj instanceof BlockState blockState)
         {
-            ViewBlockState blockState = new ViewBlockState();
-            blockState.x = block.x;
-            blockState.y = block.y;
-            blockState.z = block.z;
-            blockState.blockID = block.blockID;
-//            System.out.println(blockState.x+" "+blockState.y+" "+blockState.z+" "+blockState.blockID);
             int chunkId = ViewChunk.getId(blockState.x,blockState.y);
             int X = ViewChunk.getX(blockState.x);
             int Y = ViewChunk.getY(blockState.y);
@@ -44,7 +40,7 @@ public class ViewPlayerData {
                 chunks.put(chunkId, new ViewChunk(X,Y));
             chunks.get(chunkId).setBlock(blockState);
         }
-        else if(obj instanceof Network.PlayerState pla)
+        else if(obj instanceof PlayerState pla)
         {
             if(pla.id == playerId)
             {
@@ -52,8 +48,8 @@ public class ViewPlayerData {
                 y = pla.y;
             }
             if(!players.containsKey(pla.id))
-                players.put(pla.id, new Network.PlayerState());
-            Network.PlayerState player = players.get(pla.id);
+                players.put(pla.id, new PlayerState());
+            PlayerState player = players.get(pla.id);
             player.x = pla.x;
             player.y = pla.y;
         }
@@ -79,10 +75,10 @@ public class ViewPlayerData {
     {
         return y;
     }
-    public List<Network.PlayerState> getPlayers()
+    public List<PlayerState> getPlayers()
     {
-        ArrayList<Network.PlayerState> playersList = new ArrayList<>();
-        for(Map.Entry<Integer, Network.PlayerState> entry : players.entrySet())
+        ArrayList<PlayerState> playersList = new ArrayList<>();
+        for(Map.Entry<Integer, PlayerState> entry : players.entrySet())
         {
             playersList.add(entry.getValue());
         }

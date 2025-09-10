@@ -1,7 +1,7 @@
 package io.github.terraria.client.view;
 
-import io.github.terraria.client.view.PlayerData.ViewPlayerData;
-import io.github.terraria.controler.Network.Network;
+import io.github.terraria.client.view.Interact.Data.ViewPlayerData;
+import io.github.terraria.common.PlayerState;
 
 public class SceneGenerator {
     public static int SCENE_WIDTH = 30;
@@ -24,7 +24,7 @@ public class SceneGenerator {
                     continue;
                 scene.objects.add(new DrawableRectangle(i+x+diffX + 0.5f,j+y+diffY + 0.5f,1,1,1));
             }
-        for(Network.PlayerState pla : data.getPlayers())
+        for(PlayerState pla : data.getPlayers())
         {
             scene.objects.add(new DrawableRectangle(pla.x+diffX,pla.y+diffY,0.8f,1.8f,0));
 //            System.out.println("player " + pla.id + " x " + pla.x + " " + pla.y);

@@ -1,4 +1,6 @@
-package io.github.terraria.client.view.PlayerData;
+package io.github.terraria.client.view.Interact.Data;
+
+import io.github.terraria.common.BlockState;
 
 public class ViewChunk {
     public static int DEFAULT_WIDTH = 5;
@@ -13,7 +15,7 @@ public class ViewChunk {
         this.zeroX = zeroX;
         this.zeroY = zeroY;
     }
-    public void setBlock(ViewBlockState block)
+    public void setBlock(BlockState block)
     {
         blocks[block.x-zeroX][block.y-zeroY][block.z] = block.blockID;
     }
