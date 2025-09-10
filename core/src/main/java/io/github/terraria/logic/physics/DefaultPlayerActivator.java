@@ -27,11 +27,11 @@ public class DefaultPlayerActivator extends PlayerActivator {
             hash >>= 1;
             if(planeContainer.getPhysicalAt(position.x(), y) == null)
                 hash += topBit;
-            y++;
             if(hash == desiredHash)
-                break;
+                return new Vector2(position.x(), (y + 1 + (y + 1 - requiredHeight)) / 2f);
+            y++;
         }
-        return new Vector2(position.x(), (y + y - requiredHeight) / 2);
+        return new Vector2(position.x(), planeContainer.getTopY() + 1 + requiredHeight / 2f);
     }
 
     @Override
