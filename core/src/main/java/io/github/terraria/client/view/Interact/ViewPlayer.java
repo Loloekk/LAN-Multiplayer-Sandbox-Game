@@ -18,8 +18,8 @@ public class ViewPlayer {
     Viewport viewport;
 
 
-    private long lastClickTime = 0;
-    private static final long CLICK_DELAY = 200;
+    private long lastLeftClickTime = 0;
+    private static final long LEFT_CLICK_DELAY = 200;
     public ViewPlayer(Connection conn, int playerId, Viewport viewport)
     {
         this.conn = conn;
@@ -45,6 +45,9 @@ public class ViewPlayer {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT))  mx+=-1;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) mx+=1;
         if (Gdx.input.isKeyPressed(Input.Keys.UP))    jump=true;
+        if (Gdx.input.isKeyPressed(Input.Keys.A))  mx+=-1;
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) mx+=1;
+        if (Gdx.input.isKeyPressed(Input.Keys.W))    jump=true;
         if (mx!=0 || jump!=false) {
             PacketPlayerMove move = new PacketPlayerMove();
             move.playerId = playerId;
@@ -55,8 +58,8 @@ public class ViewPlayer {
         }
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             long now = TimeUtils.millis();
-            if (now - lastClickTime >= CLICK_DELAY) {
-                lastClickTime = now;
+            if (now - lastLeftClickTime >= LEFT_CLICK_DELAY) {
+                lastLeftClickTime = now;
                 Vector3 mousePos3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                 viewport.unproject(mousePos3);
                 Vector2 mousePos = new Vector2(mousePos3.x, mousePos3.y);
