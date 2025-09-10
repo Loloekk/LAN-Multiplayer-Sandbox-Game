@@ -79,11 +79,13 @@ public class PlayerData {
             if(abs(x-pla.x) > Chunk.DEFAULT_WIDTH*CHUNK_WIDTH_RADIUS ||
                 abs(y-pla.y) > Chunk.DEFAULT_HEIGHT*CHUNK_HEIGHT_RADIUS ||
                 (!gameState.activePlayers().isActive(pla.id)))
+                // conditions when we remove player
             {
                 PacketPlayerDisappear dis = new PacketPlayerDisappear();
                 dis.id = pla.id;
                 conn.sendUDP(dis);
                 playersToDelete.add(pla.id);
+//                System.out.println("dla" + playerId + " usuwam "+ pla.id);
             }
         }
         for(Integer deletedPlayerId : playersToDelete)
@@ -97,23 +99,21 @@ public class PlayerData {
             pla.x = player.getPosition().x;
             pla.y = player.getPosition().y;
             pla.name = "ala";
-            if(abs(x-pla.x) <= Chunk.DEFAULT_WIDTH*CHUNK_WIDTH_RADIUS &&
-                abs(y-pla.y) <= Chunk.DEFAULT_HEIGHT*CHUNK_HEIGHT_RADIUS)
+            if(players.containsKey(pla.id))
             {
-                if(players.containsKey(pla.id))
-                {
-                    Network.PlayerState tmppla = players.get(pla.id);
-                    if(tmppla.x != pla.x || tmppla.y != pla.y)
-                    {
-                        players.put(pla.id, pla);
-                        conn.sendUDP(pla);
-                    }
-                }
-                else
+                Network.PlayerState tmppla = players.get(pla.id);
+                if(tmppla.x != pla.x || tmppla.y != pla.y)
                 {
                     players.put(pla.id, pla);
                     conn.sendUDP(pla);
                 }
+            }
+            else if(abs(x-pla.x) <= Chunk.DEFAULT_WIDTH*CHUNK_WIDTH_RADIUS &&
+                abs(y-pla.y) <= Chunk.DEFAULT_HEIGHT*CHUNK_HEIGHT_RADIUS)
+                // conditions when we add player
+            {
+                players.put(pla.id, pla);
+                conn.sendUDP(pla);
             }
         }
     }

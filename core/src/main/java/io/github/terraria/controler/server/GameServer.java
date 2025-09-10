@@ -122,7 +122,6 @@ public class GameServer {
         int positionIterations = 4;
         world.step(timeStep,velocityIterations,positionIterations);
     }
-    int licz=0;
     private void broadcastScenes() {
         try {
             for (Map.Entry<Connection, PlayerData> entry : connectionIds.entrySet()) {
