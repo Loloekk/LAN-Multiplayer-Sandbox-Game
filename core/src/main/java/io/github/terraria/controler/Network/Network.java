@@ -3,8 +3,8 @@ package io.github.terraria.controler.Network;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 import io.github.terraria.controler.PlayerNetworkData.BlockState;
-import io.github.terraria.view.DrawableRectangle;
-import io.github.terraria.view.Scene;
+import io.github.terraria.client.view.DrawableRectangle;
+import io.github.terraria.client.view.Scene;
 
 import java.util.ArrayList;
 import java.util.List;

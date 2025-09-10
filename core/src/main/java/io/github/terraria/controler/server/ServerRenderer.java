@@ -1,11 +1,8 @@
 package io.github.terraria.controler.server;
 
 import io.github.terraria.logic.building.LocalPlaneContainer;
-import io.github.terraria.view.DrawableRectangle;
-import io.github.terraria.view.Scene;
-
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
+import io.github.terraria.client.view.DrawableRectangle;
+import io.github.terraria.client.view.Scene;
 
 public class ServerRenderer {
 

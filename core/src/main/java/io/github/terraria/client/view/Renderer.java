@@ -1,4 +1,4 @@
-package io.github.terraria.view;
+package io.github.terraria.client.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;

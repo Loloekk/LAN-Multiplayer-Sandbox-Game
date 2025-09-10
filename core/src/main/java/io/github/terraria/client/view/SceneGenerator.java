@@ -1,7 +1,7 @@
-package io.github.terraria.view;
+package io.github.terraria.client.view;
 
+import io.github.terraria.client.view.PlayerData.ViewPlayerData;
 import io.github.terraria.controler.Network.Network;
-import io.github.terraria.view.PlayerData.ViewPlayerData;
 
 public class SceneGenerator {
     public static int SCENE_WIDTH = 30;

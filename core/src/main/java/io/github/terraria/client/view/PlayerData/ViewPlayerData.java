@@ -1,10 +1,8 @@
-package io.github.terraria.view.PlayerData;
+package io.github.terraria.client.view.PlayerData;
 
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.controler.Network.Network;
 import io.github.terraria.controler.Network.PacketPlayerDisappear;
-import io.github.terraria.controler.PlayerNetworkData.BlockState;
-import io.github.terraria.controler.PlayerNetworkData.Chunk;
 
 import java.util.HashMap;
 import java.util.Map;

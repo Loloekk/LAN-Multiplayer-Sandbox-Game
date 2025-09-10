@@ -91,13 +91,6 @@ public class GameServer {
             broadcastScenes();
         }, 0, 20, TimeUnit.MILLISECONDS);
 
-//        for(int j = 4; j >=-5; j --)
-//        {
-//            for(int i = 0; i < 20 ;i ++)
-//                System.out.print(gameState.grid().getFrontBlockAt(i,j)+ " ");
-//            System.out.println();
-//        }
-//        ArrayList<ArrayList<ArrayList>> Wejscie = GameState.grid.
         new CountDownLatch(1).await();
             System.out.println("Server started on TCP=" + Network.TCP_PORT + ", UDP=" + Network.UDP_PORT);
     }
@@ -123,12 +116,7 @@ public class GameServer {
 //                {
 //                    IntVector2 Intloc = new IntVector2(1,-1);
 //                    Vector2 loc = new Vector2(1,-1);
-////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
-////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
-////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
-////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
-////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
-////                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
+//                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
 //                    gameState.grid().removeFrontBlockAt(Intloc);
 //                }
             }
