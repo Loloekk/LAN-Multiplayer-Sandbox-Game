@@ -45,6 +45,8 @@ public class PlayerActionServiceImpl extends PlayerActionService {
             }
             if(action.mine(force)) {
                 Block block1 = gameState.grid().removeFrontBlockAt(intLoc);
+                // If equipment is full block1 is garbage collected.
+                // This is acceptable as PlaneContainer handles destruction of the body.
                 player.equipment().insert(block1);
             }
         }

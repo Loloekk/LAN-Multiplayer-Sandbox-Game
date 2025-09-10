@@ -13,23 +13,28 @@ public class MultisetItemHolder implements ItemHolder {
     public MultisetItemHolder(int cap) {
         capacity = max(cap,0);
     }
+    @Override
     public boolean insert(Item item) {
         if(set.size()==capacity)
             return false;
         set.add(item);
         return true;
     }
-    public boolean insert(Item item, int count) {
+    @Override
+    public int insert(Item item, int count) {
         int toAdd = min(count, capacity - set.size());
         set.add(item, toAdd);
-        return toAdd == count;
+        return (count - toAdd);
     }
+    @Override
     public int getCount(Item item) { return set.count(item); }
+    @Override
     public int remove(Item item, int count) {
         return min(set.remove(item, count), count);
     }
+    @Override
     public int remove(Item item) { return remove(item, 1); }
-    public void clear() { set.clear(); }
+    @Override
     public Multiset<Item> browse() {
         return Multisets.unmodifiableMultiset(set);
     }
