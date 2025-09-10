@@ -9,6 +9,7 @@ import io.github.terraria.controler.Network.PacketJoin;
 import io.github.terraria.controler.Network.PacketJoinAck;
 import io.github.terraria.controler.PlayerNetworkData.PlayerData;
 import io.github.terraria.logic.GameState;
+import io.github.terraria.logic.IntVector2;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
 import io.github.terraria.logic.physics.*;
@@ -65,6 +66,11 @@ public class GameServer {
                 if (obj instanceof PacketJoin join) {
                     PlayerRecord pla = playerRegistry.registerPlayer();
                     int id = pla.getId();
+                    PacketJoinAck ack = new PacketJoinAck();
+                    ack.playerId = id; ack.name = join.name;
+                    System.out.println("Player " + id + " dodany");
+                    connection.sendTCP(ack);
+
                     PlayerData playerState = new PlayerData(connection,gameState,id);
                     playerActivator.loginPlayer(id);
                     connectionIds.put(connection, playerState);
@@ -72,10 +78,6 @@ public class GameServer {
 //                    Network.PlayerState ps = new Network.PlayerState();
 //                    ps.id = id; ps.x = 0; ps.y = 0; ps.name = join.name;
 //                    playerStates.put(id, ps);
-                    PacketJoinAck ack = new PacketJoinAck();
-                    ack.playerId = id; ack.name = join.name;
-                    System.out.println("Player " + id + " dodany");
-                    connection.sendTCP(ack);
                 } else if (obj instanceof Network.PacketInput) {
                     inputQueues.getOrDefault(connection, new ConcurrentLinkedQueue<>()).add((Network.PacketInput) obj);
                 }
@@ -100,7 +102,7 @@ public class GameServer {
             System.out.println("Server started on TCP=" + Network.TCP_PORT + ", UDP=" + Network.UDP_PORT);
     }
 
-
+    int licz = 0;
     private void handleInput() {
         for (Queue<Network.PacketInput> queue : inputQueues.values()) {
             Network.PacketInput in;
@@ -112,6 +114,18 @@ public class GameServer {
                     MoveService.movePlayer(gameState.activePlayers().get(in.playerId),MoveService.Direction.left);
 
                 if(in.moveY > 0)MoveService.jumpPlayer(gameState.activePlayers().get(in.playerId));
+                licz++;
+                if(licz%100 == 0)
+                {
+                    System.out.println("liczy " + licz);
+                }
+                if(licz%200 == 0)
+                {
+                    IntVector2 Intloc = new IntVector2(1,-1);
+                    Vector2 loc = new Vector2(1,-1);
+                    actionService.hitAt(gameState.activePlayers().get(in.playerId),loc);
+//                    gameState.grid().removeFrontBlockAt(Intloc);
+                }
             }
         }
     }

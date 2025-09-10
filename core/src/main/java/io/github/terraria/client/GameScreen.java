@@ -55,12 +55,10 @@ public class GameScreen implements Screen {
                     }
                     for(Object objj : list)
                     {
-                        System.out.println("mamy liste" + objj);
+//                        System.out.println("mamy liste" + objj);
                         playerData.actualize(objj);
 
                     }
-//                    Gdx.app.log("GameScreen", "Player position" + pla.x+" "+ pla.y);
-//                    currentScene.objects.add(new DrawableRectangle(pla.x, pla.y, 1, 2, 0));
                 }
                 else {
                     Gdx.app.log("GameScreen", "Scene update");
@@ -90,7 +88,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         handleInput();
         ScreenUtils.clear(Color.CYAN);
-        if(playerData==null)
+        if(playerData == null)
             return;
         SceneGenerator.generate(playerData);
         renderer.draw(viewport, SceneGenerator.generate(playerData));
