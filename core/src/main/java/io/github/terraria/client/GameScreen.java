@@ -46,6 +46,7 @@ public class GameScreen implements Screen {
                     playerId = ack.playerId;
                     playerData = new ViewPlayerData(client,playerId);
                     Gdx.app.log("GameScreen", "Joined as id=" + playerId + ", name=" + ack.name);
+
                 }
                 else if (obj instanceof ArrayList list)
                 {
@@ -89,6 +90,9 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         handleInput();
         ScreenUtils.clear(Color.CYAN);
+        if(playerData==null)
+            return;
+        SceneGenerator.generate(playerData);
         renderer.draw(viewport, SceneGenerator.generate(playerData));
         licz ++;
         if(licz%120 == 0)
