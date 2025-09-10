@@ -3,23 +3,19 @@ package io.github.terraria.client;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
+import io.github.terraria.client.view.*;
 import io.github.terraria.client.view.Interact.ViewPlayer;
+import io.github.terraria.client.view.Textures.TextureBank;
 import io.github.terraria.controler.Network.Network;
 import io.github.terraria.controler.Network.PacketJoin;
 import io.github.terraria.controler.Network.PacketJoinAck;
 import io.github.terraria.client.view.Interact.Data.ViewPlayerData;
-import io.github.terraria.client.view.Renderer;
-import io.github.terraria.client.view.Scene;
-import io.github.terraria.client.view.SceneGenerator;
-import io.github.terraria.client.view.TextureBank;
 import com.badlogic.gdx.graphics.Color;
 
 import java.io.IOException;
@@ -36,14 +32,12 @@ public class GameScreen implements Screen {
 //    private final ScreenViewport viewport = new ScreenViewport();
 //    private final StretchViewport viewport = new StretchViewport(8,5);
     private final ScalingViewport viewport = new ScalingViewport(Scaling.fill, 30, 20);
-    private TextureBank textureBank;
+    private SceneGenerator generator;
     private Renderer renderer;
-    private Scene currentScene = new Scene();
-    private final int PLAYER_TEXTURE;
-    private final int STONE_TEXTURE;
 
     public GameScreen(Drop game) {
         this.game = game;
+        generator = new SceneGenerator();
         client = new Client();
         Network.register(client);
         client.start();
@@ -86,10 +80,10 @@ public class GameScreen implements Screen {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        textureBank = new TextureBank(new Texture("missing.png"));
-        PLAYER_TEXTURE = textureBank.registerTexture(new Texture("stefan.png"));
-        STONE_TEXTURE = textureBank.registerTexture(new Texture("stone.png"));
-        renderer = new Renderer(textureBank);
+//        textureBank = new TextureBank(new Texture("missing.png"));
+//        PLAYER_TEXTURE = textureBank.registerTexture(new Texture("stefan.png"));
+//        STONE_TEXTURE = textureBank.registerTexture(new Texture("stone.png"));
+        renderer = new Renderer();
     }
     int licz = 0;
     @Override
@@ -98,7 +92,7 @@ public class GameScreen implements Screen {
         if(viewPlayer == null)
             return;
         viewPlayer.handleInput();
-        renderer.draw(viewport, SceneGenerator.generate(viewPlayer.getData()));
+        renderer.draw(viewport, generator.generate(viewPlayer.getData()));
         licz ++;
         if(licz%120 == 0)
         {

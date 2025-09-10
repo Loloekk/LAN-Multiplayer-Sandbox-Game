@@ -24,7 +24,6 @@ import java.io.IOException;
 
 public class GameServer {
     private Server server;
-    private ServerRenderer renderer;
     private final Map<Connection, Queue<PacketPlayer>> inputQueues = new ConcurrentHashMap<>();
     private final Map<Connection, PlayerData> connectionIds = new ConcurrentHashMap<>();
 
@@ -39,13 +38,12 @@ public class GameServer {
         Network.register(server);
         server.bind(Network.TCP_PORT, Network.UDP_PORT);
         server.start();
-        renderer = new ServerRenderer();
 
         // initialize model
         world = new Box2DWorld(new Vector2(0, -10), true);
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
         builder.world(world);
-        builder.width(30).height(20).zeroX(0).zeroY(10);
+        builder.width(100).height(50).zeroX(50).zeroY(25);
         PlaneContainer planeContainer = builder.build();
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()));
 //        System.out.println("Plane container " + planeContainer);
@@ -120,7 +118,7 @@ public class GameServer {
                 if(in instanceof PacketPlayerHit hit)
                 {
                     Vector2 pos = new Vector2(hit.x,hit.y);
-                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
+//                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
                     actionService.hitAt(gameState.activePlayers().get(playerId),pos);
                 }
             }

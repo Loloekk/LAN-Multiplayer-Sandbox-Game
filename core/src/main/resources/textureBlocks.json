@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Stone",
+    "fixture": {
+      "texture": "stone.png",
+      "width": 1.0,
+      "height": 1.0,
+      "centerX": 0.5,
+      "centerY": 0.5
+    }
+  },
+  {
+    "id": 2,
+    "name": "Dirt",
+    "fixture": {
+      "texture": "dirt.png",
+      "width": 1.0,
+      "height": 1.0,
+      "centerX": 0.5,
+      "centerY": 0.5
+    }
+  },
+  {
+    "id": 3,
+    "name": "Water",
+    "fixture": {
+      "texture": "stone.png",
+      "width": 1.0,
+      "height": 1.0,
+      "centerX": 0.5,
+      "centerY": 0.5
+    }
+  },
+  {
+    "id": 4,
+    "name": "Decoration",
+    "fixture": {
+      "texture": "stone.png",
+      "width": 1.0,
+      "height": 1.0,
+      "centerX": 0.5,
+      "centerY": 0.5
+    }
+  },
+  {
+    "id": 5,
+    "name": "Anvil",
+    "fixture": {
+      "texture": "stone.png",
+      "width": 1.0,
+      "height": 1.0,
+      "centerX": 0.5,
+      "centerY": 0.5
+    }
+  }
+]

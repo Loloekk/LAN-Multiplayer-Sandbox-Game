@@ -1,0 +1,13 @@
+[
+  {
+    "id": 0,
+    "name": "Player0",
+    "fixture": {
+      "texture": "stefan.png",
+      "width": 0.8,
+      "height": 1.8,
+      "centerX": 0.0,
+      "centerY": 0.0
+    }
+  }
+]

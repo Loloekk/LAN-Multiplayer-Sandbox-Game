@@ -50,6 +50,7 @@ public class ViewPlayerData {
             if(!players.containsKey(pla.id))
                 players.put(pla.id, new PlayerState());
             PlayerState player = players.get(pla.id);
+            player.id = pla.id;
             player.x = pla.x;
             player.y = pla.y;
         }

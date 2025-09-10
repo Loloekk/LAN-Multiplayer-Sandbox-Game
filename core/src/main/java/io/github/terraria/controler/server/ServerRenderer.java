@@ -6,13 +6,13 @@ import io.github.terraria.client.view.Scene;
 
 public class ServerRenderer {
 
-    public Scene renderScene(){
-        Scene scene = new Scene();
-        scene.objects.add(new DrawableRectangle(1, 1, 1, 1, 1));
-        scene.objects.add(new DrawableRectangle(2, 1, 1, 1, 1));
-        scene.objects.add(new DrawableRectangle((float)(2), (float)(2), 1, 2, 0));
-        return scene;
-    }
+//    public Scene renderScene(){
+//        Scene scene = new Scene();
+//        scene.objects.add(new DrawableRectangle(1, 1, 1, 1, 1));
+//        scene.objects.add(new DrawableRectangle(2, 1, 1, 1, 1));
+//        scene.objects.add(new DrawableRectangle((float)(2), (float)(2), 1, 2, 0));
+//        return scene;
+//    }
 
     public Scene renderScene(LocalPlaneContainer plane){
         Scene scene = new Scene();

@@ -12,7 +12,7 @@ public class GridGenerator {
             for (int j = 0; j < height; j++) {
                 ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
                 {
-                    Block frontBlock = (j < zeroY || i == 0 || i == width-1 || (i == 6 && j < zeroY + 3) || (i == 7 && j == zeroY + 3) || (i == 8 && j == zeroY + 3)) ? blockFactory.create("Stone") : null;
+                    Block frontBlock = (j < zeroY || i == 0 || i == width-1 || (i == 6 && j < zeroY + 3) || (i == 7 && j == zeroY + 3) || (i == 8 && j == zeroY + 3)) ? blockFactory.create("Dirt") : null;
                     point.add(frontBlock);
                 }
                 point.add(null);
@@ -33,7 +33,7 @@ public class GridGenerator {
             for (int j = 0; j < height; j++) {
                 ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
                 {
-                    Block frontBlock = (j <= groundLevel) ? blockFactory.create("Stone") : null;
+                    Block frontBlock = (j <= groundLevel) ? blockFactory.create("Dirt") : null;
                     point.add(frontBlock);
                 }
                 point.add(null);
