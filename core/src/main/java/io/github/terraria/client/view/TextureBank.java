@@ -1,4 +1,4 @@
-package io.github.terraria.view;
+package io.github.terraria.client.view;
 
 import com.badlogic.gdx.graphics.Texture;
 
