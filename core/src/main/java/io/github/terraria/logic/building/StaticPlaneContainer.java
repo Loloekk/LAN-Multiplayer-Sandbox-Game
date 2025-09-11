@@ -7,6 +7,7 @@ import io.github.terraria.logic.physics.BodyFactory;
 import io.github.terraria.logic.physics.World;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class StaticPlaneContainer extends PlaneContainer {
     public static final int DEFAULT_WIDTH = 100;
@@ -31,8 +32,7 @@ public class StaticPlaneContainer extends PlaneContainer {
         this.zeroY = zeroY;
         grid = savedGrid;
 
-        bodies = new ArrayList<>(width);
-        for(int i = 0; i < width; i++) {
+        bodies = new ArrayList<>(width); for(int i = 0; i < width; i++) {
             ArrayList<Body> bodiesColumn = new ArrayList<>(height);
             for (int j = 0; j < height; j++) {
                 Block block = grid.get(i).get(j).get(0);
@@ -46,35 +46,35 @@ public class StaticPlaneContainer extends PlaneContainer {
         }
     }
 
+    private boolean outOfBounds(int x, int y) {
+        return x + zeroX < 0 || x + zeroX >= width || y + zeroY < 0 || y + zeroY >= height;
+    }
     // These private methods also take world coordinates as arguments.
     private ArrayList<Block> getPointAt(int x, int y) {
+        if(outOfBounds(x, y))
+            return new ArrayList<>(Collections.nCopies(StaticPlaneContainer.layers, null));
         return grid.get(x + zeroX).get(y + zeroY);
     }
 
     private void setPointAt(int x, int y, ArrayList<Block> point) {
-        grid.get(x + zeroX).set(y + zeroY, point);
+        if(!outOfBounds(x, y))
+            grid.get(x + zeroX).set(y + zeroY, point);
     }
 
     private Body getBodyAt(int x, int y) {
+        if(outOfBounds(x, y))
+            return null;
         return bodies.get(x + zeroX).get(y + zeroY);
     }
 
     private void setBodyAt(int x, int y, Body body) {
-        bodies.get(x + zeroX).set(y + zeroY, body);
+        if(!outOfBounds(x, y))
+            bodies.get(x + zeroX).set(y + zeroY, body);
     }
 
-    // Best thin, so can be used efficiently in other methods.
     @Override
     public Block getBlockAt(int x, int y, int layer) {
-        //TODO: blad przy pobiaraniu spoza granicy
-        try
-        {
-            return getPointAt(x, y).get(layer);
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
+        return getPointAt(x, y).get(layer);
     }
 
     @Override
