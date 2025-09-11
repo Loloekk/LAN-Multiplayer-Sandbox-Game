@@ -13,10 +13,6 @@ public class TextureBank {
     public TextureBank(TextureQuad missingTexture, Map<Integer, TextureQuad> map){
         this.missingTexture = missingTexture;
         this.map = map;
-        for(Map.Entry<Integer,TextureQuad> entry : map.entrySet())
-        {
-            System.out.println(entry.getKey()+ " "+ entry.getValue().info());
-        }
     }
     public TextureQuad getTexture(int id){
         if(!map.containsKey(id))

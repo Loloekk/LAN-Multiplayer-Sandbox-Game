@@ -16,8 +16,8 @@ import io.github.terraria.logic.players.PhysicalPlayer;
 import static java.lang.Math.abs;
 
 public class PlayerData {
-    public static int CHUNK_WIDTH_RADIUS = 3;
-    public static int CHUNK_HEIGHT_RADIUS = 2;
+    public static int CHUNK_WIDTH_RADIUS = 4;
+    public static int CHUNK_HEIGHT_RADIUS = 3;
     private GameState gameState;
     private int playerId;
     Connection conn;
@@ -46,7 +46,7 @@ public class PlayerData {
                 {
                     chunks.put(chunkId,new Chunk(chunkX,chunkY));
                     ArrayList<BlockState> data = chunks.get(chunkId).initialize(gameState.grid());
-                    conn.sendUDP(data);
+                    conn.sendTCP(data);
                     //System.out.println("wysylam bloki");
                 }
             }
@@ -65,14 +65,14 @@ public class PlayerData {
             {
                 ArrayList<BlockState> data = chunk.getDifferences(gameState.grid());
                 if(data.size()>0) {
-                    conn.sendUDP(data);
+                    conn.sendTCP(data);
                     //System.out.println("wysylam bloki");
                 }
             }
         }
         for(Chunk chunk : chunksToDelete)
         {
-            chunks.remove(chunk);
+            chunks.remove(chunk.getId());
         }
         List<Integer> playersToDelete = new ArrayList<>();
         for(Map.Entry<Integer, PlayerState> entry : players.entrySet())
@@ -85,7 +85,7 @@ public class PlayerData {
             {
                 PacketPlayerDisappear dis = new PacketPlayerDisappear();
                 dis.id = pla.id;
-                conn.sendUDP(dis);
+                conn.sendTCP(dis);
                 playersToDelete.add(pla.id);
 //                System.out.println("dla" + playerId + " usuwam "+ pla.id);
             }

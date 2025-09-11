@@ -12,7 +12,7 @@ public class TextureBankLoader {
 
     public TextureBankLoader(String missing)
     {
-        this.missing = new TextureQuad(new Texture(missing),1,1,0.5f,0.5f);
+        this.missing = new TextureQuad(new Texture(missing),1,1,0.5f,0.5f,true);
     }
 
     public TextureBank getTextureBank(String jsonName)
@@ -28,7 +28,7 @@ public class TextureBankLoader {
             System.out.println(tex.texture());
             textures.put(entry.getKey(), new TextureQuad(new Texture(tex.texture()),
                 tex.width(),tex.height(),
-                tex.centerX(),tex.centerY()));
+                tex.centerX(),tex.centerY(),tex.transparent()));
             System.out.println(
                 tex.width()+ " " +tex.height()+ " " +
                 tex.centerX()+ " " +tex.centerY());

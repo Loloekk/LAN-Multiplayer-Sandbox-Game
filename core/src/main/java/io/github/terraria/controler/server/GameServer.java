@@ -43,14 +43,14 @@ public class GameServer {
         world = new Box2DWorld(new Vector2(0, -10), true);
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
         builder.world(world);
-        builder.width(100).height(50).zeroX(50).zeroY(25);
+        builder.width(100).height(40).zeroX(50).zeroY(10);
         PlaneContainer planeContainer = builder.build();
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()));
 //        System.out.println("Plane container " + planeContainer);
 //        System.out.println("Gamestate grid = " + gameState.grid());
 
 
-        playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(3f, 3f));
+        playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(0f, 0f));
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer);
         actionService = new PlayerActionServiceImpl(gameState);
 

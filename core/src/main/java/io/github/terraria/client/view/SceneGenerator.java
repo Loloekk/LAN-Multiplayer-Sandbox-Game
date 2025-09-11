@@ -3,11 +3,15 @@ package io.github.terraria.client.view;
 import io.github.terraria.client.view.Interact.Data.ViewPlayerData;
 import io.github.terraria.client.view.Textures.TextureBank;
 import io.github.terraria.client.view.Textures.TextureBankLoader;
+import io.github.terraria.client.view.Textures.TextureQuad;
 import io.github.terraria.common.PlayerState;
+
+import java.util.Stack;
 
 public class SceneGenerator {
     public static int SCENE_WIDTH = 30;
     public static int SCENE_HEIGHT = 20;
+    public static int SCENE_LAYERS = 2;
     private static float centerX = 15;
     private static float centerY = 10;
     TextureBank blocksTexture;
@@ -27,12 +31,21 @@ public class SceneGenerator {
         float diffX = centerX - data.getX();
         float diffY = centerY - data.getY();
         for(int i = - SCENE_WIDTH / 2 - 3; i<= SCENE_WIDTH / 2 + 3;  i++)
-            for(int j = - SCENE_HEIGHT / 2 - 3; j <= SCENE_HEIGHT / 2 + 3;  j++)
-            {
-                Integer blockId = data.getBlockId(i+x,j+y,0);
-                if(blockId == null || blockId.equals(0))
-                    continue;
-                scene.objects.add(new DrawableRectangle(i+x+diffX,j+y+diffY,blocksTexture.getTexture(blockId)));
+            for(int j = - SCENE_HEIGHT / 2 - 3; j <= SCENE_HEIGHT / 2 + 3;  j++) {
+                Stack<DrawableRectangle> rect = new Stack<>();
+                for (int z = 0; z < SCENE_LAYERS; z++) {
+                    Integer blockId = data.getBlockId(i + x, j + y, z);
+                    if (blockId == null || blockId.equals(0))
+                        continue;
+                    TextureQuad texture = blocksTexture.getTexture(blockId);
+                    rect.add(new DrawableRectangle(i + x + diffX, j + y + diffY,texture));
+                    if(!texture.isTransparent())
+                        break;
+                }
+                while(!rect.isEmpty())
+                {
+                    scene.objects.add(rect.pop());
+                }
             }
         for(PlayerState pla : data.getPlayers())
         {

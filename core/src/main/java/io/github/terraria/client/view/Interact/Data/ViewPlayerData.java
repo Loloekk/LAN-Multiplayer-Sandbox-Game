@@ -15,8 +15,8 @@ import static java.lang.Math.abs;
 
 
 public class ViewPlayerData {
-    public static int CHUNK_WIDTH_RADIUS = 6;
-    public static int CHUNK_HEIGHT_RADIUS = 4;
+    public static int CHUNK_WIDTH_RADIUS = 4;
+    public static int CHUNK_HEIGHT_RADIUS = 3;
     private int playerId;
     private float x;
     private float y;
