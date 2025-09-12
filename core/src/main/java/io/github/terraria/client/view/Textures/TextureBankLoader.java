@@ -1,7 +1,7 @@
 package io.github.terraria.client.view.Textures;
 
 import com.badlogic.gdx.graphics.Texture;
-import io.github.terraria.logic.RecordLoader;
+import io.github.terraria.loading.RecordLoader;
 
 import java.util.HashMap;
 import java.util.Map;

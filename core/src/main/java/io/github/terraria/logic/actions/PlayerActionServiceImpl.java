@@ -1,14 +1,15 @@
-package io.github.terraria.logic.players;
+package io.github.terraria.logic.actions;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.GameState;
-import io.github.terraria.logic.IntVector2;
+import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.building.Block;
+import io.github.terraria.logic.players.PhysicalPlayer;
 
 import java.util.HashMap;
 import java.util.Map;
 
 // TODO: Test.
+// But refactor first.
 public class PlayerActionServiceImpl extends PlayerActionService {
     public PlayerActionServiceImpl(GameState gameState) {
         super(gameState);
@@ -36,7 +37,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
 
         final int force = 35;
         IntVector2 intLoc = IntVector2.toInt(loc);
-        Block block = gameState.grid().getFrontBlockAt(intLoc);
+        Block block = grid.getFrontBlockAt(intLoc);
         if (block != null) {
             MiningAction action = currentMining.get(player.id());
             if(action == null  || !intLoc.equals(action.location())) {
@@ -44,7 +45,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
                 currentMining.put(player.id(), action);
             }
             if(action.mine(force)) {
-                Block block1 = gameState.grid().removeFrontBlockAt(intLoc);
+                Block block1 = grid.removeFrontBlockAt(intLoc);
                 // If equipment is full block1 is garbage collected.
                 // This is acceptable as PlaneContainer handles destruction of the body.
                 player.collectItem(block1);
@@ -63,7 +64,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
             return;
 
         if(player.heldItem() instanceof Block block
-            && gameState.grid().placeBlockAt(IntVector2.toInt(loc), block)) {
+            && grid.placeBlockAt(IntVector2.toInt(loc), block)) {
             player.discardInstanceOfHeldItem();
         }
     }

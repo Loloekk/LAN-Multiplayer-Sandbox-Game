@@ -1,5 +1,7 @@
-package io.github.terraria.logic.building;
+package io.github.terraria.loading;
 
+import io.github.terraria.logic.building.Block;
+import io.github.terraria.logic.building.BlockType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

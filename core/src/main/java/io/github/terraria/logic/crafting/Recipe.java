@@ -1,8 +1,8 @@
 package io.github.terraria.logic.crafting;
 
 import com.google.common.collect.Multiset;
-import io.github.terraria.logic.Item;
-import io.github.terraria.logic.ItemHolder;
+import io.github.terraria.logic.equipment.Item;
+import io.github.terraria.logic.equipment.ItemHolder;
 import io.github.terraria.logic.crafting.station.StationType;
 
 import java.util.List;

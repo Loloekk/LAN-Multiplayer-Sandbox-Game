@@ -1,9 +1,9 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.IntVector2;
-import io.github.terraria.logic.Item;
-import io.github.terraria.logic.ItemHolder;
+import io.github.terraria.utils.IntVector2;
+import io.github.terraria.logic.equipment.Item;
+import io.github.terraria.logic.equipment.ItemHolder;
 import io.github.terraria.logic.physics.Body;
 
 public class PhysicalPlayer {

@@ -1,7 +1,7 @@
 package io.github.terraria.logic.crafting;
 
-import io.github.terraria.logic.ItemRegistry;
-import io.github.terraria.logic.RecordLoader;
+import io.github.terraria.logic.equipment.ItemRegistry;
+import io.github.terraria.loading.RecordLoader;
 import io.github.terraria.logic.crafting.station.StationType;
 
 import java.util.List;

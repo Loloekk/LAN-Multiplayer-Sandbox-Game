@@ -1,4 +1,4 @@
-package io.github.terraria.logic;
+package io.github.terraria.utils;
 
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.logic.physics.Body;

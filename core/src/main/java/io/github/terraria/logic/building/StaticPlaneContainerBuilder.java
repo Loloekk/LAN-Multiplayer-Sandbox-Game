@@ -1,5 +1,8 @@
 package io.github.terraria.logic.building;
 
+import io.github.terraria.loading.BlockFactoryLoader;
+import io.github.terraria.loading.BodyFactoryLoader;
+import io.github.terraria.loading.GridGenerator;
 import io.github.terraria.logic.physics.*;
 
 import java.util.ArrayList;

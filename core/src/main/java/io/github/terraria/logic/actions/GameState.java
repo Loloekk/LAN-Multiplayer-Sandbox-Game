@@ -1,9 +1,10 @@
-package io.github.terraria.logic;
+package io.github.terraria.logic.actions;
 
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.logic.building.LocalPlaneContainer;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.players.ActivePlayers;
+import io.github.terraria.utils.RectangleNeighbourhood;
 
 public record GameState(PlaneContainer grid, ActivePlayers activePlayers) {
     public LocalPlaneContainer getLocalPlaneRelativeToPlayer(int playersId, Vector2 offsetToCorner) {

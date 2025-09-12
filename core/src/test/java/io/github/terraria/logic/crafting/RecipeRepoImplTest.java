@@ -1,8 +1,8 @@
 package io.github.terraria.logic.crafting;
 
-import io.github.terraria.logic.ItemRegistry;
+import io.github.terraria.logic.equipment.ItemRegistry;
 import io.github.terraria.logic.building.BlockFactory;
-import io.github.terraria.logic.building.BlockFactoryLoader;
+import io.github.terraria.loading.BlockFactoryLoader;
 import io.github.terraria.logic.crafting.station.StationType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

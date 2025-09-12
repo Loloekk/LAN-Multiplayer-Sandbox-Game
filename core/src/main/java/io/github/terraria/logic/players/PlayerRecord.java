@@ -1,8 +1,8 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.ItemHolder;
-import io.github.terraria.logic.MultisetItemHolder;
+import io.github.terraria.logic.equipment.ItemHolder;
+import io.github.terraria.logic.equipment.MultisetItemHolder;
 
 // The player part exported to PlayerRegistry (in between logging)
 // should be a record for easy serialization.

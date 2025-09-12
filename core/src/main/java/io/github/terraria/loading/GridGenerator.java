@@ -1,5 +1,8 @@
-package io.github.terraria.logic.building;
+package io.github.terraria.loading;
 
+import io.github.terraria.logic.building.Block;
+import io.github.terraria.logic.building.BlockFactory;
+import io.github.terraria.logic.building.StaticPlaneContainer;
 import io.github.terraria.utils.MathUtils;
 
 import java.util.ArrayList;

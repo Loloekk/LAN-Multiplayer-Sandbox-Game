@@ -1,13 +1,14 @@
-package io.github.terraria.logic.crafting.station;
+package io.github.terraria.loading;
 
-import io.github.terraria.logic.RecordLoader;
+import io.github.terraria.logic.crafting.station.StationType;
+import io.github.terraria.logic.crafting.station.StationTypeMap;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class StationTypeFactoryLoader {
+public class StationTypeMapLoader {
     private final StationTypeMap stationTypeMap;
-    public StationTypeFactoryLoader(String jsonName) {
+    public StationTypeMapLoader(String jsonName) {
         record BlockStation(String name, StationType station) {}
         var list = RecordLoader.loadList(jsonName, BlockStation.class);
         Map<String, StationType> map = list.stream()
@@ -15,7 +16,7 @@ public class StationTypeFactoryLoader {
             .collect(Collectors.toMap(BlockStation::name, BlockStation::station));
         stationTypeMap = new StationTypeMap(map);
     }
-    public StationTypeFactoryLoader() {
+    public StationTypeMapLoader() {
         this("blocks.json");
     }
     public StationTypeMap getFactory() {

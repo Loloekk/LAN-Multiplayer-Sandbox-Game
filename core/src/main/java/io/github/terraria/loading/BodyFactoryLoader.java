@@ -1,11 +1,13 @@
-package io.github.terraria.logic.physics;
+package io.github.terraria.loading;
 
-import io.github.terraria.logic.RecordLoader;
+import io.github.terraria.logic.physics.BlockFixture;
+import io.github.terraria.logic.physics.BodyFactory;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BodyFactoryLoader {
+    final Map<Integer, BlockFixture> map; // TODO: ?
     private final BodyFactory bodyFactory;
     public BodyFactoryLoader(String jsonName) {
         record BlockFixtureId(int id, boolean isPhysical, BlockFixture fixture) {
@@ -15,7 +17,7 @@ public class BodyFactoryLoader {
             }
         }
         var list = RecordLoader.loadList(jsonName, BlockFixtureId.class);
-        Map<Integer, BlockFixture> map = list.stream()
+        map = list.stream()
             .filter(b -> b.isPhysical)
             .collect(Collectors.toMap(BlockFixtureId::id, BlockFixtureId::fixture));
         bodyFactory = new BodyFactory(map);

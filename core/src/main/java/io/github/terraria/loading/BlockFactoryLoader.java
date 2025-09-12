@@ -1,6 +1,7 @@
-package io.github.terraria.logic.building;
+package io.github.terraria.loading;
 
-import io.github.terraria.logic.RecordLoader;
+import io.github.terraria.logic.building.BlockFactory;
+import io.github.terraria.logic.building.BlockType;
 
 import java.util.Map;
 import java.util.stream.Collectors;

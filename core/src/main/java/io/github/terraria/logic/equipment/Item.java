@@ -1,4 +1,4 @@
-package io.github.terraria.logic;
+package io.github.terraria.logic.equipment;
 
 public interface Item {
     ItemType type();

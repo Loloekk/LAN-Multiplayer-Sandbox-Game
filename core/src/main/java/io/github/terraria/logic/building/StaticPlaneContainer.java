@@ -1,7 +1,7 @@
 package io.github.terraria.logic.building;
 
-import io.github.terraria.logic.RectangleNeighbourhood;
-import io.github.terraria.logic.IntVector2;
+import io.github.terraria.utils.RectangleNeighbourhood;
+import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.BodyFactory;
 import io.github.terraria.logic.physics.World;

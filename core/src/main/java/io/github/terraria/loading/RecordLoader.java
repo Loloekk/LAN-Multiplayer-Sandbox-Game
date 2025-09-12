@@ -1,4 +1,4 @@
-package io.github.terraria.logic;
+package io.github.terraria.loading;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

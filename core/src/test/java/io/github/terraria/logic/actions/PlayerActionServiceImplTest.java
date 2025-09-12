@@ -1,16 +1,15 @@
-package io.github.terraria.logic.players;
+package io.github.terraria.logic.actions;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.GameState;
-import io.github.terraria.logic.IntVector2;
+import io.github.terraria.logic.players.ActivePlayers;
+import io.github.terraria.logic.players.PhysicalPlayer;
+import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.building.Block;
 import io.github.terraria.logic.building.BlockBuilder;
 import io.github.terraria.logic.building.PlaneContainer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerActionServiceImplTest {
     IntVector2 loc;

@@ -1,6 +1,6 @@
 package io.github.terraria.logic.crafting;
 
-import io.github.terraria.logic.ItemHolder;
+import io.github.terraria.logic.equipment.ItemHolder;
 import io.github.terraria.logic.crafting.station.*;
 
 import java.util.HashMap;

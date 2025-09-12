@@ -1,7 +1,6 @@
-package io.github.terraria.logic;
+package io.github.terraria.utils;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.utils.MathUtils;
 
 public record IntVector2(int x, int y) {
     public static IntVector2 toInt(Vector2 vec) {

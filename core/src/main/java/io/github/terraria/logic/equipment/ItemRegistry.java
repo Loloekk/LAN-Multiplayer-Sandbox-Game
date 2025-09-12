@@ -1,9 +1,6 @@
-package io.github.terraria.logic;
+package io.github.terraria.logic.equipment;
 
 import io.github.terraria.logic.building.BlockFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class ItemRegistry {
     BlockFactory blockFactory;

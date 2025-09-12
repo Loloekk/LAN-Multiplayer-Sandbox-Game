@@ -2,7 +2,7 @@ package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
 import com.google.common.collect.ImmutableList;
-import io.github.terraria.logic.RectangleNeighbourhood;
+import io.github.terraria.utils.RectangleNeighbourhood;
 import io.github.terraria.logic.physics.Body;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

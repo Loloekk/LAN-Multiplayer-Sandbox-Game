@@ -1,4 +1,4 @@
-package io.github.terraria.logic;
+package io.github.terraria.logic.equipment;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;

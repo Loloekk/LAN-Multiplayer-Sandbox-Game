@@ -1,6 +1,6 @@
 package io.github.terraria.logic.crafting.station;
 
-import io.github.terraria.logic.ItemHolder;
+import io.github.terraria.logic.equipment.ItemHolder;
 import io.github.terraria.logic.crafting.Recipe;
 
 public class FurnaceStation implements CraftingStation {

@@ -1,13 +1,18 @@
-package io.github.terraria.logic.players;
+package io.github.terraria.logic.actions;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.GameState;
+import io.github.terraria.logic.building.PlaneContainer;
+import io.github.terraria.logic.players.ActivePlayers;
+import io.github.terraria.logic.players.PhysicalPlayer;
 
 public abstract class PlayerActionService {
-    protected final GameState gameState;
+    protected final ActivePlayers activePlayers;
+    protected final PlaneContainer grid;
     public PlayerActionService(GameState gameState) {
-        this.gameState = gameState;
+        this.activePlayers = gameState.activePlayers();
+        this.grid = gameState.grid();
     }
+    // Consider wrapping the below methods into two classes so as to have single responsibility principle.
     // Koordynaty jak w PlaneContainer.
     protected static final int rangeRadius = 5;
     // Można rozważyć przerobienie sygnatur na boole.

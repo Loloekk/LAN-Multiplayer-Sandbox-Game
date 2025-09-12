@@ -1,7 +1,7 @@
 package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.IntVector2;
+import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.building.BlockBuilder;
 import io.github.terraria.logic.building.PhysicalBlock;
 import io.github.terraria.logic.building.PlaneContainer;
