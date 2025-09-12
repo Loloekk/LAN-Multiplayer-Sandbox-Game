@@ -13,6 +13,4 @@ public record PlayerRecord(int id, ItemHolder equipment, Vector2 spawn) {
     public PlayerRecord(int id, Vector2 spawn) {
         this(id, new MultisetItemHolder(defaultEquipmentCap), spawn);
     }
-    // TODO: Refactor to only use id().
-    public int getId() { return id; }
 }

@@ -66,7 +66,7 @@ public class GameServer {
             @Override public void received(Connection connection, Object obj) {
                 if (obj instanceof PacketJoin join) {
                     PlayerRecord pla = playerRegistry.registerPlayer();
-                    int id = pla.getId();
+                    int id = pla.id();
                     PacketJoinAck ack = new PacketJoinAck();
                     ack.playerId = id; ack.name = join.name;
                     System.out.println("Player " + id + " dodany");
