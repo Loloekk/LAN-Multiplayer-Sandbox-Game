@@ -1,15 +1,16 @@
 package io.github.terraria.controler.PlayerNetworkData;
 
 import io.github.terraria.common.BlockState;
+import io.github.terraria.common.Config;
 import io.github.terraria.logic.building.Block;
 import io.github.terraria.logic.building.PlaneContainer;
 
 import java.util.ArrayList;
 
 public class Chunk {
-    public static int DEFAULT_WIDTH = 5;
-    public static int DEFAULT_HEIGHT = 5;
-    public static int DEFAULT_LAYERS = 2;
+    public static int DEFAULT_WIDTH = Config.CHUNK_DEFAULT_WIDTH;
+    public static int DEFAULT_HEIGHT = Config.CHUNK_DEFAULT_HEIGHT;
+    public static int DEFAULT_LAYERS = Config.CHUNK_DEFAULT_LAYERS;
     public int zeroX,zeroY;
 
     private Integer[][][] blocks = new Integer[DEFAULT_WIDTH][DEFAULT_HEIGHT][DEFAULT_LAYERS];

@@ -1,6 +1,7 @@
 package io.github.terraria.controler.PlayerNetworkData;
 
 import io.github.terraria.common.BlockState;
+import io.github.terraria.common.Config;
 import io.github.terraria.common.PlayerState;
 import io.github.terraria.controler.Network.PacketPlayerDisappear;
 import io.github.terraria.logic.actions.GameState;
@@ -15,8 +16,8 @@ import io.github.terraria.logic.players.PhysicalPlayer;
 import static java.lang.Math.abs;
 
 public class PlayerData {
-    public static int CHUNK_WIDTH_RADIUS = 4;
-    public static int CHUNK_HEIGHT_RADIUS = 3;
+    public static int CHUNK_WIDTH_RADIUS = Config.PLAYER_DATA_CHUNK_WIDTH_RADIUS;
+    public static int CHUNK_HEIGHT_RADIUS = Config.PLAYER_DATA_CHUNK_HEIGHT_RADIUS;
     private GameState gameState;
     private int playerId;
     Connection conn;

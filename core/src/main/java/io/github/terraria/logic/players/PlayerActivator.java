@@ -1,11 +1,12 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
+import io.github.terraria.common.Config;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.World;
 
 public abstract class PlayerActivator {
-    public static final float MAX_PLAYERS_RADIUS = 0.99f; // Z jakimś zapasem dla float błędów.
+    public static final float MAX_PLAYERS_RADIUS = Config.PLAYER_ACTIVATOR_MAX_PLAYERS_RADIUS; // Z jakimś zapasem dla float błędów.
     private final PlayerRegistry registry;
     protected final World world;
     private final ActivePlayers activePlayers;

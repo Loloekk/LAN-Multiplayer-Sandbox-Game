@@ -1,6 +1,7 @@
 package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
+import io.github.terraria.common.Config;
 import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.players.ActivePlayers;
@@ -15,8 +16,8 @@ public class DefaultPlayerActivator extends PlayerActivator {
         this.planeContainer = planeContainer;
     }
 
-    private static final PlayerFixture playerFixture = new PlayerFixture(0.8f, 1.8f,
-        2f, 1.3f, 0.1f, new Vector2());
+    private static final PlayerFixture playerFixture = new PlayerFixture(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT,
+        Config.PLAYER_DENSITY, Config.PLAYER_FRICTION, Config.PLAYER_RESTITUTION, new Vector2());
 
     Vector2 shiftToFree(IntVector2 position, int requiredHeight) {
         int y = position.y() - requiredHeight / 2;

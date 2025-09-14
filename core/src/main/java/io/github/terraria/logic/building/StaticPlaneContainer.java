@@ -1,5 +1,6 @@
 package io.github.terraria.logic.building;
 
+import io.github.terraria.common.Config;
 import io.github.terraria.utils.RectangleNeighbourhood;
 import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.physics.Body;
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class StaticPlaneContainer extends PlaneContainer {
-    public static final int DEFAULT_WIDTH = 100;
-    public static final int DEFAULT_HEIGHT = 100;
-    public static final int layers = 2;
+    public static final int DEFAULT_WIDTH = Config.STATIC_PLANE_CONTAINER_DEFAULT_WIDTH;
+    public static final int DEFAULT_HEIGHT = Config.STATIC_PLANE_CONTAINER_DEFAULT_HEIGHT;
+    public static final int layers = Config.STATIC_PLANE_CONTAINER_LAYERS;
 
     // Słabe, że nie jest wysokość globalnie.
     // [width][height][layer] dla lokalności dostępu.

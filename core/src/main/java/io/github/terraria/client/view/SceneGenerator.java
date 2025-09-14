@@ -4,14 +4,15 @@ import io.github.terraria.client.view.Interact.Data.ViewPlayerData;
 import io.github.terraria.client.view.Textures.TextureBank;
 import io.github.terraria.client.view.Textures.TextureBankLoader;
 import io.github.terraria.client.view.Textures.TextureQuad;
+import io.github.terraria.common.Config;
 import io.github.terraria.common.PlayerState;
 
 import java.util.Stack;
 
 public class SceneGenerator {
-    public static int SCENE_WIDTH = 30;
-    public static int SCENE_HEIGHT = 20;
-    public static int SCENE_LAYERS = 2;
+    public static int SCENE_WIDTH = Config.SCENE_WIDTH;
+    public static int SCENE_HEIGHT = Config.SCENE_HEIGHT;
+    public static int SCENE_LAYERS = Config.SCENE_LAYERS;
     private static float centerX = 15;
     private static float centerY = 10;
     TextureBank blocksTexture;

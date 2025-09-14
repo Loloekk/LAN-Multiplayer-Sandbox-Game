@@ -2,6 +2,7 @@ package io.github.terraria.client.view.Interact.Data;
 
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.common.BlockState;
+import io.github.terraria.common.Config;
 import io.github.terraria.controler.Network.Network;
 import io.github.terraria.controler.Network.PacketPlayerDisappear;
 import io.github.terraria.common.PlayerState;
@@ -15,8 +16,8 @@ import static java.lang.Math.abs;
 
 
 public class ViewPlayerData {
-    public static int CHUNK_WIDTH_RADIUS = 4;
-    public static int CHUNK_HEIGHT_RADIUS = 3;
+    public static int CHUNK_WIDTH_RADIUS = Config.PLAYER_CHUNK_WIDTH_RADIUS;
+    public static int CHUNK_HEIGHT_RADIUS = Config.PLAYER_CHUNK_HEIGHT_RADIUS;
     private int playerId;
     private float x;
     private float y;

@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import io.github.terraria.common.Config;
 import io.github.terraria.controler.Network.Network;
 import io.github.terraria.controler.Network.PacketPlayer.PacketPlayer;
 import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerHit;
@@ -128,10 +129,7 @@ public class GameServer {
     }
 
     public void handlePhysics() {
-        float timeStep = 0.02f;
-        int velocityIterations = 8;
-        int positionIterations = 4;
-        world.step(timeStep,velocityIterations,positionIterations);
+        world.step(Config.PHYSICS_TIME_STEP, Config.PHYSICS_VELOCITY_ITERATIONS, Config.PHYSICS_POSITION_ITERATIONS);
     }
     private void broadcastScenes() {
         try {

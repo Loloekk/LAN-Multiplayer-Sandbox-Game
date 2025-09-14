@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.client.view.Interact.Data.ViewPlayerData;
+import io.github.terraria.common.Config;
 import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerHit;
 import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerMove;
 
@@ -19,7 +20,7 @@ public class ViewPlayer {
 
 
     private long lastLeftClickTime = 0;
-    private static final long LEFT_CLICK_DELAY = 200;
+    private static final long LEFT_CLICK_DELAY = Config.LEFT_CLICK_DELAY;
     public ViewPlayer(Connection conn, int playerId, Viewport viewport)
     {
         this.conn = conn;
