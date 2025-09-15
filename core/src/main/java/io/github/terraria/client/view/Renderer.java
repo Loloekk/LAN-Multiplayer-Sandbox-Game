@@ -2,7 +2,6 @@ package io.github.terraria.client.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import io.github.terraria.client.view.Textures.TextureBank;
 
 public class Renderer {
     private SpriteBatch spriteBatch = new SpriteBatch();

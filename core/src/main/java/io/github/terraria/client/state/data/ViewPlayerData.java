@@ -1,9 +1,8 @@
-package io.github.terraria.client.view.Interact.Data;
+package io.github.terraria.client.state.data;
 
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
-import io.github.terraria.controler.Network.Network;
 import io.github.terraria.controler.Network.PacketPlayerDisappear;
 import io.github.terraria.common.PlayerState;
 

@@ -1,4 +1,4 @@
-package io.github.terraria.client.view.Interact;
+package io.github.terraria.client.state;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.esotericsoftware.kryonet.Connection;
-import io.github.terraria.client.view.Interact.Data.ViewPlayerData;
+import io.github.terraria.client.state.data.ViewPlayerData;
 import io.github.terraria.common.Config;
 import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerHit;
 import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerMove;

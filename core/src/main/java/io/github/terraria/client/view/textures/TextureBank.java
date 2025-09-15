@@ -1,9 +1,5 @@
-package io.github.terraria.client.view.Textures;
+package io.github.terraria.client.view.textures;
 
-import com.badlogic.gdx.graphics.Texture;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class TextureBank {

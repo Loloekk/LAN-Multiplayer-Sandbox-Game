@@ -1,4 +1,4 @@
-package io.github.terraria.client.view.Textures;
+package io.github.terraria.client.view.textures;
 
 import io.github.terraria.common.Config;
 

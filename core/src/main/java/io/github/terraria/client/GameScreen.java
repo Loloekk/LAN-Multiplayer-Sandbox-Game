@@ -3,19 +3,17 @@ package io.github.terraria.client;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.client.view.*;
-import io.github.terraria.client.view.Interact.ViewPlayer;
-import io.github.terraria.client.view.Textures.TextureBank;
+import io.github.terraria.client.state.ViewPlayer;
 import io.github.terraria.controler.Network.Network;
 import io.github.terraria.controler.Network.PacketJoin;
 import io.github.terraria.controler.Network.PacketJoinAck;
-import io.github.terraria.client.view.Interact.Data.ViewPlayerData;
+import io.github.terraria.client.state.data.ViewPlayerData;
 import com.badlogic.gdx.graphics.Color;
 
 import java.io.IOException;

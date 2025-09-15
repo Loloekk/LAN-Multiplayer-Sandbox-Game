@@ -1,9 +1,9 @@
 package io.github.terraria.client.view;
 
-import io.github.terraria.client.view.Interact.Data.ViewPlayerData;
-import io.github.terraria.client.view.Textures.TextureBank;
-import io.github.terraria.client.view.Textures.TextureBankLoader;
-import io.github.terraria.client.view.Textures.TextureQuad;
+import io.github.terraria.client.state.data.ViewPlayerData;
+import io.github.terraria.client.view.textures.TextureBank;
+import io.github.terraria.client.view.textures.TextureBankLoader;
+import io.github.terraria.client.view.textures.TextureQuad;
 import io.github.terraria.common.Config;
 import io.github.terraria.common.PlayerState;
 
