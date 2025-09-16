@@ -4,9 +4,9 @@ import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
 
 public class ClientChunk {
-    public static int DEFAULT_WIDTH = Config.VIEW_CHUNK_DEFAULT_WIDTH;
-    public static int DEFAULT_HEIGHT = Config.VIEW_CHUNK_DEFAULT_HEIGHT;
-    public static int DEFAULT_LAYERS = Config.VIEW_CHUNK_DEFAULT_LAYERS;
+    public static int DEFAULT_WIDTH = Config.CHUNK_DEFAULT_WIDTH;
+    public static int DEFAULT_HEIGHT = Config.CHUNK_DEFAULT_HEIGHT;
+    public static int DEFAULT_LAYERS = Config.CHUNK_DEFAULT_LAYERS;
     public int zeroX,zeroY;
 
     private Integer[][][] blocks = new Integer[DEFAULT_WIDTH][DEFAULT_HEIGHT][DEFAULT_LAYERS];

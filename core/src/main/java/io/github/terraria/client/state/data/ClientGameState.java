@@ -18,8 +18,8 @@ import static java.lang.Math.abs;
 
 
 public class ClientGameState {
-    public static int CHUNK_WIDTH_RADIUS = Config.PLAYER_CHUNK_WIDTH_RADIUS;
-    public static int CHUNK_HEIGHT_RADIUS = Config.PLAYER_CHUNK_HEIGHT_RADIUS;
+    public static int CHUNK_WIDTH_RADIUS = Config.CHUNK_WIDTH_RADIUS;
+    public static int CHUNK_HEIGHT_RADIUS = Config.CHUNK_HEIGHT_RADIUS;
     private int playerId;
     private float x;
     private float y;

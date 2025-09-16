@@ -16,8 +16,8 @@ import io.github.terraria.logic.players.PhysicalPlayer;
 import static java.lang.Math.abs;
 
 public class PlayerData {
-    public static int CHUNK_WIDTH_RADIUS = Config.PLAYER_DATA_CHUNK_WIDTH_RADIUS;
-    public static int CHUNK_HEIGHT_RADIUS = Config.PLAYER_DATA_CHUNK_HEIGHT_RADIUS;
+    public static int CHUNK_WIDTH_RADIUS = Config.CHUNK_WIDTH_RADIUS;
+    public static int CHUNK_HEIGHT_RADIUS = Config.CHUNK_HEIGHT_RADIUS;
     private GameState gameState;
     private int playerId;
     Connection conn;

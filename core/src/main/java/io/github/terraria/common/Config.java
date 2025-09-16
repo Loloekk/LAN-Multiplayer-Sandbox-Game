@@ -5,23 +5,19 @@ import java.util.Properties;
 
 public class Config {
     private static final Properties properties = new Properties();
-    public static final int VIEW_CHUNK_DEFAULT_WIDTH;
-    public static final int VIEW_CHUNK_DEFAULT_HEIGHT;
-    public static final int VIEW_CHUNK_DEFAULT_LAYERS;
     public static final int CHUNK_DEFAULT_WIDTH;
     public static final int CHUNK_DEFAULT_HEIGHT;
     public static final int CHUNK_DEFAULT_LAYERS;
-    public static final int PLAYER_CHUNK_WIDTH_RADIUS;
-    public static final int PLAYER_CHUNK_HEIGHT_RADIUS;
     public static final long LEFT_CLICK_DELAY;
     public static final String MISSING_TEXTURE_PATH;
     public static final int SCENE_WIDTH;
     public static final int SCENE_HEIGHT;
     public static final int SCENE_LAYERS;
+    public static final int SCENE_DELTA;
     public static final int TCP_PORT;
     public static final int UDP_PORT;
-    public static final int PLAYER_DATA_CHUNK_WIDTH_RADIUS;
-    public static final int PLAYER_DATA_CHUNK_HEIGHT_RADIUS;
+    public static final int CHUNK_WIDTH_RADIUS;
+    public static final int CHUNK_HEIGHT_RADIUS;
     public static final float MOVE_IMPULSE_X;
     public static final float MAX_PLAYER_VELOCITY_X;
     public static final float PLAYER_JUMP_STRENGTH;
@@ -50,29 +46,24 @@ public class Config {
         catch (Throwable e) {
             System.err.println(e);
         }
-        VIEW_CHUNK_DEFAULT_WIDTH = Integer.parseInt(properties.getProperty("viewChunk.defaultWidth", "5"));
-        VIEW_CHUNK_DEFAULT_HEIGHT = Integer.parseInt(properties.getProperty("viewChunk.defaultHeight", "5"));
-        VIEW_CHUNK_DEFAULT_LAYERS = Integer.parseInt(properties.getProperty("viewChunk.defaultLayers", "2"));
 
         CHUNK_DEFAULT_WIDTH = Integer.parseInt(properties.getProperty("chunk.defaultWidth", "5"));
         CHUNK_DEFAULT_HEIGHT = Integer.parseInt(properties.getProperty("chunk.defaultHeight", "5"));
         CHUNK_DEFAULT_LAYERS = Integer.parseInt(properties.getProperty("chunk.defaultLayers", "2"));
 
-        PLAYER_CHUNK_WIDTH_RADIUS = Integer.parseInt(properties.getProperty("playerChunk.widthRadius", "4"));
-        PLAYER_CHUNK_HEIGHT_RADIUS = Integer.parseInt(properties.getProperty("playerChunk.heightRadius", "3"));
+        CHUNK_WIDTH_RADIUS = Integer.parseInt(properties.getProperty("chunkWidthRadius", "5"));
+        CHUNK_HEIGHT_RADIUS = Integer.parseInt(properties.getProperty("chunkHeightRadius", "3"));
 
         LEFT_CLICK_DELAY = Long.parseLong(properties.getProperty("leftClickDelay", "200"));
         MISSING_TEXTURE_PATH = properties.getProperty("missingTexturePath", "missing.png");
 
-        SCENE_WIDTH = Integer.parseInt(properties.getProperty("scene.width", "30"));
+        SCENE_WIDTH = Integer.parseInt(properties.getProperty("scene.width", "37"));
         SCENE_HEIGHT = Integer.parseInt(properties.getProperty("scene.height", "20"));
         SCENE_LAYERS = Integer.parseInt(properties.getProperty("scene.layers", "2"));
+        SCENE_DELTA = Integer.parseInt(properties.getProperty("scene.delta", "1"));
 
         TCP_PORT = Integer.parseInt(properties.getProperty("TCPPort", "54555"));
         UDP_PORT = Integer.parseInt(properties.getProperty("UDPPort", "54777"));
-
-        PLAYER_DATA_CHUNK_WIDTH_RADIUS = Integer.parseInt(properties.getProperty("playerData.chunkWidthRadius", "4"));
-        PLAYER_DATA_CHUNK_HEIGHT_RADIUS = Integer.parseInt(properties.getProperty("playerData.chunkHeightRadius", "3"));
 
         MOVE_IMPULSE_X = Float.parseFloat(properties.getProperty("moveImpulseX", "1f"));
         MAX_PLAYER_VELOCITY_X = Float.parseFloat(properties.getProperty("maxPlayerVelocityX", "5f"));

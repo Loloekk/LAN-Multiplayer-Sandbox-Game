@@ -19,6 +19,9 @@ import com.badlogic.gdx.graphics.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static io.github.terraria.common.Config.SCENE_HEIGHT;
+import static io.github.terraria.common.Config.SCENE_WIDTH;
+
 public class GameScreen implements Screen {
     private Client client;
     private int playerId;
@@ -29,7 +32,7 @@ public class GameScreen implements Screen {
 
 //    private final ScreenViewport viewport = new ScreenViewport();
 //    private final StretchViewport viewport = new StretchViewport(8,5);
-    private final ScalingViewport viewport = new ScalingViewport(Scaling.fill, 30, 20);
+    private final ScalingViewport viewport = new ScalingViewport(Scaling.fill, SCENE_WIDTH, SCENE_HEIGHT);
     private SceneGenerator generator;
     private Renderer renderer;
 

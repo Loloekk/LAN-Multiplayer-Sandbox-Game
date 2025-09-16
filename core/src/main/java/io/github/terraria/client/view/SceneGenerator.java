@@ -12,9 +12,10 @@ import java.util.Stack;
 public class SceneGenerator {
     public static int SCENE_WIDTH = Config.SCENE_WIDTH;
     public static int SCENE_HEIGHT = Config.SCENE_HEIGHT;
+    public static int SCENE_DELTA = Config.SCENE_DELTA;
     public static int SCENE_LAYERS = Config.SCENE_LAYERS;
-    private static float centerX = 15;
-    private static float centerY = 10;
+    private static float centerX = SCENE_WIDTH/2;
+    private static float centerY = SCENE_HEIGHT/2;
     TextureBank blocksTexture;
     TextureBank playerTexture;
     public SceneGenerator()
@@ -31,8 +32,8 @@ public class SceneGenerator {
         int y = (int) data.getY();
         float diffX = centerX - data.getX();
         float diffY = centerY - data.getY();
-        for(int i = - SCENE_WIDTH / 2 - 3; i<= SCENE_WIDTH / 2 + 3;  i++)
-            for(int j = - SCENE_HEIGHT / 2 - 3; j <= SCENE_HEIGHT / 2 + 3;  j++) {
+        for(int i = - SCENE_WIDTH / 2 - SCENE_DELTA; i<= SCENE_WIDTH / 2 + SCENE_DELTA;  i++)
+            for(int j = - SCENE_HEIGHT / 2 - SCENE_DELTA; j <= SCENE_HEIGHT / 2 + SCENE_DELTA;  j++) {
                 Stack<DrawableRectangle> rect = new Stack<>();
                 for (int z = 0; z < SCENE_LAYERS; z++) {
                     Integer blockId = data.getBlockId(i + x, j + y, z);

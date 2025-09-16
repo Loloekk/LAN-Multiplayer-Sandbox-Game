@@ -46,7 +46,7 @@ public class GameServer {
         world = new Box2DWorld(new Vector2(0, -10), true);
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
         builder.world(world);
-        builder.width(100).height(40).zeroX(50).zeroY(10);
+        builder.width(100).height(40).zeroX(50).zeroY(20);
         PlaneContainer planeContainer = builder.build();
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()));
 //        System.out.println("Plane container " + planeContainer);
