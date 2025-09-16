@@ -21,6 +21,7 @@ public class PlayerData {
     private GameState gameState;
     private int playerId;
     Connection conn;
+    ItemHolderObserver itemHolderObserver;
 
     public Map<Integer, Chunk> chunks = new HashMap<>();
     public Map<Integer, PlayerState> players = new HashMap<>();
@@ -29,6 +30,7 @@ public class PlayerData {
         this.conn = conn;
         this.gameState = gameState;
         this.playerId = playerId;
+        this.itemHolderObserver = new ItemHolderObserverComm();
     }
     public void actualize()
     {
@@ -122,6 +124,10 @@ public class PlayerData {
     public Integer getPlayerId()
     {
         return playerId;
+    }
+    public ItemHolderObserver getItemHolderObserver()
+    {
+        return itemHolderObserver;
     }
 
 }

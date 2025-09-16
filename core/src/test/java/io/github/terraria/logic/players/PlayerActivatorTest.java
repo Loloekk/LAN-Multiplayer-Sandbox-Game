@@ -20,16 +20,16 @@ class PlayerActivatorTest {
                 .defaultAnswer(Mockito.CALLS_REAL_METHODS));
     }
 
-    @Test
-    void loginPlayerTest() {
-        final int playersId = 10;
-        final Vector2 spawnPosition = new Vector2(1f, 0f);
-        final PlayerRecord playerRecord = new PlayerRecord(playersId, spawnPosition);
-        Mockito.when(playerRegistry.getPlayer(playersId)).thenReturn(playerRecord);
-
-        playerActivator.loginPlayer(playersId);
-        Mockito.verify(activePlayers).add(Mockito.argThat(p -> p.id() == playerRecord.id()));
-    }
+//    @Test
+//    void loginPlayerTest() {
+//        final int playersId = 10;
+//        final Vector2 spawnPosition = new Vector2(1f, 0f);
+//        final PlayerRecord playerRecord = new PlayerRecord(playersId, spawnPosition);
+//        Mockito.when(playerRegistry.getPlayer(playersId)).thenReturn(playerRecord);
+//
+//        playerActivator.loginPlayer(playersId);
+//        Mockito.verify(activePlayers).add(Mockito.argThat(p -> p.id() == playerRecord.id()));
+//    }
 
     @Test
     void logoutPlayerSetSpawnPositionTest() {

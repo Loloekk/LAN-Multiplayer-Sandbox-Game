@@ -24,7 +24,7 @@ public class MultisetItemHolder implements ItemHolder {
     public int insert(Item item, int count) {
         int toAdd = min(count, capacity - set.size());
         set.add(item, toAdd);
-        return (count - toAdd);
+        return toAdd; // zmiana nie zwraca ile miejsca zostało tylko ile wrzucono elementow
     }
     @Override
     public int getCount(Item item) { return set.count(item); }

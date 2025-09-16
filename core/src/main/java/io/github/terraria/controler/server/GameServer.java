@@ -18,6 +18,7 @@ import io.github.terraria.logic.actions.PlayerActionService;
 import io.github.terraria.logic.actions.PlayerActionServiceImpl;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
+import io.github.terraria.logic.equipment.ObservableMultisetItemHolder;
 import io.github.terraria.logic.physics.*;
 import io.github.terraria.logic.players.*;
 
@@ -76,7 +77,10 @@ public class GameServer {
                     connection.sendTCP(ack);
 
                     PlayerData playerState = new PlayerData(connection,gameState,id);
-                    playerActivator.loginPlayer(id);
+                    ObservableMultisetItemHolder observableMultisetItemHolder = new ObservableMultisetItemHolder(Config.PLAYER_DEFAULT_EQUIPMENT_CAPACITY);
+                    observableMultisetItemHolder.addObserver(playerState.getItemHolderObserver());
+                    PhysicalPlayer player = new PhysicalPlayer(observableMultisetItemHolder);
+                    playerActivator.loginPlayer(player,id);
                     connectionIds.put(connection, playerState);
                     inputQueues.put(connection, new ConcurrentLinkedQueue<>());
 //                    Network.PlayerState ps = new Network.PlayerState();
