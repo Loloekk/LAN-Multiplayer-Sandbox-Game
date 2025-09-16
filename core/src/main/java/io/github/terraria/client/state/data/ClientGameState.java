@@ -1,9 +1,10 @@
 package io.github.terraria.client.state.data;
 
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
-import io.github.terraria.controler.Network.PacketPlayerDisappear;
+import io.github.terraria.controler.network.PacketPlayerDisappear;
 import io.github.terraria.common.PlayerState;
 
 import java.util.HashMap;
@@ -11,10 +12,12 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 
+import static io.github.terraria.common.Config.SCENE_HEIGHT;
+import static io.github.terraria.common.Config.SCENE_WIDTH;
 import static java.lang.Math.abs;
 
 
-public class ViewPlayerData {
+public class ClientGameState {
     public static int CHUNK_WIDTH_RADIUS = Config.PLAYER_CHUNK_WIDTH_RADIUS;
     public static int CHUNK_HEIGHT_RADIUS = Config.PLAYER_CHUNK_HEIGHT_RADIUS;
     private int playerId;
@@ -22,9 +25,9 @@ public class ViewPlayerData {
     private float y;
     Connection conn;
 
-    public Map<Integer, ViewChunk> chunks = new HashMap<>();
+    public Map<Integer, ClientChunk> chunks = new HashMap<>();
     public Map<Integer,PlayerState> players = new HashMap<>();
-    public ViewPlayerData(Connection conn, int playerId)
+    public ClientGameState(Connection conn, int playerId)
     {
         this.conn = conn;
         this.playerId = playerId;
@@ -33,11 +36,11 @@ public class ViewPlayerData {
     {
         if(obj instanceof BlockState blockState)
         {
-            int chunkId = ViewChunk.getId(blockState.x,blockState.y);
-            int X = ViewChunk.getX(blockState.x);
-            int Y = ViewChunk.getY(blockState.y);
+            int chunkId = ClientChunk.getId(blockState.x,blockState.y);
+            int X = ClientChunk.getX(blockState.x);
+            int Y = ClientChunk.getY(blockState.y);
             if(!chunks.containsKey(chunkId))
-                chunks.put(chunkId, new ViewChunk(X,Y));
+                chunks.put(chunkId, new ClientChunk(X,Y));
             chunks.get(chunkId).setBlock(blockState);
         }
         else if(obj instanceof PlayerState pla)
@@ -61,9 +64,9 @@ public class ViewPlayerData {
     }
     public Integer getBlockId(int x, int y, int z)
     {
-        int X = ViewChunk.getX(x);
-        int Y = ViewChunk.getY(y);
-        int chunkId = ViewChunk.getId(X,Y);
+        int X = ClientChunk.getX(x);
+        int Y = ClientChunk.getY(y);
+        int chunkId = ClientChunk.getId(X,Y);
         if(chunks.containsKey(chunkId))
             return chunks.get(chunkId).getBlockId(x,y,z);
         return null;
@@ -87,15 +90,15 @@ public class ViewPlayerData {
     }
     public void throwTrash()
     {
-        int X = ViewChunk.getX(x);
-        int Y = ViewChunk.getX(y);
+        int X = ClientChunk.getX(x);
+        int Y = ClientChunk.getX(y);
         List<Integer> chunksToDelete = new ArrayList<>();
-        for(ViewChunk chunk : chunks.values())
+        for(ClientChunk chunk : chunks.values())
         {
-            if(chunk.zeroX < X - CHUNK_WIDTH_RADIUS*ViewChunk.DEFAULT_WIDTH ||
-                chunk.zeroX > X + CHUNK_WIDTH_RADIUS*ViewChunk.DEFAULT_WIDTH ||
-                chunk.zeroY < Y - CHUNK_HEIGHT_RADIUS*ViewChunk.DEFAULT_HEIGHT ||
-                chunk.zeroY > Y + CHUNK_HEIGHT_RADIUS*ViewChunk.DEFAULT_HEIGHT
+            if(chunk.zeroX < X - CHUNK_WIDTH_RADIUS* ClientChunk.DEFAULT_WIDTH ||
+                chunk.zeroX > X + CHUNK_WIDTH_RADIUS* ClientChunk.DEFAULT_WIDTH ||
+                chunk.zeroY < Y - CHUNK_HEIGHT_RADIUS* ClientChunk.DEFAULT_HEIGHT ||
+                chunk.zeroY > Y + CHUNK_HEIGHT_RADIUS* ClientChunk.DEFAULT_HEIGHT
             )
             {
                 chunksToDelete.add(chunk.getId());
@@ -107,5 +110,10 @@ public class ViewPlayerData {
         }
 
     }
+    public Vector2 getGamePosition(Vector2 screenPos)
+    {
+        return new Vector2(getX() + (screenPos.x - SCENE_WIDTH/2), getY() + (screenPos.y - SCENE_HEIGHT/2));
+    }
+
 
 }

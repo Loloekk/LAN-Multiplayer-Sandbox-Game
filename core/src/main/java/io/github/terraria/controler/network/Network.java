@@ -1,4 +1,4 @@
-package io.github.terraria.controler.Network;
+package io.github.terraria.controler.network;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
@@ -7,9 +7,9 @@ import io.github.terraria.common.Config;
 import io.github.terraria.common.PlayerState;
 import io.github.terraria.client.view.DrawableRectangle;
 import io.github.terraria.client.view.Scene;
-import io.github.terraria.controler.Network.PacketPlayer.PacketPlayer;
-import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerHit;
-import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerMove;
+import io.github.terraria.controler.network.PacketPlayer.PacketPlayer;
+import io.github.terraria.controler.network.PacketPlayer.PacketPlayerHit;
+import io.github.terraria.controler.network.PacketPlayer.PacketPlayerMove;
 
 import java.util.ArrayList;
 

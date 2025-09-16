@@ -1,4 +1,4 @@
-package io.github.terraria.controler.PlayerNetworkData;
+package io.github.terraria.controler.playerNetworkData;
 
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;

@@ -3,7 +3,7 @@ package io.github.terraria.client.state.data;
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
 
-public class ViewChunk {
+public class ClientChunk {
     public static int DEFAULT_WIDTH = Config.VIEW_CHUNK_DEFAULT_WIDTH;
     public static int DEFAULT_HEIGHT = Config.VIEW_CHUNK_DEFAULT_HEIGHT;
     public static int DEFAULT_LAYERS = Config.VIEW_CHUNK_DEFAULT_LAYERS;
@@ -11,7 +11,7 @@ public class ViewChunk {
 
     private Integer[][][] blocks = new Integer[DEFAULT_WIDTH][DEFAULT_HEIGHT][DEFAULT_LAYERS];
 
-    public ViewChunk(int zeroX, int zeroY)
+    public ClientChunk(int zeroX, int zeroY)
     {
         this.zeroX = zeroX;
         this.zeroY = zeroY;

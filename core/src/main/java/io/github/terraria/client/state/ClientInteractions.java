@@ -7,38 +7,25 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.esotericsoftware.kryonet.Connection;
-import io.github.terraria.client.state.data.ViewPlayerData;
+import io.github.terraria.client.state.data.ClientGameState;
 import io.github.terraria.common.Config;
-import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerHit;
-import io.github.terraria.controler.Network.PacketPlayer.PacketPlayerMove;
+import io.github.terraria.controler.network.PacketPlayer.PacketPlayerHit;
+import io.github.terraria.controler.network.PacketPlayer.PacketPlayerMove;
 
-public class ViewPlayer {
+public class ClientInteractions {
     Connection conn;
     private int playerId;
-    ViewPlayerData playerData;
     Viewport viewport;
-
+    ClientGameState gameState;
 
     private long lastLeftClickTime = 0;
     private static final long LEFT_CLICK_DELAY = Config.LEFT_CLICK_DELAY;
-    public ViewPlayer(Connection conn, int playerId, Viewport viewport)
+    public ClientInteractions(Connection conn, ClientGameState gameState, int playerId, Viewport viewport)
     {
         this.conn = conn;
+        this.gameState = gameState;
         this.playerId = playerId;
         this.viewport = viewport;
-        playerData = new ViewPlayerData(conn, playerId);
-    }
-    public ViewPlayerData getData()
-    {
-        return playerData;
-    }
-    public void actualize(Object obj)
-    {
-        playerData.actualize(obj);
-    }
-    public void throwTrash()
-    {
-        playerData.throwTrash();
     }
     public void handleInput() {
         short mx=0;
@@ -64,7 +51,7 @@ public class ViewPlayer {
                 Vector3 mousePos3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                 viewport.unproject(mousePos3);
                 Vector2 mousePos = new Vector2(mousePos3.x, mousePos3.y);
-                mousePos = getGamePosition(mousePos);
+                mousePos = gameState.getGamePosition(mousePos);
 //                System.out.println("Klik LPM w świecie gry: " + mousePos.x + ", " + mousePos.y);
                 PacketPlayerHit hit = new PacketPlayerHit();
                 hit.playerId = playerId;
@@ -74,9 +61,5 @@ public class ViewPlayer {
 //                System.out.println("Send hiting " + playerId);
             }
         }
-    }
-    private Vector2 getGamePosition(Vector2 screenPos)
-    {
-        return new Vector2(playerData.getX() + (screenPos.x - 15), playerData.getY() + (screenPos.y - 10));
     }
 }

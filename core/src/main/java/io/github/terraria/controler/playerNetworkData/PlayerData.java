@@ -1,9 +1,9 @@
-package io.github.terraria.controler.PlayerNetworkData;
+package io.github.terraria.controler.playerNetworkData;
 
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
 import io.github.terraria.common.PlayerState;
-import io.github.terraria.controler.Network.PacketPlayerDisappear;
+import io.github.terraria.controler.network.PacketPlayerDisappear;
 import io.github.terraria.logic.actions.GameState;
 
 import java.util.ArrayList;

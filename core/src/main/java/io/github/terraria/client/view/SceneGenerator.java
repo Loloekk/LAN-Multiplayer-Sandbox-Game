@@ -1,6 +1,6 @@
 package io.github.terraria.client.view;
 
-import io.github.terraria.client.state.data.ViewPlayerData;
+import io.github.terraria.client.state.data.ClientGameState;
 import io.github.terraria.client.view.textures.TextureBank;
 import io.github.terraria.client.view.textures.TextureBankLoader;
 import io.github.terraria.client.view.textures.TextureQuad;
@@ -24,7 +24,7 @@ public class SceneGenerator {
         playerTexture = loader.getTextureBank("texturePlayer.json");
     }
 
-    public Scene generate(ViewPlayerData data)
+    public Scene generate(ClientGameState data)
     {
         Scene scene = new Scene();
         int x = (int) data.getX();

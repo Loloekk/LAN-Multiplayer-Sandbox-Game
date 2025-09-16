@@ -9,11 +9,11 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.client.view.*;
-import io.github.terraria.client.state.ViewPlayer;
-import io.github.terraria.controler.Network.Network;
-import io.github.terraria.controler.Network.PacketJoin;
-import io.github.terraria.controler.Network.PacketJoinAck;
-import io.github.terraria.client.state.data.ViewPlayerData;
+import io.github.terraria.client.state.ClientInteractions;
+import io.github.terraria.controler.network.Network;
+import io.github.terraria.controler.network.PacketJoin;
+import io.github.terraria.controler.network.PacketJoinAck;
+import io.github.terraria.client.state.data.ClientGameState;
 import com.badlogic.gdx.graphics.Color;
 
 import java.io.IOException;
@@ -22,8 +22,8 @@ import java.util.ArrayList;
 public class GameScreen implements Screen {
     private Client client;
     private int playerId;
-    private ViewPlayerData playerData;
-    private ViewPlayer viewPlayer;
+    private ClientGameState gameState;
+    private ClientInteractions playerInteractions;
     private final Drop game;
 //    private final FitViewport viewport = new FitViewport(8, 5);
 
@@ -44,28 +44,29 @@ public class GameScreen implements Screen {
             public void received(com.esotericsoftware.kryonet.Connection c, Object obj) {
                 if (obj instanceof PacketJoinAck ack ) {
                     playerId = ack.playerId;
-                    viewPlayer = new ViewPlayer(client, playerId,viewport);
+                    gameState = new ClientGameState(client, playerId);
+                    playerInteractions = new ClientInteractions(client, gameState, playerId,viewport);
                     Gdx.app.log("GameScreen", "Joined as id=" + playerId + ", name=" + ack.name);
 
                 }
                 else if (obj instanceof ArrayList list)
                 {
-                    if(viewPlayer == null) {
+                    if(gameState == null) {
                         Gdx.app.log("communication error","XD");
                     }
                     for(Object objj : list)
                     {
 //                        System.out.println("mamy liste" + objj);
-                        viewPlayer.actualize(objj);
+                        gameState.actualize(objj);
 
                     }
                 }
                 else {
                     Gdx.app.log("GameScreen", "Scene update");
-                    if(viewPlayer == null) {
+                    if(gameState == null) {
                         Gdx.app.log("communication error","XD");
                     }
-                    viewPlayer.actualize(obj);
+                    gameState.actualize(obj);
                     System.out.println(obj);
                 }
             }
@@ -87,14 +88,14 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.CYAN);
-        if(viewPlayer == null)
+        if(playerInteractions == null)
             return;
-        viewPlayer.handleInput();
-        renderer.draw(viewport, generator.generate(viewPlayer.getData()));
+        playerInteractions.handleInput();
+        renderer.draw(viewport, generator.generate(gameState));
         licz ++;
         if(licz%120 == 0)
         {
-            viewPlayer.throwTrash();
+            gameState.throwTrash();
             licz = 0;
         }
     }
