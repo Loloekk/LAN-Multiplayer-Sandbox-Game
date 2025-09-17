@@ -3,7 +3,7 @@ package io.github.terraria.controler.playerNetworkData;
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
 import io.github.terraria.common.PlayerState;
-import io.github.terraria.controler.network.PacketPlayerDisappear;
+import io.github.terraria.controler.network.PacketServerToClient.PacketDisappearPlayer;
 import io.github.terraria.logic.actions.GameState;
 
 import java.util.ArrayList;
@@ -25,12 +25,14 @@ public class PlayerData {
 
     public Map<Integer, Chunk> chunks = new HashMap<>();
     public Map<Integer, PlayerState> players = new HashMap<>();
+    private List<Object> bufferTCP = new ArrayList<>();
+//    private List<Object> bufforUDP = new ArrayList<>();
     public PlayerData(Connection conn, GameState gameState, int playerId)
     {
         this.conn = conn;
         this.gameState = gameState;
         this.playerId = playerId;
-        this.itemHolderObserver = new ItemHolderObserverComm();
+        this.itemHolderObserver = new ItemHolderObserverComm(bufferTCP);
     }
     public void actualize()
     {
@@ -48,7 +50,7 @@ public class PlayerData {
                 {
                     chunks.put(chunkId,new Chunk(chunkX,chunkY));
                     ArrayList<BlockState> data = chunks.get(chunkId).initialize(gameState.grid());
-                    conn.sendTCP(data);
+                    bufferTCP.add(data);
                     //System.out.println("wysylam bloki");
                 }
             }
@@ -67,7 +69,7 @@ public class PlayerData {
             {
                 ArrayList<BlockState> data = chunk.getDifferences(gameState.grid());
                 if(data.size()>0) {
-                    conn.sendTCP(data);
+                    bufferTCP.add(data);
                     //System.out.println("wysylam bloki");
                 }
             }
@@ -85,9 +87,9 @@ public class PlayerData {
                 (!gameState.activePlayers().isActive(pla.id)))
                 // conditions when we remove player
             {
-                PacketPlayerDisappear dis = new PacketPlayerDisappear();
+                PacketDisappearPlayer dis = new PacketDisappearPlayer();
                 dis.id = pla.id;
-                conn.sendTCP(dis);
+                bufferTCP.add(dis);
                 playersToDelete.add(pla.id);
 //                System.out.println("dla" + playerId + " usuwam "+ pla.id);
             }
@@ -120,6 +122,7 @@ public class PlayerData {
                 conn.sendUDP(pla);
             }
         }
+        broadcast();
     }
     public Integer getPlayerId()
     {
@@ -128,6 +131,14 @@ public class PlayerData {
     public ItemHolderObserver getItemHolderObserver()
     {
         return itemHolderObserver;
+    }
+    public void broadcast()
+    {
+        for(Object obj : bufferTCP)
+        {
+            conn.sendTCP(obj);
+        }
+        bufferTCP.clear();
     }
 
 }

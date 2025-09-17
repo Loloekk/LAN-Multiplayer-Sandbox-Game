@@ -7,15 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TextureBankLoader {
+public class TextureQuadBankLoader {
     TextureQuad missing;
 
-    public TextureBankLoader(String missing)
+    public TextureQuadBankLoader(String missing)
     {
         this.missing = new TextureQuad(new Texture(missing),1,1,0.5f,0.5f,true);
     }
 
-    public TextureBank getTextureBank(String jsonName)
+    public TextureQuadBank getTextureBank(String jsonName)
     {
         record TextureFixtureId(int id, String name, TextureFixture fixture) {}
         var list = RecordLoader.loadList(jsonName, TextureFixtureId.class);
@@ -33,7 +33,7 @@ public class TextureBankLoader {
                 tex.width()+ " " +tex.height()+ " " +
                 tex.centerX()+ " " +tex.centerY());
         }
-        return new TextureBank(missing,textures);
+        return new TextureQuadBank(missing,textures);
     }
 
 }

@@ -1,8 +1,8 @@
 package io.github.terraria.client.view;
 
 import io.github.terraria.client.state.data.ClientGameState;
-import io.github.terraria.client.view.textures.TextureBank;
-import io.github.terraria.client.view.textures.TextureBankLoader;
+import io.github.terraria.client.view.textures.TextureQuadBank;
+import io.github.terraria.client.view.textures.TextureQuadBankLoader;
 import io.github.terraria.client.view.textures.TextureQuad;
 import io.github.terraria.common.Config;
 import io.github.terraria.common.PlayerState;
@@ -16,11 +16,11 @@ public class SceneGenerator {
     public static int SCENE_LAYERS = Config.SCENE_LAYERS;
     private static float centerX = SCENE_WIDTH/2;
     private static float centerY = SCENE_HEIGHT/2;
-    TextureBank blocksTexture;
-    TextureBank playerTexture;
+    TextureQuadBank blocksTexture;
+    TextureQuadBank playerTexture;
     public SceneGenerator()
     {
-        TextureBankLoader loader = new TextureBankLoader("missing.png");
+        TextureQuadBankLoader loader = new TextureQuadBankLoader("missing.png");
         blocksTexture = loader.getTextureBank("textureBlocks.json");
         playerTexture = loader.getTextureBank("texturePlayer.json");
     }
@@ -55,6 +55,11 @@ public class SceneGenerator {
 //            System.out.println("player " + pla.id + " x " + pla.x + " " + pla.y);
         }
         return scene;
+    }
+    public void dispose()
+    {
+        blocksTexture.dispose();
+        playerTexture.dispose();
     }
 
 }

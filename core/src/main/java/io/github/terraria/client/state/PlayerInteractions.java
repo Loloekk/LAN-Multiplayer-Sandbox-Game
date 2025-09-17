@@ -9,10 +9,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.client.state.data.ClientGameState;
 import io.github.terraria.common.Config;
-import io.github.terraria.controler.network.PacketPlayer.PacketPlayerHit;
-import io.github.terraria.controler.network.PacketPlayer.PacketPlayerMove;
+import io.github.terraria.controler.network.PacketPlayerClientToServer.PacketPlayerHit;
+import io.github.terraria.controler.network.PacketPlayerClientToServer.PacketPlayerMove;
 
-public class ClientInteractions {
+public class PlayerInteractions {
     Connection conn;
     private int playerId;
     Viewport viewport;
@@ -20,7 +20,7 @@ public class ClientInteractions {
 
     private long lastLeftClickTime = 0;
     private static final long LEFT_CLICK_DELAY = Config.LEFT_CLICK_DELAY;
-    public ClientInteractions(Connection conn, ClientGameState gameState, int playerId, Viewport viewport)
+    public PlayerInteractions(Connection conn, ClientGameState gameState, int playerId, Viewport viewport)
     {
         this.conn = conn;
         this.gameState = gameState;

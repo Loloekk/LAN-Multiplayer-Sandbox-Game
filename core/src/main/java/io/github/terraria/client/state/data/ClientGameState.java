@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
-import io.github.terraria.controler.network.PacketPlayerDisappear;
+import io.github.terraria.controler.network.PacketServerToClient.PacketDisappearPlayer;
 import io.github.terraria.common.PlayerState;
 
 import java.util.HashMap;
@@ -57,7 +57,7 @@ public class ClientGameState {
             player.x = pla.x;
             player.y = pla.y;
         }
-        else if(obj instanceof PacketPlayerDisappear dis)
+        else if(obj instanceof PacketDisappearPlayer dis)
         {
             players.remove(dis.id);
         }

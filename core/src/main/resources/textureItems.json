@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "name": "Stone",
+    "texture": "stone.png"
+  },
+  {
+    "id": 2,
+    "name": "Dirt",
+    "texture": "dirt.png"
+  },
+  {
+    "id": 3,
+    "name": "Water",
+    "texture": "stone.png"
+  },
+  {
+    "id": 4,
+    "name": "Decoration",
+    "texture": "stone.png"
+  },
+  {
+    "id": 5,
+    "name": "Anvil",
+    "texture": "stone.png"
+  }
+]

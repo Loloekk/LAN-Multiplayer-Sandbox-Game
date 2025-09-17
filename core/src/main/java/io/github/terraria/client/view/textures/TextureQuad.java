@@ -27,4 +27,8 @@ public class TextureQuad {
     {
         return transparent;
     }
+    public void dispose()
+    {
+        texture.dispose();
+    }
 }
