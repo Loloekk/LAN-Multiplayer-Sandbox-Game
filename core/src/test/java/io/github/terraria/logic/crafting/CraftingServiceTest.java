@@ -1,5 +1,6 @@
 package io.github.terraria.logic.crafting;
 
+import io.github.terraria.logic.crafting.station.StationTypeMap;
 import io.github.terraria.logic.equipment.ItemHolder;
 import io.github.terraria.logic.equipment.ItemRegistry;
 import io.github.terraria.logic.equipment.MultisetItemHolder;
@@ -9,6 +10,7 @@ import io.github.terraria.logic.crafting.station.StationType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.List;
 
@@ -37,7 +39,7 @@ class CraftingServiceTest {
     @BeforeEach
     void setupTest() {
         itemHolder = new DummyItemHolder();
-        service = new CraftingService(recipeRepo);
+        service = new CraftingService(recipeRepo, Mockito.any());
     }
 
     @Test
@@ -55,7 +57,8 @@ class CraftingServiceTest {
 
     @Test
     void getAvailableRecipes() {
-        List<Recipe> workbenchRecipes = service.getAvailableRecipes(StationType.WORKBENCH);
+        itemHolder.insert(itemRegistry.create("Stone"), 1);
+        List<Recipe> workbenchRecipes = service.getAvailableRecipes(StationType.WORKBENCH, itemHolder);
         assertFalse(workbenchRecipes.isEmpty());
         assertEquals(StationType.WORKBENCH, workbenchRecipes.get(0).station());
     }
