@@ -33,6 +33,7 @@ public class ObservableMultisetItemHolder extends MultisetItemHolder{
         for (ItemHolderObserver obs : observers) {
             obs.onRemove(item, count);
         }
+        System.out.println(observers.size());
     }
 
     @Override
@@ -62,7 +63,7 @@ public class ObservableMultisetItemHolder extends MultisetItemHolder{
 
     @Override
     public int remove(Item item) {
-        int removed = super.remove(item);
+        int removed = super.remove(item,1);
         if (removed > 0) {
             notifyRemove(item, removed);
         }
