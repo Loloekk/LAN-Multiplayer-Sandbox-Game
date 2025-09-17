@@ -1,4 +1,4 @@
-package io.github.terraria.client.view.textures;
+package io.github.terraria.client.view.textures.textureQuad;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

@@ -1,6 +1,7 @@
 package io.github.terraria.controler.playerNetworkData;
 
 import io.github.terraria.controler.network.PacketServerToClient.PacketCollectItems;
+import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveItems;
 import io.github.terraria.logic.equipment.Item;
 import java.util.List;
 
@@ -18,6 +19,6 @@ public class ItemHolderObserverComm implements ItemHolderObserver{
     @Override
     public void onRemove(Item item, int count){
         System.out.println("Remove " + item + " " + count);
-        bufferTCP.add(new PacketCollectItems(item.type().id(), count));
+        bufferTCP.add(new PacketRemoveItems(item.type().id(), count));
     }
 }

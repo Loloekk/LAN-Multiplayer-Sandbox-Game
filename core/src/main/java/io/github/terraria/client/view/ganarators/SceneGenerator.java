@@ -1,6 +1,8 @@
-package io.github.terraria.client.view;
+package io.github.terraria.client.view.ganarators;
 
 import io.github.terraria.client.state.ClientGameState;
+import io.github.terraria.client.view.DrawableRectangle;
+import io.github.terraria.client.view.Scene;
 import io.github.terraria.client.view.textures.textureQuad.TextureQuadBank;
 import io.github.terraria.client.view.textures.textureQuad.TextureQuadBankLoader;
 import io.github.terraria.client.view.textures.textureQuad.TextureQuad;

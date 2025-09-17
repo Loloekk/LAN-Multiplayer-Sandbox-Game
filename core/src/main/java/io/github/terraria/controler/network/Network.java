@@ -7,11 +7,10 @@ import io.github.terraria.common.Config;
 import io.github.terraria.common.PlayerState;
 import io.github.terraria.client.view.DrawableRectangle;
 import io.github.terraria.client.view.Scene;
-import io.github.terraria.controler.network.PacketPlayerClientToServer.PacketPlayer;
-import io.github.terraria.controler.network.PacketPlayerClientToServer.PacketPlayerHit;
-import io.github.terraria.controler.network.PacketPlayerClientToServer.PacketPlayerMove;
+import io.github.terraria.controler.network.PacketClientToServer.*;
 import io.github.terraria.controler.network.PacketServerToClient.PacketCollectItems;
 import io.github.terraria.controler.network.PacketServerToClient.PacketDisappearPlayer;
+import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveItems;
 
 import java.util.ArrayList;
 
@@ -34,5 +33,8 @@ public class Network {
         kryo.register(BlockState.class);
         kryo.register(PacketDisappearPlayer.class);
         kryo.register(PacketCollectItems.class);
+        kryo.register(PacketRemoveItems.class);
+        kryo.register(PacketPlayerHeldItem.class);
+        kryo.register(PacketPlayerTouch.class);
     }
 }

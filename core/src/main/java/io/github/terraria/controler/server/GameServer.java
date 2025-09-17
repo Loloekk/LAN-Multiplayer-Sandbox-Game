@@ -6,9 +6,11 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.common.Config;
 import io.github.terraria.controler.network.Network;
-import io.github.terraria.controler.network.PacketPlayerClientToServer.PacketPlayer;
-import io.github.terraria.controler.network.PacketPlayerClientToServer.PacketPlayerHit;
-import io.github.terraria.controler.network.PacketPlayerClientToServer.PacketPlayerMove;
+import io.github.terraria.controler.network.PacketClientToServer.PacketPlayer;
+import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHeldItem;
+import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHit;
+import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTouch;
+import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerMove;
 import io.github.terraria.controler.network.PacketJoin;
 import io.github.terraria.controler.network.PacketJoinAck;
 import io.github.terraria.controler.playerNetworkData.PlayerData;
@@ -18,6 +20,7 @@ import io.github.terraria.logic.actions.PlayerActionService;
 import io.github.terraria.logic.actions.PlayerActionServiceImpl;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
+import io.github.terraria.logic.equipment.MultisetItemHolder;
 import io.github.terraria.logic.equipment.ObservableMultisetItemHolder;
 import io.github.terraria.logic.physics.*;
 import io.github.terraria.logic.players.*;
@@ -80,6 +83,7 @@ public class GameServer {
                     ObservableMultisetItemHolder observableMultisetItemHolder = new ObservableMultisetItemHolder(Config.PLAYER_DEFAULT_EQUIPMENT_CAPACITY);
                     observableMultisetItemHolder.addObserver(playerState.getItemHolderObserver());
                     PhysicalPlayer player = new PhysicalPlayer(observableMultisetItemHolder);
+//                    PhysicalPlayer player = new PhysicalPlayer(new MultisetItemHolder(50));
                     playerActivator.loginPlayer(player,id);
                     connectionIds.put(connection, playerState);
                     inputQueues.put(connection, new ConcurrentLinkedQueue<>());
@@ -127,6 +131,17 @@ public class GameServer {
                     Vector2 pos = new Vector2(hit.x,hit.y);
 //                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
                     actionService.hitAt(gameState.activePlayers().get(playerId),pos);
+                }
+                if(in instanceof PacketPlayerTouch touch)
+                {
+                    Vector2 pos = new Vector2(touch.x,touch.y);
+//                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
+                    actionService.placeHeldAt(gameState.activePlayers().get(playerId),pos);
+                }
+                if(in instanceof PacketPlayerHeldItem held)
+                {
+                    System.out.println(held);
+                    //TODO ustawic graczowi item w rece
                 }
             }
         }

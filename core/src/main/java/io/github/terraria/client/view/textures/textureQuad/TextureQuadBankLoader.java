@@ -1,6 +1,7 @@
-package io.github.terraria.client.view.textures;
+package io.github.terraria.client.view.textures.textureQuad;
 
 import com.badlogic.gdx.graphics.Texture;
+import io.github.terraria.client.view.textures.TextureFixture;
 import io.github.terraria.loading.RecordLoader;
 
 import java.util.HashMap;
@@ -15,7 +16,7 @@ public class TextureQuadBankLoader {
         this.missing = new TextureQuad(new Texture(missing),1,1,0.5f,0.5f,true);
     }
 
-    public TextureQuadBank getTextureBank(String jsonName)
+    public TextureQuadBank getTextureQuadBank(String jsonName)
     {
         record TextureFixtureId(int id, String name, TextureFixture fixture) {}
         var list = RecordLoader.loadList(jsonName, TextureFixtureId.class);
@@ -25,13 +26,9 @@ public class TextureQuadBankLoader {
         for(Map.Entry<Integer, TextureFixture> entry: map.entrySet())
         {
             TextureFixture tex = entry.getValue();
-            System.out.println(tex.texture());
             textures.put(entry.getKey(), new TextureQuad(new Texture(tex.texture()),
                 tex.width(),tex.height(),
                 tex.centerX(),tex.centerY(),tex.transparent()));
-            System.out.println(
-                tex.width()+ " " +tex.height()+ " " +
-                tex.centerX()+ " " +tex.centerY());
         }
         return new TextureQuadBank(missing,textures);
     }

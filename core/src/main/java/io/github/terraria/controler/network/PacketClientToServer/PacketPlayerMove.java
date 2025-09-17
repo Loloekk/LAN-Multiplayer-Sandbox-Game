@@ -1,4 +1,4 @@
-package io.github.terraria.controler.network.PacketPlayerClientToServer;
+package io.github.terraria.controler.network.PacketClientToServer;
 
 public class PacketPlayerMove implements PacketPlayer{
     public int playerId;

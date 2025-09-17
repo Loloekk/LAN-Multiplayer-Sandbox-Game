@@ -3,8 +3,8 @@ package io.github.terraria.controler.network.PacketServerToClient;
 import io.github.terraria.logic.equipment.ItemType;
 
 public class PacketCollectItems {
-    int id;
-    int count;
+    public int id;
+    public int count;
     public PacketCollectItems(){}
     public PacketCollectItems(int id, int count)
     {

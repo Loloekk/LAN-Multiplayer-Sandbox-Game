@@ -54,7 +54,8 @@ public class Chunk {
                     }
                     else
                     {
-                        if(!blocks[i][j][z].equals((Integer)tmp.type().id()))
+                        if(blocks[i][j][z] == null||
+                            (!blocks[i][j][z].equals((Integer)tmp.type().id())))
                         {
                             blocks[i][j][z] = tmp.type().id();
                             data.add(new BlockState(zeroX + i, zeroY + j, z, blocks[i][j][z]));

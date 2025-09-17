@@ -1,4 +1,4 @@
-package io.github.terraria.client.view.textures;
+package io.github.terraria.client.view.textures.textureQuad;
 
 import java.util.Map;
 
@@ -10,7 +10,7 @@ public class TextureQuadBank {
         this.missingTexture = missingTexture;
         this.map = map;
     }
-    public TextureQuad getTexture(int id){
+    public TextureQuad getTextureQuad(int id){
         if(!map.containsKey(id))
             return missingTexture;
         return map.get(id);

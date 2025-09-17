@@ -36,7 +36,11 @@ public class GridGenerator {
             for (int j = 0; j < height; j++) {
                 ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
                 {
-                    Block frontBlock = (j <= groundLevel) ? blockFactory.create("Dirt") : null;
+                    Block frontBlock;
+                    if(j%2 == 0)
+                        frontBlock = (j <= groundLevel) ? blockFactory.create("Dirt") : null;
+                    else
+                        frontBlock = (j <= groundLevel) ? blockFactory.create("Stone") : null;
                     point.add(frontBlock);
                 }
                 point.add(null);

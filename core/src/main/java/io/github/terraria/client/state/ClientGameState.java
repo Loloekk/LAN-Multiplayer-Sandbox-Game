@@ -4,8 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
+import io.github.terraria.controler.network.PacketServerToClient.PacketCollectItems;
 import io.github.terraria.controler.network.PacketServerToClient.PacketDisappearPlayer;
 import io.github.terraria.common.PlayerState;
+import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveItems;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,16 +23,20 @@ public class ClientGameState {
     public static int CHUNK_WIDTH_RADIUS = Config.CHUNK_WIDTH_RADIUS;
     public static int CHUNK_HEIGHT_RADIUS = Config.CHUNK_HEIGHT_RADIUS;
     private int playerId;
-    private float x;
-    private float y;
+    private ClientPlayerState playerState;
     Connection conn;
 
     public Map<Integer, ClientChunk> chunks = new HashMap<>();
     public Map<Integer,PlayerState> players = new HashMap<>();
-    public ClientGameState(Connection conn, int playerId)
+    public ClientGameState(Connection conn)
     {
         this.conn = conn;
-        this.playerId = playerId;
+        playerState = new ClientPlayerState();
+    }
+    public void setPlayerId(int id)
+    {
+        this.playerId = id;
+        playerState.setPlayerId(id);
     }
     public void actualize(Object obj)
     {
@@ -47,8 +53,7 @@ public class ClientGameState {
         {
             if(pla.id == playerId)
             {
-                x = pla.x;
-                y = pla.y;
+                playerState.actualize(pla);
             }
             if(!players.containsKey(pla.id))
                 players.put(pla.id, new PlayerState());
@@ -61,6 +66,10 @@ public class ClientGameState {
         {
             players.remove(dis.id);
         }
+        else if(obj instanceof PacketCollectItems || obj instanceof PacketRemoveItems)
+        {
+            playerState.actualize(obj);
+        }
     }
     public Integer getBlockId(int x, int y, int z)
     {
@@ -70,14 +79,6 @@ public class ClientGameState {
         if(chunks.containsKey(chunkId))
             return chunks.get(chunkId).getBlockId(x,y,z);
         return null;
-    }
-    public float getX()
-    {
-        return x;
-    }
-    public float getY()
-    {
-        return y;
     }
     public List<PlayerState> getPlayers()
     {
@@ -90,8 +91,8 @@ public class ClientGameState {
     }
     public void throwTrash()
     {
-        int X = ClientChunk.getX(x);
-        int Y = ClientChunk.getX(y);
+        int X = ClientChunk.getX(getX());
+        int Y = ClientChunk.getX(getY());
         List<Integer> chunksToDelete = new ArrayList<>();
         for(ClientChunk chunk : chunks.values())
         {
@@ -114,6 +115,17 @@ public class ClientGameState {
     {
         return new Vector2(getX() + (screenPos.x - SCENE_WIDTH/2), getY() + (screenPos.y - SCENE_HEIGHT/2));
     }
-
+    public float getX()
+    {
+        return playerState.getX();
+    }
+    public float getY()
+    {
+        return playerState.getY();
+    }
+    public ClientPlayerState getPlayerState()
+    {
+        return playerState;
+    }
 
 }

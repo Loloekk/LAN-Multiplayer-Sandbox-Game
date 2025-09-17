@@ -3,10 +3,10 @@ package io.github.terraria.client.view;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class Renderer {
+public class SceneRenderer {
     private SpriteBatch spriteBatch = new SpriteBatch();
 
-    public Renderer(){}
+    public SceneRenderer(){}
 
     public void draw(Viewport viewport, Scene scene){
         viewport.apply();
