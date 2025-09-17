@@ -1,9 +1,9 @@
 package io.github.terraria.client.view;
 
 import io.github.terraria.client.state.ClientGameState;
-import io.github.terraria.client.view.textures.TextureQuadBank;
-import io.github.terraria.client.view.textures.TextureQuadBankLoader;
-import io.github.terraria.client.view.textures.TextureQuad;
+import io.github.terraria.client.view.textures.textureQuad.TextureQuadBank;
+import io.github.terraria.client.view.textures.textureQuad.TextureQuadBankLoader;
+import io.github.terraria.client.view.textures.textureQuad.TextureQuad;
 import io.github.terraria.common.Config;
 import io.github.terraria.common.PlayerState;
 
@@ -21,8 +21,8 @@ public class SceneGenerator {
     public SceneGenerator()
     {
         TextureQuadBankLoader loader = new TextureQuadBankLoader("missing.png");
-        blocksTexture = loader.getTextureBank("textureBlocks.json");
-        playerTexture = loader.getTextureBank("texturePlayer.json");
+        blocksTexture = loader.getTextureQuadBank("textureBlocks.json");
+        playerTexture = loader.getTextureQuadBank("texturePlayer.json");
     }
 
     public Scene generate(ClientGameState data)
@@ -39,7 +39,7 @@ public class SceneGenerator {
                     Integer blockId = data.getBlockId(i + x, j + y, z);
                     if (blockId == null || blockId.equals(0))
                         continue;
-                    TextureQuad texture = blocksTexture.getTexture(blockId);
+                    TextureQuad texture = blocksTexture.getTextureQuad(blockId);
                     rect.add(new DrawableRectangle(i + x + diffX, j + y + diffY,texture));
                     if(!texture.isTransparent())
                         break;
@@ -51,7 +51,7 @@ public class SceneGenerator {
             }
         for(PlayerState pla : data.getPlayers())
         {
-            scene.objects.add(new DrawableRectangle(pla.x+diffX,pla.y+diffY,playerTexture.getTexture(0)));
+            scene.objects.add(new DrawableRectangle(pla.x+diffX,pla.y+diffY,playerTexture.getTextureQuad(0)));
 //            System.out.println("player " + pla.id + " x " + pla.x + " " + pla.y);
         }
         return scene;

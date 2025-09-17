@@ -27,11 +27,15 @@ public class PhysicalPlayer {
     public Item heldItem() { return heldItem; }
     public ItemHolder equipment() { return equipment; }
     public void collectItem(Item item) { equipment.insert(item); }
-    public void setHeldItem(Item item) { heldItem = item; }
+    public void setHeldItem(Item item) {
+        if(equipment.getCount(item) > 0 || item == null) // Nie wiem czy okej Karol
+            heldItem = item;
+    }
     public void discardInstanceOfHeldItem() {
         equipment.remove(heldItem);
-        if(equipment.getCount(heldItem) == 0)
+        if(equipment.getCount(heldItem) == 0) {
             setHeldItem(null);
+        }
     }
 
     public IntVector2 getIntegerPosition() {
