@@ -1,4 +1,4 @@
-package io.github.terraria.client.state.data;
+package io.github.terraria.client.state;
 
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;

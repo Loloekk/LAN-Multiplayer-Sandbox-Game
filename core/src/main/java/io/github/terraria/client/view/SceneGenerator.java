@@ -1,6 +1,6 @@
 package io.github.terraria.client.view;
 
-import io.github.terraria.client.state.data.ClientGameState;
+import io.github.terraria.client.state.ClientGameState;
 import io.github.terraria.client.view.textures.TextureQuadBank;
 import io.github.terraria.client.view.textures.TextureQuadBankLoader;
 import io.github.terraria.client.view.textures.TextureQuad;

@@ -1,4 +1,4 @@
-package io.github.terraria.client.state.data;
+package io.github.terraria.client.state;
 
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
