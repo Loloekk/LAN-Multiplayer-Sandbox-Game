@@ -2,7 +2,7 @@ package io.github.terraria.client.state;
 
 import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerState;
 import io.github.terraria.controler.network.PacketServerToClient.PacketCollectItems;
-import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerTakeItem;
+import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerHeldItem;
 import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveItems;
 
 public class ClientMainPlayerState {
@@ -53,11 +53,11 @@ public class ClientMainPlayerState {
             equipment.actualize(obj);
             difference = true;
         }
-        if(obj instanceof PacketPlayerTakeItem take)
+        if(obj instanceof PacketPlayerHeldItem held)
         {
-            if(take.playerId == playerId)
+            if(held.playerId == playerId)
             {
-                heldItem = take.itemId;
+                heldItem = held.itemId;
                 difference = true;
             }
         }

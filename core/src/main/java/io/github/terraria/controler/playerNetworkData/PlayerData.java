@@ -4,7 +4,7 @@ import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
 import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerState;
 import io.github.terraria.controler.network.PacketServerToClient.PacketDisappearPlayer;
-import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerTakeItem;
+import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerHeldItem;
 import io.github.terraria.logic.actions.GameState;
 
 import java.util.ArrayList;
@@ -130,13 +130,13 @@ public class PlayerData {
                 players.put(pla.id, pla);
                 bufferTCP.add(pla);
                 Item item = player.heldItem();
-                PacketPlayerTakeItem take = new PacketPlayerTakeItem();
-                take.playerId = pla.id;
+                PacketPlayerHeldItem held = new PacketPlayerHeldItem();
+                held.playerId = pla.id;
                 if(item == null)
-                    take.itemId = null;
+                    held.itemId = null;
                 else
-                    take.itemId = item.type().id();
-                bufferTCP.add(take);
+                    held.itemId = item.type().id();
+                bufferTCP.add(held);
                 if(player instanceof ObservablePhysicalPlayer observablePlayer)
                 {
                     observablePlayer.addObserver(physicalPlayerObserver);

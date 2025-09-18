@@ -31,8 +31,8 @@ public class Network {
         kryo.register(PacketDisappearPlayer.class);
         kryo.register(PacketCollectItems.class);
         kryo.register(PacketRemoveItems.class);
-        kryo.register(PacketPlayerHeldItem.class);
-        kryo.register(PacketPlayerTouch.class);
         kryo.register(PacketPlayerTakeItem.class);
+        kryo.register(PacketPlayerTouch.class);
+        kryo.register(PacketPlayerHeldItem.class);
     }
 }

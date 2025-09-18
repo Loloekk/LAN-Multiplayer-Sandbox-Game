@@ -3,28 +3,25 @@ package io.github.terraria.client.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.*;
 import io.github.terraria.client.state.ClientMainPlayerState;
 
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.client.view.textures.texture.TextureBank;
-import io.github.terraria.client.view.textures.texture.TextureBankLoader;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHeldItem;
+
+import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTakeItem;
 
 public class EquipmentStage{
+    public static int ITEMS_PER_ROW = 10;
     private TextureBank itemsTexture;
     private Stage inventoryStage;
     private Table currentTable;
@@ -84,45 +81,47 @@ public class EquipmentStage{
             currentTable.remove();
         currentTable = new Table();
         currentTable.setFillParent(true);
-        currentTable.top().left();
-        currentTable.padTop(50);
-        currentTable.padLeft(20);
+        inventoryStage.addActor(currentTable);
 
-        int i = 0;
-        for (Integer itemId : playerState.getEquipment().browse()) {
-            Texture tex = itemsTexture.getTexture(itemId);
-            if (tex == null) continue;
+        Table itemsTable = new Table();
+        itemsTable.top().left().pad(20);
 
-            Drawable drawable = new TextureRegionDrawable(new TextureRegion(tex));
+        int count = 0;
+
+        for (Integer item : playerState.getEquipment().browse()) {
+
+            TextureRegion region = new TextureRegion(itemsTexture.getTexture(item));
 
             ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle();
-            style.imageUp = drawable;
+            style.imageUp = new TextureRegionDrawable(region);
+            ImageButton itemButton = new ImageButton(style);
 
-            ImageButton button = new ImageButton(style);
-            button.getImage().setScaling(Scaling.fit);
-            button.getImage().setFillParent(true);
-
-            final int finalItemId = itemId;
-            button.addListener(new ClickListener() {
+            itemButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    System.out.println("Kliknięto item o numerze " + finalItemId);
-                    PacketPlayerHeldItem held = new PacketPlayerHeldItem();
-                    held.itemId = finalItemId;
-                    held.playerId = playerState.getPlayerId();
-                    conn.sendTCP(held);
+                    System.out.println("Kliknięto item o numerze " + item);
+                    PacketPlayerTakeItem take = new PacketPlayerTakeItem();
+                    take.itemId = item;
+                    take.playerId = playerState.getPlayerId();
+                    conn.sendTCP(take);
                 }
             });
 
-            currentTable.add(button).size(64, 64).pad(2);
+            itemsTable.add(itemButton).size(40).pad(5);
+            count++;
 
-            i++;
-            if (i % 10 == 0) {
-                currentTable.row();
+            if (count % ITEMS_PER_ROW == 0) {
+                itemsTable.row();
             }
         }
 
-        inventoryStage.addActor(currentTable);
+        ScrollPane.ScrollPaneStyle scrollStyle = new ScrollPane.ScrollPaneStyle();
+        ScrollPane scrollPane = new ScrollPane(itemsTable, scrollStyle);
+        scrollPane.setFadeScrollBars(false);
+
+        currentTable.add(scrollPane).growY().align(Align.left);
+        currentTable.add().grow();
+
     }
     public void resize(int width, int height) {
         viewport.update(width, height, true);

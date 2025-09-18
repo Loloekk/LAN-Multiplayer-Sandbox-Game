@@ -7,7 +7,7 @@ import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.common.Config;
 import io.github.terraria.controler.network.Network;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayer;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHeldItem;
+import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTakeItem;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHit;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTouch;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerMove;
@@ -20,7 +20,6 @@ import io.github.terraria.logic.actions.PlayerActionService;
 import io.github.terraria.logic.actions.PlayerActionServiceImpl;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
-import io.github.terraria.logic.equipment.MultisetItemHolder;
 import io.github.terraria.logic.equipment.ObservableMultisetItemHolder;
 import io.github.terraria.logic.physics.*;
 import io.github.terraria.logic.players.*;
@@ -138,9 +137,9 @@ public class GameServer {
 //                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
                     actionService.placeHeldAt(gameState.activePlayers().get(playerId),pos);
                 }
-                if(in instanceof PacketPlayerHeldItem held)
+                if(in instanceof PacketPlayerTakeItem take)
                 {
-                    System.out.println(held);
+                    System.out.println(take);
                     //TODO ustawic graczowi item w rece
                 }
             }

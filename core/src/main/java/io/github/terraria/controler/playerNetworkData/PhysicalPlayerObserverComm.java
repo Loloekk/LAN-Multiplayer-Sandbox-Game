@@ -1,6 +1,6 @@
 package io.github.terraria.controler.playerNetworkData;
 
-import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerTakeItem;
+import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerHeldItem;
 import io.github.terraria.logic.equipment.Item;
 
 import java.util.List;
@@ -14,12 +14,12 @@ public class PhysicalPlayerObserverComm implements PhysicalPlayerObserver{
     @Override
     public void onSetHeldItem(int playerId, Item item){
         System.out.println(playerId + " held item " + item);
-        PacketPlayerTakeItem take = new PacketPlayerTakeItem();
-        take.playerId = playerId;
+        PacketPlayerHeldItem held = new PacketPlayerHeldItem();
+        held.playerId = playerId;
         if(item == null)
-            take.itemId = null;
+            held.itemId = null;
         else
-            take.itemId = item.type().id();
-        bufferTCP.add(take);
+            held.itemId = item.type().id();
+        bufferTCP.add(held);
     }
 }

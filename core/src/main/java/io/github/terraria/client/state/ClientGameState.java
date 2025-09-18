@@ -63,13 +63,13 @@ public class ClientGameState {
         {
             players.remove(dis.id);
         }
-        else if(obj instanceof PacketPlayerTakeItem take)
+        else if(obj instanceof PacketPlayerHeldItem held)
         {
-            ClientPlayerState player = players.get(take.playerId);
+            ClientPlayerState player = players.get(held.playerId);
             if(player != null)
             {
-                player.heldItem = take.itemId;
-                if(take.playerId == playerId)
+                player.heldItem = held.itemId;
+                if(held.playerId == playerId)
                     mainPlayerState.actualize(obj);
             }
         }

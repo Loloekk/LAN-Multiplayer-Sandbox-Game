@@ -1,6 +1,6 @@
 package io.github.terraria.controler.network.PacketServerToClient;
 
-public class PacketPlayerTakeItem {
+public class PacketPlayerHeldItem {
     public int playerId;
     public Integer itemId;
 }
