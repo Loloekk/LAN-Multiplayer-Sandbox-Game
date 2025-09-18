@@ -1,4 +1,4 @@
-package io.github.terraria.logic.crafting.station;
+package io.github.terraria.common;
 
 public enum StationType {
     WORKBENCH,

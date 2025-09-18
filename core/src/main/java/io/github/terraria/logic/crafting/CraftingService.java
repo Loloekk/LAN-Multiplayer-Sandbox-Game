@@ -1,13 +1,11 @@
 package io.github.terraria.logic.crafting;
 
-import io.github.terraria.logic.actions.GameState;
+import io.github.terraria.common.StationType;
 import io.github.terraria.logic.building.Block;
 import io.github.terraria.logic.equipment.ItemHolder;
 import io.github.terraria.logic.crafting.station.*;
-import io.github.terraria.logic.players.PhysicalPlayer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

@@ -5,7 +5,7 @@ import io.github.terraria.logic.building.Block;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.crafting.CraftingService;
 import io.github.terraria.logic.crafting.Recipe;
-import io.github.terraria.logic.crafting.station.StationType;
+import io.github.terraria.common.StationType;
 import io.github.terraria.logic.players.ActivePlayers;
 import io.github.terraria.logic.players.PhysicalPlayer;
 import io.github.terraria.utils.IntVector2;

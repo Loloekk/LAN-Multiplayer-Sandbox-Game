@@ -1,5 +1,6 @@
 package io.github.terraria.logic.crafting.station;
 
+import io.github.terraria.common.StationType;
 import io.github.terraria.logic.equipment.ItemHolder;
 import io.github.terraria.logic.crafting.Recipe;
 

@@ -1,6 +1,6 @@
 package io.github.terraria.loading;
 
-import io.github.terraria.logic.crafting.station.StationType;
+import io.github.terraria.common.StationType;
 import io.github.terraria.logic.crafting.station.StationTypeMap;
 
 import java.util.Map;
