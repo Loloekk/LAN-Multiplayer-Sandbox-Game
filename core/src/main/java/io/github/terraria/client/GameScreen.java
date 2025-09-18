@@ -36,7 +36,7 @@ public class GameScreen implements Screen {
 
     private boolean inventoryVisible = false;
     private final Drop game;
-//    private final Viewport viewport = new FitViewport(SCENE_WIDTH, SCENE_HEIGHT);
+    //    private final Viewport viewport = new FitViewport(SCENE_WIDTH, SCENE_HEIGHT);
     private final ScalingViewport viewport = new ScalingViewport(Scaling.fill, SCENE_WIDTH, SCENE_HEIGHT);
     private SceneGenerator generator;
     private SceneRenderer renderer;
@@ -143,7 +143,7 @@ public class GameScreen implements Screen {
         if(equipmentStage != null) {
             equipmentStage.resize(width, height);
         }
-            viewport.update(width, height, true);
+        viewport.update(width, height, true);
     }
     @Override public void show()    {}
     @Override public void pause()   {}
