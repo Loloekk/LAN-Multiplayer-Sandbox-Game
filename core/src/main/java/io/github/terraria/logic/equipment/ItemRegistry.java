@@ -12,4 +12,6 @@ public class ItemRegistry {
     public Item create(String name) {
         return blockFactory.create(name);
     }
+
+    public Item create(int id) { return blockFactory.create(id); }
 }
