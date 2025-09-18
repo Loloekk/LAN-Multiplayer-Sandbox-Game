@@ -27,9 +27,12 @@ public class PhysicalPlayer {
     public Item heldItem() { return heldItem; }
     public ItemHolder equipment() { return equipment; }
     public void collectItem(Item item) { equipment.insert(item); }
-    public void setHeldItem(Item item) {
-        if(equipment.getCount(item) > 0 || item == null) // Nie wiem czy okej Karol
+    public boolean setHeldItem(Item item) {
+        if(equipment.getCount(item) > 0 || item == null) {// Nie wiem czy okej Karol
             heldItem = item;
+            return true;
+        }
+        return false;
     }
     public void discardInstanceOfHeldItem() {
         equipment.remove(heldItem);

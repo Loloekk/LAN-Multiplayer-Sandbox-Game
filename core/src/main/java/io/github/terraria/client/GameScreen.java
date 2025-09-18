@@ -4,17 +4,17 @@ package io.github.terraria.client;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.viewport.*;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.client.view.*;
 import io.github.terraria.client.view.ganarators.SceneGenerator;
+import io.github.terraria.client.view.textures.texture.TextureBank;
+import io.github.terraria.client.view.textures.texture.TextureBankLoader;
+import io.github.terraria.client.view.textures.textureQuad.TextureQuadBank;
+import io.github.terraria.client.view.textures.textureQuad.TextureQuadBankLoader;
 import io.github.terraria.controler.network.Network;
 import io.github.terraria.controler.network.PacketJoin;
 import io.github.terraria.controler.network.PacketJoinAck;
@@ -36,23 +36,34 @@ public class GameScreen implements Screen {
 
     private boolean inventoryVisible = false;
     private final Drop game;
-//    private final Viewport viewport = new StretchViewport(SCENE_WIDTH, SCENE_HEIGHT);
+//    private final Viewport viewport = new FitViewport(SCENE_WIDTH, SCENE_HEIGHT);
     private final ScalingViewport viewport = new ScalingViewport(Scaling.fill, SCENE_WIDTH, SCENE_HEIGHT);
     private SceneGenerator generator;
     private SceneRenderer renderer;
     private EquipmentStage equipmentStage;
-    Texture dirtTexture = new Texture("dirt.png");
     private boolean connectionAccept = false;
+
+    TextureBank itemsTexture;
+    TextureQuadBank blocksTexture;
+    TextureQuadBank playerTexture;
 
     public GameScreen(Drop game) {
         this.game = game;
-        generator = new SceneGenerator();
+
+
+        TextureBankLoader loader = new TextureBankLoader("missing.png");
+        itemsTexture = loader.getTextureBank("textureItems.json");
+        TextureQuadBankLoader loaderQuad = new TextureQuadBankLoader("missing.png");
+        blocksTexture = loaderQuad.getTextureQuadBank("textureBlocks.json");
+        playerTexture = loaderQuad.getTextureQuadBank("texturePlayer.json");
+
+        generator = new SceneGenerator(blocksTexture, playerTexture, itemsTexture);
         client = new Client();
         Network.register(client);
         client.start();
         gameState = new ClientGameState(client);
         playerInteractions = new PlayerInteractions(client, gameState, viewport);
-        equipmentStage = new EquipmentStage(client,gameState.getPlayerState());
+        equipmentStage = new EquipmentStage(client,gameState.getMainPlayerState(), itemsTexture);
         client.addListener(new Listener() {
             @Override
             public void received(com.esotericsoftware.kryonet.Connection c, Object obj) {
@@ -129,9 +140,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
-        if(equipmentStage != null)
+        if(equipmentStage != null) {
             equipmentStage.resize(width, height);
+        }
+            viewport.update(width, height, true);
     }
     @Override public void show()    {}
     @Override public void pause()   {}

@@ -2,8 +2,9 @@ package io.github.terraria.controler.playerNetworkData;
 
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
-import io.github.terraria.common.PlayerState;
+import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerState;
 import io.github.terraria.controler.network.PacketServerToClient.PacketDisappearPlayer;
+import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerTakeItem;
 import io.github.terraria.logic.actions.GameState;
 
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import com.esotericsoftware.kryonet.Connection;
+import io.github.terraria.logic.equipment.Item;
+import io.github.terraria.logic.players.ObservablePhysicalPlayer;
 import io.github.terraria.logic.players.PhysicalPlayer;
 
 import static java.lang.Math.abs;
@@ -20,11 +23,12 @@ public class PlayerData {
     public static int CHUNK_HEIGHT_RADIUS = Config.CHUNK_HEIGHT_RADIUS;
     private GameState gameState;
     private int playerId;
-    Connection conn;
-    ItemHolderObserver itemHolderObserver;
+    private Connection conn;
+    private ItemHolderObserver itemHolderObserver;
+    private PhysicalPlayerObserver physicalPlayerObserver;
 
     public Map<Integer, Chunk> chunks = new HashMap<>();
-    public Map<Integer, PlayerState> players = new HashMap<>();
+    public Map<Integer, PacketPlayerState> players = new HashMap<>();
     private List<Object> bufferTCP = new ArrayList<>();
 //    private List<Object> bufforUDP = new ArrayList<>();
     public PlayerData(Connection conn, GameState gameState, int playerId)
@@ -33,6 +37,7 @@ public class PlayerData {
         this.gameState = gameState;
         this.playerId = playerId;
         this.itemHolderObserver = new ItemHolderObserverComm(bufferTCP);
+        this.physicalPlayerObserver = new PhysicalPlayerObserverComm(bufferTCP);
     }
     public void actualize()
     {
@@ -79,9 +84,9 @@ public class PlayerData {
             chunks.remove(chunk.getId());
         }
         List<Integer> playersToDelete = new ArrayList<>();
-        for(Map.Entry<Integer, PlayerState> entry : players.entrySet())
+        for(Map.Entry<Integer, PacketPlayerState> entry : players.entrySet())
         {
-            PlayerState pla = entry.getValue();
+            PacketPlayerState pla = entry.getValue();
             if(abs(x-pla.x) > Chunk.DEFAULT_WIDTH*CHUNK_WIDTH_RADIUS ||
                 abs(y-pla.y) > Chunk.DEFAULT_HEIGHT*CHUNK_HEIGHT_RADIUS ||
                 (!gameState.activePlayers().isActive(pla.id)))
@@ -91,7 +96,11 @@ public class PlayerData {
                 dis.id = pla.id;
                 bufferTCP.add(dis);
                 playersToDelete.add(pla.id);
-//                System.out.println("dla" + playerId + " usuwam "+ pla.id);
+                PhysicalPlayer player = gameState.activePlayers().get(pla.id);
+                if(player instanceof ObservablePhysicalPlayer observablePlayer)
+                {
+                    observablePlayer.removeObserver(physicalPlayerObserver);
+                }
             }
         }
         for(Integer deletedPlayerId : playersToDelete)
@@ -100,14 +109,14 @@ public class PlayerData {
         }
         for(PhysicalPlayer player : gameState.activePlayers().getList())
         {
-            PlayerState pla = new PlayerState();
+            PacketPlayerState pla = new PacketPlayerState();
             pla.id = player.id();
             pla.x = player.getPosition().x;
             pla.y = player.getPosition().y;
             pla.name = "ala";
             if(players.containsKey(pla.id))
             {
-                PlayerState tmppla = players.get(pla.id);
+                PacketPlayerState tmppla = players.get(pla.id);
                 if(tmppla.x != pla.x || tmppla.y != pla.y)
                 {
                     players.put(pla.id, pla);
@@ -119,7 +128,19 @@ public class PlayerData {
                 // conditions when we add player
             {
                 players.put(pla.id, pla);
-                conn.sendUDP(pla);
+                bufferTCP.add(pla);
+                Item item = player.heldItem();
+                PacketPlayerTakeItem take = new PacketPlayerTakeItem();
+                take.playerId = pla.id;
+                if(item == null)
+                    take.itemId = null;
+                else
+                    take.itemId = item.type().id();
+                bufferTCP.add(take);
+                if(player instanceof ObservablePhysicalPlayer observablePlayer)
+                {
+                    observablePlayer.addObserver(physicalPlayerObserver);
+                }
             }
         }
         broadcast();
@@ -131,6 +152,10 @@ public class PlayerData {
     public ItemHolderObserver getItemHolderObserver()
     {
         return itemHolderObserver;
+    }
+    public PhysicalPlayerObserver getPhysicalPlayerObserver()
+    {
+        return physicalPlayerObserver;
     }
     public void broadcast()
     {

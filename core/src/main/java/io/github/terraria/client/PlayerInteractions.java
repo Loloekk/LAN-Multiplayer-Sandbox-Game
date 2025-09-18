@@ -38,7 +38,7 @@ public class PlayerInteractions {
         if (Gdx.input.isKeyPressed(Input.Keys.W))    jump=true;
         if (mx!=0 || jump!=false) {
             PacketPlayerMove move = new PacketPlayerMove();
-            move.playerId = gameState.getPlayerState().getPlayerId();
+            move.playerId = gameState.getMainPlayerState().getPlayerId();
             move.moveX = mx;
             move.jump = jump;
             conn.sendUDP(move);
@@ -54,7 +54,7 @@ public class PlayerInteractions {
                 mousePos = gameState.getGamePosition(mousePos);
 //                System.out.println("Klik LPM w świecie gry: " + mousePos.x + ", " + mousePos.y);
                 PacketPlayerHit hit = new PacketPlayerHit();
-                hit.playerId = gameState.getPlayerState().getPlayerId();
+                hit.playerId = gameState.getMainPlayerState().getPlayerId();
                 hit.x = mousePos.x;
                 hit.y = mousePos.y;
                 conn.sendTCP(hit);
@@ -71,7 +71,7 @@ public class PlayerInteractions {
                 mousePos = gameState.getGamePosition(mousePos);
 //                System.out.println("Klik LPM w świecie gry: " + mousePos.x + ", " + mousePos.y);
                 PacketPlayerTouch touch = new PacketPlayerTouch();
-                touch.playerId = gameState.getPlayerState().getPlayerId();
+                touch.playerId = gameState.getMainPlayerState().getPlayerId();
                 touch.x = mousePos.x;
                 touch.y = mousePos.y;
                 conn.sendTCP(touch);

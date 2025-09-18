@@ -4,13 +4,10 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
-import io.github.terraria.common.PlayerState;
+import io.github.terraria.controler.network.PacketServerToClient.*;
 import io.github.terraria.client.view.DrawableRectangle;
 import io.github.terraria.client.view.Scene;
 import io.github.terraria.controler.network.PacketClientToServer.*;
-import io.github.terraria.controler.network.PacketServerToClient.PacketCollectItems;
-import io.github.terraria.controler.network.PacketServerToClient.PacketDisappearPlayer;
-import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveItems;
 
 import java.util.ArrayList;
 
@@ -26,7 +23,7 @@ public class Network {
         kryo.register(PacketPlayerMove.class);
         kryo.register(PacketPlayerHit.class);
         kryo.register(java.util.ArrayList.class);
-        kryo.register(PlayerState.class);
+        kryo.register(PacketPlayerState.class);
         kryo.register(Scene.class);
         kryo.register(DrawableRectangle.class);
         kryo.register(ArrayList.class);
@@ -36,5 +33,6 @@ public class Network {
         kryo.register(PacketRemoveItems.class);
         kryo.register(PacketPlayerHeldItem.class);
         kryo.register(PacketPlayerTouch.class);
+        kryo.register(PacketPlayerTakeItem.class);
     }
 }

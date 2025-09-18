@@ -1,13 +1,15 @@
 package io.github.terraria.client.view.ganarators;
 
 import io.github.terraria.client.state.ClientGameState;
+import io.github.terraria.client.state.ClientPlayerState;
 import io.github.terraria.client.view.DrawableRectangle;
 import io.github.terraria.client.view.Scene;
+import io.github.terraria.client.view.textures.texture.TextureBank;
 import io.github.terraria.client.view.textures.textureQuad.TextureQuadBank;
 import io.github.terraria.client.view.textures.textureQuad.TextureQuadBankLoader;
 import io.github.terraria.client.view.textures.textureQuad.TextureQuad;
 import io.github.terraria.common.Config;
-import io.github.terraria.common.PlayerState;
+import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerState;
 
 import java.util.Stack;
 
@@ -16,15 +18,18 @@ public class SceneGenerator {
     public static int SCENE_HEIGHT = Config.SCENE_HEIGHT;
     public static int SCENE_DELTA = Config.SCENE_DELTA;
     public static int SCENE_LAYERS = Config.SCENE_LAYERS;
+    public static float ARM_LENGHT = 0.3f;
     private static float centerX = SCENE_WIDTH/2;
     private static float centerY = SCENE_HEIGHT/2;
+
     TextureQuadBank blocksTexture;
     TextureQuadBank playerTexture;
-    public SceneGenerator()
+    TextureBank itemsTexture;
+    public SceneGenerator(TextureQuadBank blocksTexture, TextureQuadBank playerTexture, TextureBank itemsTexture)
     {
-        TextureQuadBankLoader loader = new TextureQuadBankLoader("missing.png");
-        blocksTexture = loader.getTextureQuadBank("textureBlocks.json");
-        playerTexture = loader.getTextureQuadBank("texturePlayer.json");
+        this.blocksTexture = blocksTexture;
+        this.playerTexture = playerTexture;
+        this.itemsTexture = itemsTexture;
     }
 
     public Scene generate(ClientGameState data)
@@ -51,10 +56,12 @@ public class SceneGenerator {
                     scene.objects.add(rect.pop());
                 }
             }
-        for(PlayerState pla : data.getPlayers())
+        for(ClientPlayerState pla : data.getPlayers())
         {
             scene.objects.add(new DrawableRectangle(pla.x+diffX,pla.y+diffY,playerTexture.getTextureQuad(0)));
-//            System.out.println("player " + pla.id + " x " + pla.x + " " + pla.y);
+            if(pla.heldItem != null)
+                scene.objects.add(new DrawableRectangle(pla.x+diffX+ARM_LENGHT,pla.y+diffY,new TextureQuad(itemsTexture.getTexture(pla.heldItem),0.3f,0.3f,0.15f,0.15f,true)));
+            //            System.out.println("player " + pla.id + " x " + pla.x + " " + pla.y);
         }
         return scene;
     }

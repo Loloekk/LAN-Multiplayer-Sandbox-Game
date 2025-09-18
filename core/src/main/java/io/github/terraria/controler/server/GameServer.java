@@ -82,7 +82,7 @@ public class GameServer {
                     PlayerData playerState = new PlayerData(connection,gameState,id);
                     ObservableMultisetItemHolder observableMultisetItemHolder = new ObservableMultisetItemHolder(Config.PLAYER_DEFAULT_EQUIPMENT_CAPACITY);
                     observableMultisetItemHolder.addObserver(playerState.getItemHolderObserver());
-                    PhysicalPlayer player = new PhysicalPlayer(observableMultisetItemHolder);
+                    ObservablePhysicalPlayer player = new ObservablePhysicalPlayer(observableMultisetItemHolder);
 //                    PhysicalPlayer player = new PhysicalPlayer(new MultisetItemHolder(50));
                     playerActivator.loginPlayer(player,id);
                     connectionIds.put(connection, playerState);

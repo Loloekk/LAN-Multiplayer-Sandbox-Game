@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,28 +17,25 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.*;
-import io.github.terraria.client.state.ClientPlayerState;
+import io.github.terraria.client.state.ClientMainPlayerState;
 
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.client.view.textures.texture.TextureBank;
 import io.github.terraria.client.view.textures.texture.TextureBankLoader;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHeldItem;
 
-import javax.xml.transform.stream.StreamResult;
-
 public class EquipmentStage{
     private TextureBank itemsTexture;
     private Stage inventoryStage;
     private Table currentTable;
-    private ClientPlayerState playerState;
+    private ClientMainPlayerState playerState;
     private Connection conn;
     private Viewport viewport;
-    public EquipmentStage(Connection conn, ClientPlayerState playerState)
+    public EquipmentStage(Connection conn, ClientMainPlayerState playerState, TextureBank itemTexture)
     {
         viewport = new ScreenViewport();
         inventoryStage = new Stage(viewport);
-        TextureBankLoader loader = new TextureBankLoader("missing.png");
-        itemsTexture = loader.getTextureBank("textureItems.json");
+        this.itemsTexture = itemTexture;
         currentTable = new Table();
         Table header = new Table();
         header.setFillParent(true);

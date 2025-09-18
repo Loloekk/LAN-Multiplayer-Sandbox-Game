@@ -4,10 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
-import io.github.terraria.controler.network.PacketServerToClient.PacketCollectItems;
-import io.github.terraria.controler.network.PacketServerToClient.PacketDisappearPlayer;
-import io.github.terraria.common.PlayerState;
-import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveItems;
+import io.github.terraria.controler.network.PacketServerToClient.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,20 +20,20 @@ public class ClientGameState {
     public static int CHUNK_WIDTH_RADIUS = Config.CHUNK_WIDTH_RADIUS;
     public static int CHUNK_HEIGHT_RADIUS = Config.CHUNK_HEIGHT_RADIUS;
     private int playerId;
-    private ClientPlayerState playerState;
+    private ClientMainPlayerState mainPlayerState;
     Connection conn;
 
     public Map<Integer, ClientChunk> chunks = new HashMap<>();
-    public Map<Integer,PlayerState> players = new HashMap<>();
+    public Map<Integer, ClientPlayerState> players = new HashMap<>();
     public ClientGameState(Connection conn)
     {
         this.conn = conn;
-        playerState = new ClientPlayerState();
+        mainPlayerState = new ClientMainPlayerState();
     }
     public void setPlayerId(int id)
     {
         this.playerId = id;
-        playerState.setPlayerId(id);
+        mainPlayerState.setPlayerId(id);
     }
     public void actualize(Object obj)
     {
@@ -49,15 +46,15 @@ public class ClientGameState {
                 chunks.put(chunkId, new ClientChunk(X,Y));
             chunks.get(chunkId).setBlock(blockState);
         }
-        else if(obj instanceof PlayerState pla)
+        else if(obj instanceof PacketPlayerState pla)
         {
             if(pla.id == playerId)
             {
-                playerState.actualize(pla);
+                mainPlayerState.actualize(pla);
             }
             if(!players.containsKey(pla.id))
-                players.put(pla.id, new PlayerState());
-            PlayerState player = players.get(pla.id);
+                players.put(pla.id, new ClientPlayerState());
+            ClientPlayerState player = players.get(pla.id);
             player.id = pla.id;
             player.x = pla.x;
             player.y = pla.y;
@@ -66,9 +63,19 @@ public class ClientGameState {
         {
             players.remove(dis.id);
         }
+        else if(obj instanceof PacketPlayerTakeItem take)
+        {
+            ClientPlayerState player = players.get(take.playerId);
+            if(player != null)
+            {
+                player.heldItem = take.itemId;
+                if(take.playerId == playerId)
+                    mainPlayerState.actualize(obj);
+            }
+        }
         else if(obj instanceof PacketCollectItems || obj instanceof PacketRemoveItems)
         {
-            playerState.actualize(obj);
+            mainPlayerState.actualize(obj);
         }
     }
     public Integer getBlockId(int x, int y, int z)
@@ -76,14 +83,18 @@ public class ClientGameState {
         int X = ClientChunk.getX(x);
         int Y = ClientChunk.getY(y);
         int chunkId = ClientChunk.getId(X,Y);
-        if(chunks.containsKey(chunkId))
-            return chunks.get(chunkId).getBlockId(x,y,z);
+        if(chunks.containsKey(chunkId)) {
+            ClientChunk chunk = chunks.get(chunkId);
+            if(chunk == null)
+                return null;
+            return chunk.getBlockId(x, y, z);
+        }
         return null;
     }
-    public List<PlayerState> getPlayers()
+    public List<ClientPlayerState> getPlayers()
     {
-        ArrayList<PlayerState> playersList = new ArrayList<>();
-        for(Map.Entry<Integer, PlayerState> entry : players.entrySet())
+        ArrayList<ClientPlayerState> playersList = new ArrayList<>();
+        for(Map.Entry<Integer, ClientPlayerState> entry : players.entrySet())
         {
             playersList.add(entry.getValue());
         }
@@ -117,15 +128,15 @@ public class ClientGameState {
     }
     public float getX()
     {
-        return playerState.getX();
+        return mainPlayerState.getX();
     }
     public float getY()
     {
-        return playerState.getY();
+        return mainPlayerState.getY();
     }
-    public ClientPlayerState getPlayerState()
+    public ClientMainPlayerState getMainPlayerState()
     {
-        return playerState;
+        return mainPlayerState;
     }
 
 }
