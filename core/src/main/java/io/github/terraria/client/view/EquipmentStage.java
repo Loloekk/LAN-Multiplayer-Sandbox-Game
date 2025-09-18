@@ -119,9 +119,18 @@ public class EquipmentStage{
         ScrollPane scrollPane = new ScrollPane(itemsTable, scrollStyle);
         scrollPane.setFadeScrollBars(false);
 
-        currentTable.add(scrollPane).growY().align(Align.left);
-        currentTable.add().grow();
+        Table centerTable = new Table();
+        centerTable.top().pad(20);
 
+        if(playerState.getHeldItem() != null) {
+            TextureRegion centerRegion = new TextureRegion(itemsTexture.getTexture(playerState.getHeldItem()));
+            Image centerItem = new Image(centerRegion);
+            centerTable.add(centerItem).size(80);
+        }
+
+        currentTable.add(scrollPane).width(55 * ITEMS_PER_ROW+20).growY().align(Align.left);
+        currentTable.add(centerTable).width(80).pad(20);
+        currentTable.add().grow();
     }
     public void resize(int width, int height) {
         viewport.update(width, height, true);
