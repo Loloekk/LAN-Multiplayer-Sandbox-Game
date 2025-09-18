@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import io.github.terraria.logic.creatures.BasicCreatureBody;
+import io.github.terraria.logic.creatures.CollisionHandler;
 import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.logic.players.PlayerActivator;
 
@@ -17,6 +18,7 @@ public class Box2DWorld implements World {
 
     public Box2DWorld(Vector2 gravity, boolean doSleep) {
         world = new com.badlogic.gdx.physics.box2d.World(gravity, doSleep);
+        world.setContactListener(new CollisionHandler());
     }
 
     private static final float thickness = 0.4f;

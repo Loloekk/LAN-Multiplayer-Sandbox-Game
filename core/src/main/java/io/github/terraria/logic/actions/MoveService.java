@@ -26,8 +26,9 @@ public class MoveService {
     // Jakby to było potrzebne, to raczej na zewnątrz co world step trzeba by zbierać dane i tutaj już podawać jako argument metody, więc static ok.
     public static void jumpPlayer(PhysicalPlayer player) {
         CreatureBody body = player.body();
-        if (Math.abs(body.getLinearVelocity().y) <= 0.01) { // Only jump if on the ground
-            body.applyLinearImpulse(JUMP_IMPULSE);
-        }
+//        if (Math.abs(body.getLinearVelocity().y) <= 0.01) { // Only jump if on the ground
+//            body.applyLinearImpulse(JUMP_IMPULSE);
+//        }
+        if(body.isGrounded() && body.getLinearVelocity().y < 0.1f)body.applyLinearImpulse(JUMP_IMPULSE);
     }
 }

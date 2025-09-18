@@ -39,7 +39,7 @@ public class DefaultPlayerActivator extends PlayerActivator {
 
     @Override
     protected CreatureBody getNewPlayerBody(Vector2 spawnPosition) {
-        return world.createCreatureBody(spawnPosition, Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT,
+        return world.createCreatureBody(shiftToFree(IntVector2.toInt(spawnPosition), 2), Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT,
         Config.PLAYER_DENSITY, Config.PLAYER_FRICTION, Config.PLAYER_RESTITUTION);
     }
 }
