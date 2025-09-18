@@ -11,6 +11,11 @@ public class PhysicalPlayer {
     private ItemHolder equipment;
     private Item heldItem; // Tylko takie pole spełnia nasze wymagania. Trzeba uważać przy używaniu.
     private Body body;
+    public PhysicalPlayer(PlayerRecord playerRecord, Body body) {
+        this.id = playerRecord.id();
+        this.equipment = playerRecord.equipment();
+        this.body = body;
+    }
     public PhysicalPlayer(ItemHolder equipment) {
         this.equipment = equipment;
     }

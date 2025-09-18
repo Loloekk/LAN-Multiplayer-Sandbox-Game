@@ -39,7 +39,7 @@ class CraftingServiceTest {
     @BeforeEach
     void setupTest() {
         itemHolder = new DummyItemHolder();
-        service = new CraftingService(recipeRepo, Mockito.any());
+        service = new CraftingService(recipeRepo, null);
     }
 
     @Test
