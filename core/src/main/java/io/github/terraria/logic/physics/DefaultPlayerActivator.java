@@ -2,6 +2,8 @@ package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.common.Config;
+import io.github.terraria.logic.creatures.BasicCreatureBody;
+import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.players.ActivePlayers;
@@ -36,10 +38,8 @@ public class DefaultPlayerActivator extends PlayerActivator {
     }
 
     @Override
-    protected Body getNewPlayerBody(Vector2 spawnPosition) {
-        Body body = world.createDynamicBody(shiftToFree(IntVector2.toInt(spawnPosition),
-            MathUtils.ceil(PlayerActivator.MAX_PLAYERS_RADIUS * 2)));
-        body.addPlayerFixture(playerFixture);
-        return body;
+    protected CreatureBody getNewPlayerBody(Vector2 spawnPosition) {
+        return world.createCreatureBody(spawnPosition, Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT,
+        Config.PLAYER_DENSITY, Config.PLAYER_FRICTION, Config.PLAYER_RESTITUTION);
     }
 }

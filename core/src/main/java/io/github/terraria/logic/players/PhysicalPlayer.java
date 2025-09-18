@@ -1,6 +1,7 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
+import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.equipment.ItemHolder;
@@ -10,8 +11,8 @@ public class PhysicalPlayer {
     private int id;
     private ItemHolder equipment;
     private Item heldItem; // Tylko takie pole spełnia nasze wymagania. Trzeba uważać przy używaniu.
-    private Body body;
-    public PhysicalPlayer(PlayerRecord playerRecord, Body body) {
+    private CreatureBody body;
+    public PhysicalPlayer(PlayerRecord playerRecord, CreatureBody body) {
         this.id = playerRecord.id();
         this.equipment = playerRecord.equipment();
         this.body = body;
@@ -23,12 +24,12 @@ public class PhysicalPlayer {
     {
         this.id = id;
     }
-    public void setBody(Body body)
+    public void setBody(CreatureBody body)
     {
         this.body = body;
     }
     public int id() { return id; }
-    public Body body() { return body; }
+    public CreatureBody body() { return body; }
     public Item heldItem() { return heldItem; }
     public ItemHolder equipment() { return equipment; }
     public void collectItem(Item item) { equipment.insert(item); }

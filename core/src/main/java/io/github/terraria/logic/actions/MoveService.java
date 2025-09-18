@@ -2,6 +2,7 @@ package io.github.terraria.logic.actions;
 
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.common.Config;
+import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.players.PhysicalPlayer;
 
@@ -16,7 +17,7 @@ public class MoveService {
         return new Vector2(direction == Direction.right ? MOVE_IMPULSE_X : -MOVE_IMPULSE_X, 0f);
     }
     public static void movePlayer(PhysicalPlayer player, Direction direction) {
-        Body body = player.body();
+        CreatureBody body = player.body();
         if ((direction == Direction.right && body.getLinearVelocity().x < MAX_VELOCITY_X) || (direction == Direction.left && body.getLinearVelocity().x > -MAX_VELOCITY_X))
             body.applyLinearImpulse(MoveService.getMoveImpulse(direction));
     }
@@ -24,7 +25,7 @@ public class MoveService {
     // Trzeba będzie pewnie pamiętać czas od opuszczenia ziemi, żeby móc jakieś bardziej skomplikowane skoki robić np.
     // Jakby to było potrzebne, to raczej na zewnątrz co world step trzeba by zbierać dane i tutaj już podawać jako argument metody, więc static ok.
     public static void jumpPlayer(PhysicalPlayer player) {
-        Body body = player.body();
+        CreatureBody body = player.body();
         if (Math.abs(body.getLinearVelocity().y) <= 0.01) { // Only jump if on the ground
             body.applyLinearImpulse(JUMP_IMPULSE);
         }

@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import io.github.terraria.logic.creatures.BasicCreatureBody;
+import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.logic.players.PlayerActivator;
 
 public class Box2DWorld implements World {
@@ -66,6 +68,8 @@ public class Box2DWorld implements World {
         fixtureDef.shape = rectangle;
         fixtureDef.friction = blockFixture.friction();
         fixtureDef.restitution = blockFixture.restitution();
+        fixtureDef.filter.categoryBits = BodyCategory.BLOCK;
+        fixtureDef.filter.maskBits = (BodyCategory.MOB | BodyCategory.PLAYER);
         box2DBody.createFixture(fixtureDef);
         rectangle.dispose();
         return new Box2DBody(box2DBody);
@@ -77,6 +81,11 @@ public class Box2DWorld implements World {
         bodyDef.position.set(v);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         return new Box2DBody(world.createBody(bodyDef));
+    }
+
+    @Override
+    public CreatureBody createCreatureBody(Vector2 v, float width, float height, float density, float friction, float restitution){
+        return new BasicCreatureBody(world, v, width, height, density, friction, restitution);
     }
 
     @Override

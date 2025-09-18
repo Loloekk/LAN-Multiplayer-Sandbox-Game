@@ -2,6 +2,7 @@ package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.common.Config;
+import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.World;
@@ -17,7 +18,7 @@ public abstract class PlayerActivator {
         this.activePlayers = activePlayers;
     }
 
-    protected abstract Body getNewPlayerBody(Vector2 spawnPosition);
+    protected abstract CreatureBody getNewPlayerBody(Vector2 spawnPosition);
 
     // Sprawdzanie haseł poza modelem.
     public void loginPlayer(PhysicalPlayer player, int playerId) {
