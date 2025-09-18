@@ -140,7 +140,7 @@ public class GameServer {
                 if(in instanceof PacketPlayerTakeItem take)
                 {
                     System.out.println(take);
-                    //TODO ustawic graczowi item w rece
+                    //TODO ustawic graczowi o id take.playerId item take.itemId w rece
                 }
             }
         }
