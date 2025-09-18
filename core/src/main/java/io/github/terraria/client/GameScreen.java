@@ -3,7 +3,6 @@ package io.github.terraria.client;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
@@ -30,69 +29,40 @@ import static io.github.terraria.common.Config.SCENE_WIDTH;
 
 public class GameScreen implements Screen {
     private Client client;
-    private int playerId;
-    private ClientGameState gameState;
-    private PlayerInteractions playerInteractions;
-
-    private boolean inventoryVisible = false;
+    private GameIOHandler IOHandler;
     private final Drop game;
     //    private final Viewport viewport = new FitViewport(SCENE_WIDTH, SCENE_HEIGHT);
     private final ScalingViewport viewport = new ScalingViewport(Scaling.fill, SCENE_WIDTH, SCENE_HEIGHT);
-    private SceneGenerator generator;
-    private SceneRenderer renderer;
-    private EquipmentStage equipmentStage;
     private boolean connectionAccept = false;
-
-    TextureBank itemsTexture;
-    TextureQuadBank blocksTexture;
-    TextureQuadBank playerTexture;
 
     public GameScreen(Drop game) {
         this.game = game;
 
-
-        TextureBankLoader loader = new TextureBankLoader("missing.png");
-        itemsTexture = loader.getTextureBank("textureItems.json");
-        TextureQuadBankLoader loaderQuad = new TextureQuadBankLoader("missing.png");
-        blocksTexture = loaderQuad.getTextureQuadBank("textureBlocks.json");
-        playerTexture = loaderQuad.getTextureQuadBank("texturePlayer.json");
-
-        generator = new SceneGenerator(blocksTexture, playerTexture, itemsTexture);
         client = new Client();
         Network.register(client);
         client.start();
-        gameState = new ClientGameState(client);
-        playerInteractions = new PlayerInteractions(client, gameState, viewport);
-        equipmentStage = new EquipmentStage(client,gameState.getMainPlayerState(), itemsTexture);
+        IOHandler = new GameIOHandler(client, viewport);
+
         client.addListener(new Listener() {
             @Override
             public void received(com.esotericsoftware.kryonet.Connection c, Object obj) {
                 if (obj instanceof PacketJoinAck ack ) {
-                    playerId = ack.playerId;
-                    gameState.setPlayerId(playerId);
+                    IOHandler.setPlayerId(ack.playerId);
                     connectionAccept = true;
-                    Gdx.app.log("GameScreen", "Joined as id=" + playerId + ", name=" + ack.name);
+                    Gdx.app.log("GameScreen", "Joined as id=" + ack.playerId + ", name=" + ack.name);
 
                 }
-                else if (obj instanceof ArrayList list)
-                {
-                    if(gameState == null) {
-                        Gdx.app.log("communication error","XD");
-                    }
-                    for(Object objj : list)
+                else if(connectionAccept) {
+                    if (obj instanceof ArrayList list)
                     {
-//                        System.out.println("mamy liste" + objj);
-                        gameState.actualize(objj);
-
+                        for (Object objj : list) {
+                            IOHandler.actualize(objj);
+                        }
                     }
-                }
-                else {
-                    Gdx.app.log("GameScreen", "Scene update");
-                    if(gameState == null) {
-                        Gdx.app.log("communication error","XD");
+                    else
+                    {
+                        IOHandler.actualize(obj);
                     }
-                    gameState.actualize(obj);
-                    System.out.println(obj);
                 }
             }
         });
@@ -104,35 +74,13 @@ public class GameScreen implements Screen {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        renderer = new SceneRenderer();
     }
-    int licz = 0;
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.CYAN);
         if(connectionAccept) {
-            if(playerInteractions != null )
-                playerInteractions.handleInput();
-            renderer.draw(viewport, generator.generate(gameState));
-            if (inventoryVisible) {
-                equipmentStage.act(delta);
-                equipmentStage.draw();
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-                inventoryVisible = !inventoryVisible;
-                if (inventoryVisible) {
-                    Gdx.input.setInputProcessor(equipmentStage.getInventoryStage());
-                } else {
-                    Gdx.input.setInputProcessor(null);
-                }
-            }
-        }
-
-        licz ++;
-        if(licz%120 == 0)
-        {
-            gameState.throwTrash();
-            licz = 0;
+            IOHandler.handleInput();
+            IOHandler.draw(delta);
         }
     }
 
@@ -140,9 +88,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        if(equipmentStage != null) {
-            equipmentStage.resize(width, height);
-        }
+        if(connectionAccept)
+            IOHandler.resize(width,height);
         viewport.update(width, height, true);
     }
     @Override public void show()    {}
@@ -151,7 +98,7 @@ public class GameScreen implements Screen {
     @Override public void hide()    {}
     @Override
     public void dispose() {
-        generator.dispose();
+        IOHandler.dispose();
     }
 
 }

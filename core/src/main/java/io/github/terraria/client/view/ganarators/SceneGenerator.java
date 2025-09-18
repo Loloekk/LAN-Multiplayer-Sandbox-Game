@@ -65,10 +65,5 @@ public class SceneGenerator {
         }
         return scene;
     }
-    public void dispose()
-    {
-        blocksTexture.dispose();
-        playerTexture.dispose();
-    }
 
 }

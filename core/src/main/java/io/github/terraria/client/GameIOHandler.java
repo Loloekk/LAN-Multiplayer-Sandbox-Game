@@ -8,24 +8,55 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.client.state.ClientGameState;
+import io.github.terraria.client.view.EquipmentStage;
+import io.github.terraria.client.view.SceneRenderer;
+import io.github.terraria.client.view.ganarators.SceneGenerator;
+import io.github.terraria.client.view.textures.texture.TextureBank;
+import io.github.terraria.client.view.textures.texture.TextureBankLoader;
+import io.github.terraria.client.view.textures.textureQuad.TextureQuadBank;
+import io.github.terraria.client.view.textures.textureQuad.TextureQuadBankLoader;
 import io.github.terraria.common.Config;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHit;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerMove;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTouch;
 
-public class PlayerInteractions {
-    Connection conn;
-    Viewport viewport;
-    ClientGameState gameState;
+public class GameIOHandler {
+    private Connection conn;
+    private Viewport viewport;
+
+    private ClientGameState gameState;
+    private SceneGenerator generator;
+    private SceneRenderer renderer;
+    private EquipmentStage equipmentStage;
+
+    private TextureBank itemsTexture;
+    private TextureQuadBank blocksTexture;
+    private TextureQuadBank playerTexture;
+
+    private boolean inventoryVisible = false;
 
     private long lastLeftClickTime = 0;
     private long lastRightClickTime = 0;
+    private long frames = 0;
     private static final long LEFT_CLICK_DELAY = Config.LEFT_CLICK_DELAY;
-    public PlayerInteractions(Connection conn, ClientGameState gameState, Viewport viewport)
+    private static final long RIGHT_CLICK_DELAY = Config.LEFT_CLICK_DELAY;
+    public GameIOHandler(Connection conn, Viewport viewport)
     {
         this.conn = conn;
-        this.gameState = gameState;
         this.viewport = viewport;
+        gameState = new ClientGameState(conn);
+
+
+        TextureBankLoader loader = new TextureBankLoader("missing.png");
+        itemsTexture = loader.getTextureBank("textureItems.json");
+        TextureQuadBankLoader loaderQuad = new TextureQuadBankLoader("missing.png");
+        blocksTexture = loaderQuad.getTextureQuadBank("textureBlocks.json");
+        playerTexture = loaderQuad.getTextureQuadBank("texturePlayer.json");
+
+
+        generator = new SceneGenerator(blocksTexture, playerTexture, itemsTexture);
+        equipmentStage = new EquipmentStage(conn,gameState.getMainPlayerState(), itemsTexture);
+        renderer = new SceneRenderer();
     }
     public void handleInput() {
         short mx=0;
@@ -63,7 +94,7 @@ public class PlayerInteractions {
         }
         if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
             long now = TimeUtils.millis();
-            if (now - lastRightClickTime >= LEFT_CLICK_DELAY) {
+            if (now - lastRightClickTime >= RIGHT_CLICK_DELAY) {
                 lastRightClickTime = now;
                 Vector3 mousePos3 = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                 viewport.unproject(mousePos3);
@@ -78,5 +109,45 @@ public class PlayerInteractions {
 //                System.out.println("Send hiting " + playerId);
             }
         }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            inventoryVisible = !inventoryVisible;
+            if (inventoryVisible) {
+                Gdx.input.setInputProcessor(equipmentStage.getInventoryStage());
+            } else {
+                Gdx.input.setInputProcessor(null);
+            }
+        }
+    }
+    public void actualize(Object obj)
+    {
+        gameState.actualize(obj);
+    }
+    public void setPlayerId(int id)
+    {
+        gameState.setPlayerId(id);
+    }
+    public void draw(float delta)
+    {
+        renderer.draw(viewport, generator.generate(gameState));
+        if (inventoryVisible) {
+            equipmentStage.act(delta);
+            equipmentStage.draw();
+        }
+        frames ++;
+        if(frames%120 == 0)
+        {
+            gameState.throwTrash();
+            frames = 0;
+        }
+    }
+    public void resize(int width, int height)
+    {
+        equipmentStage.resize(width, height);
+    }
+    public void dispose()
+    {
+        itemsTexture.dispose();
+        blocksTexture.dispose();
+        playerTexture.dispose();
     }
 }
