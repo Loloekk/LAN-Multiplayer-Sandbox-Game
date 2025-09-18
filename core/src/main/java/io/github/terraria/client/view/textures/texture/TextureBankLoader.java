@@ -22,14 +22,22 @@ public class TextureBankLoader {
     {
         record TextureFixture(int id, String name, String texture) {}
         var list = RecordLoader.loadList(jsonName, TextureFixture.class);
-        Map<Integer, String> map = list.stream()
+        Map<Integer, String> idPath = list.stream()
             .collect(Collectors.toMap(TextureFixture::id, TextureFixture::texture));
-        Map<Integer, Texture> textures = new HashMap<>();
-        for(Map.Entry<Integer, String> entry: map.entrySet())
+        Map<String, String> namePath = list.stream()
+            .collect(Collectors.toMap(TextureFixture::name, TextureFixture::texture));
+        Map<Integer, Texture> idMap = new HashMap<>();
+        Map<String, Texture> nameMap = new HashMap<>();
+        for(Map.Entry<Integer, String> entry: idPath.entrySet())
         {
             String path = entry.getValue();
-            textures.put(entry.getKey(), new Texture(path));
+            idMap.put(entry.getKey(), new Texture(path));
         }
-        return new TextureBank(missing,textures);
+        for(Map.Entry<String, String> entry: namePath.entrySet())
+        {
+            String path = entry.getValue();
+            nameMap.put(entry.getKey(), new Texture(path));
+        }
+        return new TextureBank(missing, idMap, nameMap);
     }
 }
