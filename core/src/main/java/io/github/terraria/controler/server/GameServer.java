@@ -14,12 +14,15 @@ import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerMov
 import io.github.terraria.controler.network.PacketJoin;
 import io.github.terraria.controler.network.PacketJoinAck;
 import io.github.terraria.controler.playerNetworkData.PlayerData;
+import io.github.terraria.loading.BlockFactoryLoader;
 import io.github.terraria.logic.actions.GameState;
 import io.github.terraria.logic.actions.MoveService;
 import io.github.terraria.logic.actions.PlayerActionService;
 import io.github.terraria.logic.actions.PlayerActionServiceImpl;
+import io.github.terraria.logic.building.BlockFactory;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
+import io.github.terraria.logic.equipment.ItemRegistry;
 import io.github.terraria.logic.equipment.ObservableMultisetItemHolder;
 import io.github.terraria.logic.physics.*;
 import io.github.terraria.logic.players.*;
@@ -39,6 +42,8 @@ public class GameServer {
     private PlayerActivator playerActivator;
     private PlayerActionService actionService;
 
+    private ItemRegistry itemRegistry;
+
     public void start() throws IOException, InterruptedException {
         server = new Server();
         Network.register(server);
@@ -47,7 +52,9 @@ public class GameServer {
 
         // initialize model
         world = new Box2DWorld(new Vector2(0, -10), true);
-        StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
+        BlockFactory blockFactory = new BlockFactoryLoader().getBlockFactory();
+        StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder().blockFactory(blockFactory);
+        itemRegistry = new ItemRegistry(blockFactory);
         builder.world(world);
         builder.width(100).height(40).zeroX(50).zeroY(20);
         PlaneContainer planeContainer = builder.build();
@@ -140,7 +147,10 @@ public class GameServer {
                 if(in instanceof PacketPlayerTakeItem take)
                 {
                     System.out.println(take);
-                    //TODO ustawic graczowi o id take.playerId item take.itemId w rece
+                    //TODO clean up.
+                    PhysicalPlayer player = gameState.activePlayers().get(take.playerId);
+                    if(player != null)
+                        player.setHeldItem(itemRegistry.create(take.itemId));
                 }
             }
         }
