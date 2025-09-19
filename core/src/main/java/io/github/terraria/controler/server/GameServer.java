@@ -79,6 +79,7 @@ public class GameServer {
                         pla = playerRegistry.registerPlayer();
                     else
                         pla = playerRegistry.getPlayer(0);
+                    //TODO sensowne logowanie na podstawie name
                     int id = pla.id();
                     PacketJoinAck ack = new PacketJoinAck();
                     ack.playerId = id; ack.name = join.name;
