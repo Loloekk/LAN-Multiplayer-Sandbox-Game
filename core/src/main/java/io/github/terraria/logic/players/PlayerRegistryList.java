@@ -31,4 +31,21 @@ public class PlayerRegistryList implements PlayerRegistry {
     public List<PlayerRecord> getList() {
         return List.copyOf(list);
     }
+    @Override
+    public boolean hasPlayer(int id)
+    {
+        return id < list.size();
+    }
+    @Override
+    public boolean hasPlayer(String name)
+    {
+        return false;
+        //TODO
+    }
+    @Override
+    public int getId(String name)
+    {
+        return 0;
+        //TODO
+    }
 }

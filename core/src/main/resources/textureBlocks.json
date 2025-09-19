@@ -58,5 +58,17 @@
       "centerY": 0.5,
       "transparent": false
     }
+  },
+  {
+    "id": 6,
+    "name": "Workbench",
+    "fixture": {
+      "texture": "workbench.png",
+      "width": 1.0,
+      "height": 1.0,
+      "centerX": 0.5,
+      "centerY": 0.5,
+      "transparent": false
+    }
   }
 ]

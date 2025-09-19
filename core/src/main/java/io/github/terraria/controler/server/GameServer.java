@@ -6,11 +6,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.common.Config;
 import io.github.terraria.controler.network.Network;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayer;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTakeItem;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHit;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTouch;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerMove;
+import io.github.terraria.controler.network.PacketClientToServer.*;
 import io.github.terraria.controler.network.PacketJoin;
 import io.github.terraria.controler.network.PacketJoinAck;
 import io.github.terraria.controler.playerNetworkData.PlayerData;
@@ -78,7 +74,11 @@ public class GameServer {
             }
             @Override public void received(Connection connection, Object obj) {
                 if (obj instanceof PacketJoin join) {
-                    PlayerRecord pla = playerRegistry.registerPlayer();
+                    PlayerRecord pla;
+                    if(!playerRegistry.hasPlayer(0))
+                        pla = playerRegistry.registerPlayer();
+                    else
+                        pla = playerRegistry.getPlayer(0);
                     int id = pla.id();
                     PacketJoinAck ack = new PacketJoinAck();
                     ack.playerId = id; ack.name = join.name;
@@ -146,11 +146,14 @@ public class GameServer {
                 }
                 if(in instanceof PacketPlayerTakeItem take)
                 {
-                    System.out.println(take);
-                    //TODO clean up.
                     PhysicalPlayer player = gameState.activePlayers().get(take.playerId);
                     if(player != null)
                         player.setHeldItem(itemRegistry.create(take.itemId));
+                }
+                if(in instanceof PacketCraftItems craft)
+                {
+                    System.out.println("Player " + craft.playerId + " crafting " + craft.craftingId);
+                    // TODO
                 }
             }
         }

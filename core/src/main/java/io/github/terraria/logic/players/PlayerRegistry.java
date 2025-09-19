@@ -7,4 +7,7 @@ public interface PlayerRegistry {
     void updateRecord(int id, PlayerRecord playerRecord);
     PlayerRecord getPlayer(int id);
     List<PlayerRecord> getList();
+    boolean hasPlayer(int id);
+    boolean hasPlayer(String name);
+    int getId(String name);
 }

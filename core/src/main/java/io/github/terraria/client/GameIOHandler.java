@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.esotericsoftware.kryonet.Connection;
+import io.github.terraria.client.Recipes.RecipeLoader;
 import io.github.terraria.client.state.ClientGameState;
 import io.github.terraria.client.view.EquipmentStage;
 import io.github.terraria.client.view.SceneRenderer;
@@ -16,22 +17,28 @@ import io.github.terraria.client.view.textures.texture.TextureBankLoader;
 import io.github.terraria.client.view.textures.textureQuad.TextureQuadBank;
 import io.github.terraria.client.view.textures.textureQuad.TextureQuadBankLoader;
 import io.github.terraria.common.Config;
+import io.github.terraria.common.StationType;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHit;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerMove;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTouch;
+import io.github.terraria.utils.MathUtils;
 
 public class GameIOHandler {
     private Connection conn;
     private Viewport viewport;
 
     private ClientGameState gameState;
+    private StationBank stationBank;
+
     private SceneGenerator generator;
     private SceneRenderer renderer;
     private EquipmentStage equipmentStage;
 
+
     private TextureBank itemsTexture;
     private TextureQuadBank blocksTexture;
     private TextureQuadBank playerTexture;
+    private StationType currentStation;
 
     private boolean inventoryVisible = false;
 
@@ -40,11 +47,13 @@ public class GameIOHandler {
     private long frames = 0;
     private static final long LEFT_CLICK_DELAY = Config.LEFT_CLICK_DELAY;
     private static final long RIGHT_CLICK_DELAY = Config.LEFT_CLICK_DELAY;
+    public static int SCENE_LAYERS = Config.SCENE_LAYERS;
     public GameIOHandler(Connection conn, Viewport viewport)
     {
         this.conn = conn;
         this.viewport = viewport;
         gameState = new ClientGameState(conn);
+        stationBank = new StationBank("blocks.json");
 
 
         TextureBankLoader loader = new TextureBankLoader("missing.png");
@@ -57,7 +66,10 @@ public class GameIOHandler {
         generator = new SceneGenerator(blocksTexture, playerTexture, itemsTexture);
         equipmentStage = new EquipmentStage(conn,gameState.getMainPlayerState(), itemsTexture);
         renderer = new SceneRenderer();
+
+        currentStation = StationType.INVENTORY;
     }
+
     public void handleInput() {
         short mx=0;
         boolean jump = false;
@@ -100,16 +112,33 @@ public class GameIOHandler {
                 viewport.unproject(mousePos3);
                 Vector2 mousePos = new Vector2(mousePos3.x, mousePos3.y);
                 mousePos = gameState.getGamePosition(mousePos);
-//                System.out.println("Klik LPM w świecie gry: " + mousePos.x + ", " + mousePos.y);
-                PacketPlayerTouch touch = new PacketPlayerTouch();
-                touch.playerId = gameState.getMainPlayerState().getPlayerId();
-                touch.x = mousePos.x;
-                touch.y = mousePos.y;
-                conn.sendTCP(touch);
+
+                Integer itemId = null;
+                for(int z = 0; z < SCENE_LAYERS; z ++)
+                {
+                    itemId = gameState.getBlockId(MathUtils.floor(mousePos.x),MathUtils.floor(mousePos.y), z);
+                    if(itemId != null)
+                        break;
+                }
+                if(stationBank.isStation(itemId))
+                {
+                    equipmentStage.setCurrentStation(stationBank.getStation(itemId));
+                    inventoryVisible = true;
+                    Gdx.input.setInputProcessor(equipmentStage.getInventoryStage());
+                }
+                else{
+                    PacketPlayerTouch touch = new PacketPlayerTouch();
+                    touch.playerId = gameState.getMainPlayerState().getPlayerId();
+                    touch.x = mousePos.x;
+                    touch.y = mousePos.y;
+                    conn.sendTCP(touch);
+                }
+
 //                System.out.println("Send hiting " + playerId);
             }
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            equipmentStage.setCurrentStation(StationType.INVENTORY);
             inventoryVisible = !inventoryVisible;
             if (inventoryVisible) {
                 Gdx.input.setInputProcessor(equipmentStage.getInventoryStage());

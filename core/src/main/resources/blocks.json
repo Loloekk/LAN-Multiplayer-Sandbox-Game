@@ -27,5 +27,11 @@
       "name": "Anvil",
       "layer": 0,
       "station": "ANVIL"
+    },
+    {
+      "id": 6,
+      "name": "Workbench",
+      "isPhysical": 1,
+      "station": "WORKBENCH"
     }
 ]

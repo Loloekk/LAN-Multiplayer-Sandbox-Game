@@ -40,7 +40,7 @@ public class GridGenerator {
                     if(j%2 == 0)
                         frontBlock = (j <= groundLevel) ? blockFactory.create("Dirt") : null;
                     else
-                        frontBlock = (j <= groundLevel) ? blockFactory.create("Stone") : null;
+                        frontBlock = (j <= groundLevel) ? blockFactory.create("Workbench") : null;
                     point.add(frontBlock);
                 }
                 point.add(null);

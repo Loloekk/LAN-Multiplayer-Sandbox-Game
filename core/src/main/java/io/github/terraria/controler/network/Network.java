@@ -34,5 +34,6 @@ public class Network {
         kryo.register(PacketPlayerTakeItem.class);
         kryo.register(PacketPlayerTouch.class);
         kryo.register(PacketPlayerHeldItem.class);
+        kryo.register(PacketCraftItems.class);
     }
 }

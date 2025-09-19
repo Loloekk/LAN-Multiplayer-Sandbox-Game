@@ -88,9 +88,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        viewport.update(width, height, true);
         if(connectionAccept)
             IOHandler.resize(width,height);
-        viewport.update(width, height, true);
     }
     @Override public void show()    {}
     @Override public void pause()   {}
