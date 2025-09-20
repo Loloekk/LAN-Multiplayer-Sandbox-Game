@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DefaultPlayerActivatorTest {
     World world = Mockito.mock(World.class);
     PlaneContainer planeContainer = Mockito.mock(PlaneContainer.class);
-    DefaultPlayerActivator activator = new DefaultPlayerActivator(null, world, null, planeContainer);
+    DefaultPlayerActivator activator = new DefaultPlayerActivator(null, world, null, planeContainer, null);
     final int x = 4;
 
     @BeforeEach
