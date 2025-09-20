@@ -29,6 +29,6 @@ public class MoveService {
 //        if (Math.abs(body.getLinearVelocity().y) <= 0.01) { // Only jump if on the ground
 //            body.applyLinearImpulse(JUMP_IMPULSE);
 //        }
-        if(body.isGrounded() && body.getLinearVelocity().y < 0.1f)body.applyLinearImpulse(JUMP_IMPULSE);
+        if(body.isGrounded())body.applyLinearImpulse(JUMP_IMPULSE);
     }
 }

@@ -1,0 +1,40 @@
+package io.github.terraria.logic.creatures;
+
+import com.badlogic.gdx.math.Vector2;
+
+public class EmptyBody implements CreatureBody{
+    @Override
+    public void bindCreature(Creature creature) {
+
+    }
+
+    @Override
+    public void applyLinearImpulse(Vector2 impulse) {
+
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        return new Vector2(0, 0);
+    }
+
+    @Override
+    public Vector2 getLinearVelocity() {
+        return new Vector2(0, 0);
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+
+    @Override
+    public boolean isGrounded() {
+        return false;
+    }
+
+    @Override
+    public boolean liesOn(Vector2 desired) {
+        return false;
+    }
+}

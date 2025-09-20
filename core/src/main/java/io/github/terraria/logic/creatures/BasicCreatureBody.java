@@ -7,6 +7,7 @@ import io.github.terraria.logic.physics.BodyCategory;
 
 public class BasicCreatureBody implements CreatureBody{
     private final com.badlogic.gdx.physics.box2d.Body body;
+    private final com.badlogic.gdx.physics.box2d.Fixture bodyFixture;
     private final CollisionSensor feet;
 
     public BasicCreatureBody(World world, Vector2 position, float width, float height, float density, float friction, float restitution){
@@ -25,12 +26,17 @@ public class BasicCreatureBody implements CreatureBody{
         fixtureDef.restitution = restitution;
         fixtureDef.filter.categoryBits = BodyCategory.MOB;
         fixtureDef.filter.maskBits = (BodyCategory.BLOCK);
-        body.createFixture(fixtureDef);
+        bodyFixture = body.createFixture(fixtureDef);
 
         body.setBullet(true);
         body.setFixedRotation(true);
         feet = new CollisionSensor(body, 0.9f*width, 0.1f, new Vector2(0, - (height / 2 + 0.05f)));
         rectangle.dispose();
+    }
+
+    @Override
+    public void bindCreature(Creature creature){
+        bodyFixture.setUserData(creature);
     }
     @Override
     public void applyLinearImpulse(Vector2 impulse) {
