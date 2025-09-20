@@ -22,6 +22,8 @@ public class Creature {
     public void move(IntVector2 direction){
         movement.move(direction);
     }
+    public void jump(){movement.jump();}
+    public boolean liesOn(Vector2 desired){return body.liesOn(desired);}
 
     public void normalAction(Vector2 actionPosition){
         tool.normalAction(this, actionPosition);
@@ -34,5 +36,11 @@ public class Creature {
     }
     public void takeDamage(Damage amount){
         health.takeDamage(amount);
+    }
+    public Vector2 getPosition(){
+        return body.getPosition();
+    }
+    public void destroy(){
+
     }
 }

@@ -2,6 +2,7 @@ package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.common.Config;
+import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.physics.Body;
@@ -18,12 +19,12 @@ public abstract class PlayerActivator {
         this.activePlayers = activePlayers;
     }
 
-    protected abstract CreatureBody getNewPlayerBody(Vector2 spawnPosition);
+    protected abstract Creature getNewPlayerCreature(Vector2 spawnPosition);
 
     // Sprawdzanie haseł poza modelem.
     public void loginPlayer(PhysicalPlayer player, int playerId) {
         PlayerRecord playerRecord = registry.getPlayer(playerId);
-        player.setBody(getNewPlayerBody(playerRecord.spawn()));
+        player.setCreature(getNewPlayerCreature(playerRecord.spawn()));
         player.setId(playerId);
         for(Item item : playerRecord.equipment().browse())
         {
@@ -34,7 +35,7 @@ public abstract class PlayerActivator {
     public void logoutPlayer(int playersId) {
         PhysicalPlayer physicalPlayer = activePlayers.remove(playersId);
         PlayerRecord playerRecord = new PlayerRecord(physicalPlayer.id(), physicalPlayer.equipment(), physicalPlayer.getPosition());
-        physicalPlayer.body().destroy(); // ?
+        physicalPlayer.creature().destroy(); // ?
         registry.updateRecord(playerRecord.id(), playerRecord);
     }
 }

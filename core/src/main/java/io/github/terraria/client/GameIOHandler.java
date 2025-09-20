@@ -21,6 +21,7 @@ import io.github.terraria.common.StationType;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHit;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerMove;
 import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTouch;
+import io.github.terraria.utils.IntVector2;
 import io.github.terraria.utils.MathUtils;
 
 public class GameIOHandler {
@@ -71,18 +72,22 @@ public class GameIOHandler {
     }
 
     public void handleInput() {
-        short mx=0;
+        int mx = 0;
+        int my = 0;
         boolean jump = false;
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))  mx+=-1;
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) mx+=1;
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))    jump=true;
-        if (Gdx.input.isKeyPressed(Input.Keys.A))  mx+=-1;
-        if (Gdx.input.isKeyPressed(Input.Keys.D)) mx+=1;
-        if (Gdx.input.isKeyPressed(Input.Keys.W))    jump=true;
-        if (mx!=0 || jump!=false) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))  mx += -1;
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) mx += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) my += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) my += -1;
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) jump=true;
+        if (Gdx.input.isKeyPressed(Input.Keys.A))  mx += -1;
+        if (Gdx.input.isKeyPressed(Input.Keys.D)) mx += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) my += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) my += -1;
+        {
             PacketPlayerMove move = new PacketPlayerMove();
             move.playerId = gameState.getMainPlayerState().getPlayerId();
-            move.moveX = mx;
+            move.direction = new IntVector2(mx, my);
             move.jump = jump;
             conn.sendUDP(move);
 //            System.out.println("Send moving " + playerId);

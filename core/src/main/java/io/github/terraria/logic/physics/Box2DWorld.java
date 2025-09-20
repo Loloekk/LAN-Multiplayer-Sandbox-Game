@@ -12,14 +12,14 @@ import io.github.terraria.logic.players.PlayerActivator;
 public class Box2DWorld implements World {
     private final com.badlogic.gdx.physics.box2d.World world;
 
-    Box2DWorld(com.badlogic.gdx.physics.box2d.World world) {
+    public Box2DWorld(com.badlogic.gdx.physics.box2d.World world) {
         this.world = world;
     }
 
-    public Box2DWorld(Vector2 gravity, boolean doSleep) {
-        world = new com.badlogic.gdx.physics.box2d.World(gravity, doSleep);
-        world.setContactListener(new CollisionHandler());
-    }
+//    public Box2DWorld(Vector2 gravity, boolean doSleep) {
+//        world = new com.badlogic.gdx.physics.box2d.World(gravity, doSleep);
+//        world.setContactListener(new CollisionHandler());
+//    }
 
     private static final float thickness = 0.4f;
     @Override

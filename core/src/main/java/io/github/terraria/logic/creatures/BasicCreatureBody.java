@@ -44,6 +44,11 @@ public class BasicCreatureBody implements CreatureBody{
     }
 
     @Override
+    public void applyForce(Vector2 force) {
+        body.applyForceToCenter(force, true);
+    }
+
+    @Override
     public Vector2 getPosition(){
         return  body.getPosition();
     }

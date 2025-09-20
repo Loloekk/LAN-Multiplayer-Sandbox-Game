@@ -8,6 +8,7 @@ import io.github.terraria.controler.network.PacketServerToClient.*;
 import io.github.terraria.client.view.DrawableRectangle;
 import io.github.terraria.client.view.Scene;
 import io.github.terraria.controler.network.PacketClientToServer.*;
+import io.github.terraria.utils.IntVector2;
 
 import java.util.ArrayList;
 
@@ -35,5 +36,6 @@ public class Network {
         kryo.register(PacketPlayerTouch.class);
         kryo.register(PacketPlayerHeldItem.class);
         kryo.register(PacketCraftItems.class);
+        kryo.register(IntVector2.class);
     }
 }

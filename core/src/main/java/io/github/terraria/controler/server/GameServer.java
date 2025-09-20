@@ -12,12 +12,14 @@ import io.github.terraria.controler.network.PacketJoinAck;
 import io.github.terraria.controler.playerNetworkData.PlayerData;
 import io.github.terraria.loading.BlockFactoryLoader;
 import io.github.terraria.logic.actions.GameState;
-import io.github.terraria.logic.actions.MoveService;
 import io.github.terraria.logic.actions.PlayerActionService;
 import io.github.terraria.logic.actions.PlayerActionServiceImpl;
 import io.github.terraria.logic.building.BlockFactory;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
+import io.github.terraria.logic.creatures.CollisionHandler;
+import io.github.terraria.logic.creatures.Creature;
+import io.github.terraria.logic.creatures.CreatureRegistry;
 import io.github.terraria.logic.equipment.ItemRegistry;
 import io.github.terraria.logic.equipment.ObservableMultisetItemHolder;
 import io.github.terraria.logic.physics.*;
@@ -37,6 +39,7 @@ public class GameServer {
     private PlayerRegistry playerRegistry;
     private PlayerActivator playerActivator;
     private PlayerActionService actionService;
+    private CreatureRegistry creatureRegistry;
 
     private ItemRegistry itemRegistry;
 
@@ -47,7 +50,9 @@ public class GameServer {
         server.start();
 
         // initialize model
-        world = new Box2DWorld(new Vector2(0, -10), true);
+        com.badlogic.gdx.physics.box2d.World boxWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -10), true);
+        boxWorld.setContactListener(new CollisionHandler());
+        world = new Box2DWorld(boxWorld);
         BlockFactory blockFactory = new BlockFactoryLoader().getBlockFactory();
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder().blockFactory(blockFactory);
         itemRegistry = new ItemRegistry(blockFactory);
@@ -58,9 +63,9 @@ public class GameServer {
 //        System.out.println("Plane container " + planeContainer);
 //        System.out.println("Gamestate grid = " + gameState.grid());
 
-
+        creatureRegistry = new CreatureRegistry(boxWorld);
         playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(0f, 0f));
-        playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer);
+        playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry);
         actionService = new PlayerActionServiceImpl(gameState);
 
         server.addListener(new Listener() {
@@ -121,17 +126,14 @@ public class GameServer {
             int playerId = connectionIds.get(entry.getKey()).getPlayerId();
             Queue<PacketPlayer> queue = entry.getValue();
             while ((in = queue.poll()) != null) {
-                System.out.println(in);
+//                System.out.println(in);
                 if(in.getPlayerId() != playerId) {
                     continue;
                 }
                 if(in instanceof PacketPlayerMove move) {
-                    if (move.moveX > 0)
-                        MoveService.movePlayer(gameState.activePlayers().get(playerId), MoveService.Direction.right);
-                    else if (move.moveX < 0)
-                        MoveService.movePlayer(gameState.activePlayers().get(playerId), MoveService.Direction.left);
-
-                    if (move.jump == true) MoveService.jumpPlayer(gameState.activePlayers().get(playerId));
+                    Creature playerCreature = gameState.activePlayers().get(playerId).creature();
+                    playerCreature.move(move.direction);
+                    if (move.jump) playerCreature.jump();
                 }
                 if(in instanceof PacketPlayerHit hit)
                 {

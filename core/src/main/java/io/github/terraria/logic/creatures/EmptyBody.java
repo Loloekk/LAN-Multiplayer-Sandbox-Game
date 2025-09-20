@@ -14,6 +14,11 @@ public class EmptyBody implements CreatureBody{
     }
 
     @Override
+    public void applyForce(Vector2 force) {
+
+    }
+
+    @Override
     public Vector2 getPosition() {
         return new Vector2(0, 0);
     }

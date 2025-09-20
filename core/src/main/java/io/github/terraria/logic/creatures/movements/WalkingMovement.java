@@ -33,6 +33,8 @@ public class WalkingMovement implements Movement {
 
     @Override
     public void jump() {
-        if(body.isGrounded())body.applyLinearImpulse(jumpImpulse);
+        if(body.isGrounded()){
+            body.applyLinearImpulse(jumpImpulse);
+        }
     }
 }
