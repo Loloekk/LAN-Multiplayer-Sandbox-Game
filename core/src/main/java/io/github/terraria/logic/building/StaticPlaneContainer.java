@@ -103,6 +103,8 @@ public class StaticPlaneContainer extends PlaneContainer {
 
     @Override
     public boolean placeBlockAt(int x, int y, Block block, Body body) {
+        if(outOfBounds(x, y))
+            return false;
         int layer = block.type().layer();
         ArrayList<Block> point = getPointAt(x, y);
         if(point.get(layer) != null)

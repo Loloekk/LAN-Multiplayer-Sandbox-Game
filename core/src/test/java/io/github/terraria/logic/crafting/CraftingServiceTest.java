@@ -1,16 +1,14 @@
 package io.github.terraria.logic.crafting;
 
-import io.github.terraria.logic.crafting.station.StationTypeMap;
 import io.github.terraria.logic.equipment.ItemHolder;
 import io.github.terraria.logic.equipment.ItemRegistry;
 import io.github.terraria.logic.equipment.MultisetItemHolder;
 import io.github.terraria.logic.building.BlockFactory;
 import io.github.terraria.loading.BlockFactoryLoader;
-import io.github.terraria.logic.crafting.station.StationType;
+import io.github.terraria.common.StationType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.List;
 

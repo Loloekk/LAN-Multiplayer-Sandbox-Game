@@ -2,7 +2,7 @@ package io.github.terraria.loading;
 
 import io.github.terraria.logic.building.Block;
 import io.github.terraria.logic.building.BlockBuilder;
-import io.github.terraria.logic.crafting.station.StationType;
+import io.github.terraria.common.StationType;
 import io.github.terraria.logic.crafting.station.StationTypeMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

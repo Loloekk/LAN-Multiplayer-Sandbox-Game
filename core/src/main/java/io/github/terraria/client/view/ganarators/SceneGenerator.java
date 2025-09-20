@@ -60,15 +60,10 @@ public class SceneGenerator {
         {
             scene.objects.add(new DrawableRectangle(pla.x+diffX,pla.y+diffY,playerTexture.getTextureQuad(0)));
             if(pla.heldItem != null)
-                scene.objects.add(new DrawableRectangle(pla.x+diffX+ARM_LENGHT,pla.y+diffY,new TextureQuad(itemsTexture.getTexture(pla.heldItem),0.3f,0.3f,0.15f,0.15f,true)));
+                scene.objects.add(new DrawableRectangle(pla.x+diffX+ARM_LENGHT,pla.y+diffY,new TextureQuad(itemsTexture.getTexture(pla.heldItem),0.5f,0.5f,0.25f,0.25f,true)));
             //            System.out.println("player " + pla.id + " x " + pla.x + " " + pla.y);
         }
         return scene;
-    }
-    public void dispose()
-    {
-        blocksTexture.dispose();
-        playerTexture.dispose();
     }
 
 }

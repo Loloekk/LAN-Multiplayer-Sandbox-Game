@@ -6,20 +6,19 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.common.Config;
 import io.github.terraria.controler.network.Network;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayer;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTakeItem;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHit;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTouch;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerMove;
+import io.github.terraria.controler.network.PacketClientToServer.*;
 import io.github.terraria.controler.network.PacketJoin;
 import io.github.terraria.controler.network.PacketJoinAck;
 import io.github.terraria.controler.playerNetworkData.PlayerData;
+import io.github.terraria.loading.BlockFactoryLoader;
 import io.github.terraria.logic.actions.GameState;
 import io.github.terraria.logic.actions.MoveService;
 import io.github.terraria.logic.actions.PlayerActionService;
 import io.github.terraria.logic.actions.PlayerActionServiceImpl;
+import io.github.terraria.logic.building.BlockFactory;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
+import io.github.terraria.logic.equipment.ItemRegistry;
 import io.github.terraria.logic.equipment.ObservableMultisetItemHolder;
 import io.github.terraria.logic.physics.*;
 import io.github.terraria.logic.players.*;
@@ -39,6 +38,8 @@ public class GameServer {
     private PlayerActivator playerActivator;
     private PlayerActionService actionService;
 
+    private ItemRegistry itemRegistry;
+
     public void start() throws IOException, InterruptedException {
         server = new Server();
         Network.register(server);
@@ -47,7 +48,9 @@ public class GameServer {
 
         // initialize model
         world = new Box2DWorld(new Vector2(0, -10), true);
-        StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder();
+        BlockFactory blockFactory = new BlockFactoryLoader().getBlockFactory();
+        StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder().blockFactory(blockFactory);
+        itemRegistry = new ItemRegistry(blockFactory);
         builder.world(world);
         builder.width(100).height(40).zeroX(50).zeroY(20);
         PlaneContainer planeContainer = builder.build();
@@ -71,7 +74,12 @@ public class GameServer {
             }
             @Override public void received(Connection connection, Object obj) {
                 if (obj instanceof PacketJoin join) {
-                    PlayerRecord pla = playerRegistry.registerPlayer();
+                    PlayerRecord pla;
+                    if(!playerRegistry.hasPlayer(0))
+                        pla = playerRegistry.registerPlayer();
+                    else
+                        pla = playerRegistry.getPlayer(0);
+                    //TODO sensowne logowanie na podstawie name
                     int id = pla.id();
                     PacketJoinAck ack = new PacketJoinAck();
                     ack.playerId = id; ack.name = join.name;
@@ -139,8 +147,14 @@ public class GameServer {
                 }
                 if(in instanceof PacketPlayerTakeItem take)
                 {
-                    System.out.println(take);
-                    //TODO ustawic graczowi o id take.playerId item take.itemId w rece
+                    PhysicalPlayer player = gameState.activePlayers().get(take.playerId);
+                    if(player != null)
+                        player.setHeldItem(itemRegistry.create(take.itemId));
+                }
+                if(in instanceof PacketCraftItems craft)
+                {
+                    System.out.println("Player " + craft.playerId + " crafting " + craft.craftingId);
+                    // TODO
                 }
             }
         }

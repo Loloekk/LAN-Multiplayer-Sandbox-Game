@@ -113,7 +113,7 @@ public class PlayerData {
             pla.id = player.id();
             pla.x = player.getPosition().x;
             pla.y = player.getPosition().y;
-            pla.name = "ala";
+            pla.name = "ala"; //TODO wpisac name prawdziwy
             if(players.containsKey(pla.id))
             {
                 PacketPlayerState tmppla = players.get(pla.id);
