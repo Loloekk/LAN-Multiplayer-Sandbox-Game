@@ -5,16 +5,18 @@ import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.logic.creatures.Movement;
 import io.github.terraria.utils.IntVector2;
 
-public class WalkingMovement implements Movement {
+public class FlyingMovement implements Movement {
     private CreatureBody body;
     private final float maxVelocityX;
-    private final Vector2 jumpImpulse;
-    private final float acceleration;
+    private final float moveImpulseX;
+    private final float maxVelocityUp;
+    private final float moveUpAcceleration;
 
-    public WalkingMovement(float maxVelocityX, float acceleration, float jumpStrength){
+    public FlyingMovement(float maxVelocityX, float moveImpulseX, float maxVelocityUp, float moveUpAcceleration){
         this.maxVelocityX = maxVelocityX;
-        this.acceleration = acceleration;
-        jumpImpulse = new Vector2(0, jumpStrength);
+        this.moveImpulseX = moveImpulseX;
+        this.maxVelocityUp = maxVelocityUp;
+        this.moveUpAcceleration = moveUpAcceleration;
     }
     @Override
     public void bind(CreatureBody body) {
@@ -25,17 +27,15 @@ public class WalkingMovement implements Movement {
     @Override
     public void move(IntVector2 direction) {
         if(direction.x() < 0 && body.getLinearVelocity().x > - maxVelocityX){
-            body.applyLinearImpulse(new Vector2(-acceleration, 0));
+            body.applyLinearImpulse(new Vector2(-moveImpulseX, 0));
         }
         if(direction.x() > 0 && body.getLinearVelocity().x < maxVelocityX){
-            body.applyLinearImpulse(new Vector2(acceleration, 0));
+            body.applyLinearImpulse(new Vector2(moveImpulseX, 0));
         }
     }
 
     @Override
     public void jump() {
-        if(body.isGrounded()){
-            body.applyLinearImpulse(jumpImpulse);
-        }
+        if(body.getLinearVelocity().y < maxVelocityUp)body.applyLinearImpulse(new Vector2(0, moveUpAcceleration));
     }
 }

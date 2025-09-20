@@ -3,6 +3,8 @@ package io.github.terraria.logic.creatures;
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.common.Config;
 import io.github.terraria.logic.actions.PlayerWorldInteractor;
+import io.github.terraria.logic.creatures.movements.FloatingMovement;
+import io.github.terraria.logic.creatures.movements.FlyingMovement;
 import io.github.terraria.logic.creatures.movements.WalkingMovement;
 import io.github.terraria.logic.creatures.tools.NoTool;
 import io.github.terraria.logic.creatures.tools.PlayerTool;

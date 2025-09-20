@@ -59,6 +59,11 @@ public class BasicCreatureBody implements CreatureBody{
     }
 
     @Override
+    public void setGravity(float scale) {
+        body.setGravityScale(scale);
+    }
+
+    @Override
     public void destroy() {
         body.getWorld().destroyBody(body);
     }

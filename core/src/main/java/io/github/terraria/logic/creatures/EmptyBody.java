@@ -29,6 +29,11 @@ public class EmptyBody implements CreatureBody{
     }
 
     @Override
+    public void setGravity(float scale) {
+
+    }
+
+    @Override
     public void destroy() {
 
     }

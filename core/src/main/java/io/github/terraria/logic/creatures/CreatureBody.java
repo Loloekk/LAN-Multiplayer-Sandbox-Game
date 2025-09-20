@@ -8,6 +8,7 @@ public interface CreatureBody {
     void applyForce(Vector2 force);
     Vector2 getPosition();
     Vector2 getLinearVelocity();
+    void setGravity(float scale);
     void destroy();
     boolean isGrounded();
     boolean liesOn(Vector2 desired);
