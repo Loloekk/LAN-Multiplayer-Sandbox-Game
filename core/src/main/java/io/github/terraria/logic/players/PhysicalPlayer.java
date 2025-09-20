@@ -1,8 +1,11 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
+import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.logic.creatures.CreatureBody;
+import io.github.terraria.logic.creatures.tools.PlayerTool;
+import io.github.terraria.logic.equipment.ToolItem;
 import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.equipment.ItemHolder;
@@ -13,13 +16,14 @@ public class PhysicalPlayer {
     private ItemHolder equipment;
     private Item heldItem; // Tylko takie pole spełnia nasze wymagania. Trzeba uważać przy używaniu.
     private Creature creature;
-    public PhysicalPlayer(PlayerRecord playerRecord, Creature creature) {
-        this.id = playerRecord.id();
-        this.equipment = playerRecord.equipment();
-        this.creature = creature;
-    }
-    public PhysicalPlayer(ItemHolder equipment) {
+    private final PlayerWorldInteractor interactor;
+    public PhysicalPlayer(ItemHolder equipment, PlayerWorldInteractor interactor) {
         this.equipment = equipment;
+        this.interactor = interactor;
+        this.interactor.bindPlayer(this);
+    }
+    public PlayerWorldInteractor getInteractor(){
+        return interactor;
     }
     public void setId(int id)
     {
@@ -37,6 +41,9 @@ public class PhysicalPlayer {
     public boolean setHeldItem(Item item) {
         if(equipment.getCount(item) > 0 || item == null) {// Nie wiem czy okej Karol
             heldItem = item;
+            if(heldItem instanceof ToolItem toolItem){
+                creature.setTool(new PlayerTool(interactor, toolItem.getTool(interactor)));
+            }
             return true;
         }
         return false;

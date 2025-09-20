@@ -14,6 +14,7 @@ import io.github.terraria.loading.BlockFactoryLoader;
 import io.github.terraria.logic.actions.GameState;
 import io.github.terraria.logic.actions.PlayerActionService;
 import io.github.terraria.logic.actions.PlayerActionServiceImpl;
+import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.building.BlockFactory;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
@@ -94,14 +95,10 @@ public class GameServer {
                     PlayerData playerState = new PlayerData(connection,gameState,id);
                     ObservableMultisetItemHolder observableMultisetItemHolder = new ObservableMultisetItemHolder(Config.PLAYER_DEFAULT_EQUIPMENT_CAPACITY);
                     observableMultisetItemHolder.addObserver(playerState.getItemHolderObserver());
-                    ObservablePhysicalPlayer player = new ObservablePhysicalPlayer(observableMultisetItemHolder);
-//                    PhysicalPlayer player = new PhysicalPlayer(new MultisetItemHolder(50));
+                    ObservablePhysicalPlayer player = new ObservablePhysicalPlayer(observableMultisetItemHolder, new PlayerWorldInteractor(actionService, creatureRegistry));
                     playerActivator.loginPlayer(player,id);
                     connectionIds.put(connection, playerState);
                     inputQueues.put(connection, new ConcurrentLinkedQueue<>());
-//                    Network.PlayerState ps = new Network.PlayerState();
-//                    ps.id = id; ps.x = 0; ps.y = 0; ps.name = join.name;
-//                    playerStates.put(id, ps);
                 } else if (obj instanceof PacketPlayer) {
                     inputQueues.getOrDefault(connection, new ConcurrentLinkedQueue<>()).add((PacketPlayer) obj);
                 }
@@ -130,22 +127,24 @@ public class GameServer {
                 if(in.getPlayerId() != playerId) {
                     continue;
                 }
+                Creature playerCreature = gameState.activePlayers().get(playerId).creature();
                 if(in instanceof PacketPlayerMove move) {
-                    Creature playerCreature = gameState.activePlayers().get(playerId).creature();
                     playerCreature.move(move.direction);
                     if (move.jump) playerCreature.jump();
                 }
                 if(in instanceof PacketPlayerHit hit)
                 {
                     Vector2 pos = new Vector2(hit.x,hit.y);
+                    playerCreature.normalAction(pos);
 //                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
-                    actionService.hitAt(gameState.activePlayers().get(playerId),pos);
+//                    actionService.hitAt(gameState.activePlayers().get(playerId),pos);
                 }
                 if(in instanceof PacketPlayerTouch touch)
                 {
                     Vector2 pos = new Vector2(touch.x,touch.y);
+                    playerCreature.specialAction(pos);
 //                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
-                    actionService.placeHeldAt(gameState.activePlayers().get(playerId),pos);
+//                    actionService.placeHeldAt(gameState.activePlayers().get(playerId),pos);
                 }
                 if(in instanceof PacketPlayerTakeItem take)
                 {

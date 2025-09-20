@@ -2,10 +2,12 @@ package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.common.Config;
+import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.creatures.BasicCreatureBody;
 import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.logic.creatures.CreatureRegistry;
+import io.github.terraria.logic.players.PhysicalPlayer;
 import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.players.ActivePlayers;
@@ -42,8 +44,8 @@ public class DefaultPlayerActivator extends PlayerActivator {
     }
 
     @Override
-    protected Creature getNewPlayerCreature(Vector2 spawnPosition) {
+    protected Creature getNewPlayerCreature(Vector2 spawnPosition, PlayerWorldInteractor interactor) {
         spawnPosition = shiftToFree(IntVector2.toInt(spawnPosition), 2);
-        return creatureRegistry.spawnPlayerCreature(spawnPosition);
+        return creatureRegistry.spawnPlayerCreature(spawnPosition, interactor);
     }
 }

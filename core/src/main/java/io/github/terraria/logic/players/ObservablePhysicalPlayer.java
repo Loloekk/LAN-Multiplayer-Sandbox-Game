@@ -2,6 +2,7 @@ package io.github.terraria.logic.players;
 
 import io.github.terraria.controler.playerNetworkData.ItemHolderObserver;
 import io.github.terraria.controler.playerNetworkData.PhysicalPlayerObserver;
+import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.equipment.ItemHolder;
 
@@ -10,8 +11,8 @@ import java.util.List;
 
 public class ObservablePhysicalPlayer extends PhysicalPlayer{
     private final List<PhysicalPlayerObserver> observers = new ArrayList<>();
-    public ObservablePhysicalPlayer(ItemHolder equipment) {
-        super(equipment);
+    public ObservablePhysicalPlayer(ItemHolder equipment, PlayerWorldInteractor interactor) {
+        super(equipment, interactor);
     }
     public void addObserver(PhysicalPlayerObserver obs) {
         observers.add(obs);
