@@ -24,12 +24,14 @@ public class SceneGenerator {
 
     TextureQuadBank blocksTexture;
     TextureQuadBank playerTexture;
+    TextureQuadBank mobTextures;
     TextureBank itemsTexture;
-    public SceneGenerator(TextureQuadBank blocksTexture, TextureQuadBank playerTexture, TextureBank itemsTexture)
+    public SceneGenerator(TextureQuadBank blocksTexture, TextureQuadBank playerTexture, TextureBank itemsTexture, TextureQuadBank mobTextures)
     {
         this.blocksTexture = blocksTexture;
         this.playerTexture = playerTexture;
         this.itemsTexture = itemsTexture;
+        this.mobTextures = mobTextures;
     }
 
     public Scene generate(ClientGameState data)
@@ -62,6 +64,9 @@ public class SceneGenerator {
             if(pla.heldItem != null)
                 scene.objects.add(new DrawableRectangle(pla.x+diffX+ARM_LENGHT,pla.y+diffY,new TextureQuad(itemsTexture.getTexture(pla.heldItem),0.5f,0.5f,0.25f,0.25f,true)));
             //            System.out.println("player " + pla.id + " x " + pla.x + " " + pla.y);
+        }
+        for(var mob : data.getMobs()){
+            scene.objects.add(new DrawableRectangle(mob.x + diffX, mob.y + diffY, mobTextures.getTextureQuad(mob.mobType)));
         }
         return scene;
     }

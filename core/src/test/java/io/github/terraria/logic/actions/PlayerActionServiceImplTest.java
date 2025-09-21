@@ -30,7 +30,7 @@ class PlayerActionServiceImplTest {
             .thenReturn(block);
         Mockito.when(container.removeFrontBlockAt(loc.x(), loc.y()))
             .thenReturn(block);
-        service = new PlayerActionServiceImpl(new GameState(container, Mockito.mock(ActivePlayers.class)));
+        service = new PlayerActionServiceImpl(new GameState(container, Mockito.mock(ActivePlayers.class), null));
     }
     @Test
     void hitAt() {

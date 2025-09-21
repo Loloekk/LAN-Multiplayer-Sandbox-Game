@@ -2,6 +2,7 @@ package io.github.terraria.logic.creatures;
 
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.common.Config;
+import io.github.terraria.logic.actions.MobWorldInteractor;
 import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.creatures.movements.FloatingMovement;
 import io.github.terraria.logic.creatures.movements.FlyingMovement;
@@ -17,7 +18,10 @@ import java.util.List;
 public class CreatureRegistry {
     private final com.badlogic.gdx.physics.box2d.World world;
     private final HashSet<Creature> mobs = new HashSet<>();
+    private final HashSet<Integer> aliveMobs = new HashSet<>();
     private final HashSet<Creature> players = new HashSet<>();
+    private final MobWorldInteractor mobWorldInteractor = new MobWorldInteractor(this);
+    private int nextId = 0;
 
     public CreatureRegistry(com.badlogic.gdx.physics.box2d.World world){
         this.world = world;
@@ -69,13 +73,32 @@ public class CreatureRegistry {
         return res;
     }
 
+    public boolean isMobAlive(int mobId){
+        return aliveMobs.contains(mobId);
+    }
+
+    public List<Creature> aliveMobs(){
+        return new ArrayList<>(mobs);
+    }
+
+    public Creature spawnZombieCreature(Vector2 position){
+        BasicCreatureBody zombieBody = new BasicCreatureBody(world, position, 0.8f, 1.6f, 2.0f, 1.3f, 0.1f);
+        WalkingMovement movement = new WalkingMovement(Config.MAX_PLAYER_VELOCITY_X, Config.MOVE_IMPULSE_X, Config.PLAYER_JUMP_STRENGTH);
+        NoTool tool = new NoTool();
+        BasicHealth health = new BasicHealth();
+        Creature zombieCreature = new Creature(nextId++,1, zombieBody, movement, tool, health);
+        mobs.add(zombieCreature);
+        aliveMobs.add(zombieCreature.id());
+        return zombieCreature;
+    }
+
     public Creature spawnPlayerCreature(Vector2 position, PlayerWorldInteractor interactor){
         BasicCreatureBody playerBody = new BasicCreatureBody(world, position, Config.PLAYER_WIDTH,
             Config.PLAYER_HEIGHT, Config.PLAYER_DENSITY, Config.PLAYER_FRICTION, Config.PLAYER_RESTITUTION);
         WalkingMovement movement = new WalkingMovement(Config.MAX_PLAYER_VELOCITY_X, Config.MOVE_IMPULSE_X, Config.PLAYER_JUMP_STRENGTH);
         PlayerTool tool = new PlayerTool(interactor, new NoTool());
         BasicHealth health = new BasicHealth();
-        Creature playerCreature = new Creature(playerBody, movement, tool, health);
+        Creature playerCreature = new Creature(nextId++,0, playerBody, movement, tool, health);
         players.add(playerCreature);
         return playerCreature;
     }

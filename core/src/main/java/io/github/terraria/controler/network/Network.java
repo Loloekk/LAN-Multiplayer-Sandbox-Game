@@ -37,5 +37,7 @@ public class Network {
         kryo.register(PacketPlayerHeldItem.class);
         kryo.register(PacketCraftItems.class);
         kryo.register(IntVector2.class);
+        kryo.register(PacketDisappearMob.class);
+        kryo.register(PacketMobState.class);
     }
 }

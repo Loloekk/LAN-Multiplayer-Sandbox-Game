@@ -43,6 +43,7 @@ public class GameServer {
     private CreatureRegistry creatureRegistry;
 
     private ItemRegistry itemRegistry;
+    private Creature depressedZombie;
 
     public void start() throws IOException, InterruptedException {
         server = new Server();
@@ -60,14 +61,15 @@ public class GameServer {
         builder.world(world);
         builder.width(100).height(40).zeroX(50).zeroY(20);
         PlaneContainer planeContainer = builder.build();
-        gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()));
 //        System.out.println("Plane container " + planeContainer);
 //        System.out.println("Gamestate grid = " + gameState.grid());
 
         creatureRegistry = new CreatureRegistry(boxWorld);
         playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(0f, 0f));
+        gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()), creatureRegistry);
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry);
         actionService = new PlayerActionServiceImpl(gameState);
+        depressedZombie = creatureRegistry.spawnZombieCreature(new Vector2(0f, 10f));
 
         server.addListener(new Listener() {
             @Override public void connected(Connection connection) {}

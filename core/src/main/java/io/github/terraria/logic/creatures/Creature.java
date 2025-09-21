@@ -4,12 +4,16 @@ import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.utils.IntVector2;
 
 public class Creature {
+    private int id;
+    private int creatureType;
     private CreatureBody body;
     private Movement movement;
     private Tool tool;
     private Health health;
 
-    public Creature(CreatureBody body, Movement movement, Tool tool, Health health){
+    public Creature(int id, int creatureType, CreatureBody body, Movement movement, Tool tool, Health health){
+        this.id = id;
+        this.creatureType = creatureType;
         this.body = body;
         this.movement = movement;
         this.tool = tool;
@@ -18,6 +22,10 @@ public class Creature {
         this.body.bindCreature(this);
         this.health.bindCreature(this);
     }
+    public int id(){
+        return id;
+    }
+    public int mobType(){return creatureType;}
 
     public void move(IntVector2 direction){
         movement.move(direction);
