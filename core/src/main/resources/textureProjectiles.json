@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "Rock",
+    "fixture": {
+      "texture": "rock.png",
+      "width": 0.2,
+      "height": 0.2,
+      "centerX": 0.0,
+      "centerY": 0.0,
+      "transparent": true
+    }
+  }
+
+]

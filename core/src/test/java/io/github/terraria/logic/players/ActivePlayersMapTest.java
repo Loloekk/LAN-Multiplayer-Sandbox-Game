@@ -2,6 +2,8 @@ package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
 import com.google.common.collect.ImmutableList;
+import io.github.terraria.logic.actions.PlayerWorldInteractor;
+import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.utils.RectangleNeighbourhood;
 import io.github.terraria.logic.physics.Body;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,16 +24,22 @@ class ActivePlayersMapTest {
     int n = 0;
     Vector2 noPos;
 
-    Body createBody(Vector2 position) {
+    Creature createBody(Vector2 position) {
         positions.add(position);
-        Body body = Mockito.mock(Body.class);
+        Creature body = Mockito.mock(Creature.class);
         Mockito.when(body.getPosition()).thenReturn(position);
         Mockito.when(body.liesOn(noPos)).thenReturn(false);
         return body;
     }
 
+    PlayerWorldInteractor createInteractor(){
+        return Mockito.mock(PlayerWorldInteractor.class);
+    }
+
     void createPhysicalPlayer(Vector2 position) {
-        PhysicalPlayer physicalPlayer = new PhysicalPlayer(new PlayerRecord(n, new Vector2()), createBody(position));
+        PhysicalPlayer physicalPlayer = new PhysicalPlayer(null, createInteractor());
+        physicalPlayer.setId(n);
+        physicalPlayer.setCreature(createBody(position));
         physicalPlayers.add(physicalPlayer);
         map.add(physicalPlayer);
         n++;
@@ -46,7 +54,7 @@ class ActivePlayersMapTest {
         createPhysicalPlayer(new Vector2(0.5f, 1f));
         createPhysicalPlayer(new Vector2(1f, 1f));
         for(int i = 0; i < n; i++) {
-            Body body = physicalPlayers.get(i).body();
+            Creature body = physicalPlayers.get(i).creature();
             for(int j = 0; j < n; j++) {
                 Vector2 pos = positions.get(j);
                 Mockito.when(body.liesOn(pos)).thenReturn(i == j);
@@ -75,7 +83,10 @@ class ActivePlayersMapTest {
 
     @Test
     void addIdDuplicateNoOp() {
-        map.add(new PhysicalPlayer(new PlayerRecord(0, noPos), Mockito.mock(Body.class)));
+        PhysicalPlayer player = new PhysicalPlayer(null, createInteractor());
+        player.setCreature(createBody(noPos));
+        player.setId(0);
+        map.add(player);
         assertThat(map.getList()).containsExactlyInAnyOrderElementsOf(physicalPlayers);
     }
 

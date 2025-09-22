@@ -31,11 +31,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
     private final Map<Integer, MiningAction> currentMining = new HashMap<>();
 
     @Override
-    public void hitAt(PhysicalPlayer player, Vector2 loc) {
-        if(!loc.epsilonEquals(player.getPosition(), (float) rangeRadius))
-            return;
-
-        final int force = 35;
+    public void hitAt(PhysicalPlayer player, Vector2 loc, int force) {
         IntVector2 intLoc = IntVector2.toInt(loc);
         Block block = grid.getFrontBlockAt(intLoc);
         if (block != null) {

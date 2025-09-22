@@ -10,6 +10,7 @@ import io.github.terraria.client.view.textures.textureQuad.TextureQuadBankLoader
 import io.github.terraria.client.view.textures.textureQuad.TextureQuad;
 import io.github.terraria.common.Config;
 import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerState;
+import org.w3c.dom.Text;
 
 import java.util.Stack;
 
@@ -24,12 +25,16 @@ public class SceneGenerator {
 
     TextureQuadBank blocksTexture;
     TextureQuadBank playerTexture;
+    TextureQuadBank mobTextures;
+    TextureQuadBank projectileTextures;
     TextureBank itemsTexture;
-    public SceneGenerator(TextureQuadBank blocksTexture, TextureQuadBank playerTexture, TextureBank itemsTexture)
+    public SceneGenerator(TextureQuadBank blocksTexture, TextureQuadBank playerTexture, TextureBank itemsTexture, TextureQuadBank mobTextures, TextureQuadBank projectileTextures)
     {
         this.blocksTexture = blocksTexture;
         this.playerTexture = playerTexture;
         this.itemsTexture = itemsTexture;
+        this.mobTextures = mobTextures;
+        this.projectileTextures = projectileTextures;
     }
 
     public Scene generate(ClientGameState data)
@@ -62,6 +67,12 @@ public class SceneGenerator {
             if(pla.heldItem != null)
                 scene.objects.add(new DrawableRectangle(pla.x+diffX+ARM_LENGHT,pla.y+diffY,new TextureQuad(itemsTexture.getTexture(pla.heldItem),0.5f,0.5f,0.25f,0.25f,true)));
             //            System.out.println("player " + pla.id + " x " + pla.x + " " + pla.y);
+        }
+        for(var mob : data.getMobs()){
+            scene.objects.add(new DrawableRectangle(mob.x + diffX, mob.y + diffY, mobTextures.getTextureQuad(mob.mobType)));
+        }
+        for(var projectile : data.getProjectiles()){
+            scene.objects.add(new DrawableRectangle(projectile.x + diffX, projectile.y + diffY, projectileTextures.getTextureQuad(projectile.projectileType)));
         }
         return scene;
     }

@@ -1,0 +1,20 @@
+package io.github.terraria.logic.creatures.bots;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+public class BotRegistry {
+    private HashSet<Bot> bots = new HashSet<>();
+    public void addBot(Bot bot){
+        bots.add(bot);
+    }
+    public void removeBot(Bot bot){
+        bots.remove(bot);
+    }
+    public void update(){
+        for(var bot : bots){
+            bot.think();
+        }
+    }
+}

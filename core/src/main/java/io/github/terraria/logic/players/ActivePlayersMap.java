@@ -35,7 +35,7 @@ public class ActivePlayersMap implements ActivePlayers {
     @Override
     public PhysicalPlayer getAt(Vector2 desired) {
         for (PhysicalPlayer player : map.values()) {
-            if (player.body().liesOn(desired))
+            if (player.creature().liesOn(desired))
                 return player;
         }
         return null;

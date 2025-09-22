@@ -1,6 +1,8 @@
 package io.github.terraria.utils;
 
 import com.badlogic.gdx.math.Vector2;
+import io.github.terraria.logic.actions.PlayerWorldInteractor;
+import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.players.PhysicalPlayer;
 import io.github.terraria.logic.players.PlayerRecord;
@@ -15,16 +17,22 @@ class RectangleNeighbourhoodTest {
     Vector2 leftBottom;
     Vector2 rightTop;
     RectangleNeighbourhood rectangle;
-    Body body;
+    Creature body;
     PhysicalPlayer player;
+    PhysicalPlayer makePlayer(PlayerRecord record, Creature body){
+        PhysicalPlayer res = new PhysicalPlayer(null, Mockito.mock(PlayerWorldInteractor.class));
+        res.setId(record.id());
+        res.setCreature(body);
+        return res;
+    }
 
     @BeforeEach
     void setUp() {
         leftBottom = new Vector2(0f, 0f);
         rightTop = new Vector2(9f, 9f);
         rectangle = new RectangleNeighbourhood(leftBottom, rightTop);
-        body = Mockito.mock(Body.class);
-        player = new PhysicalPlayer(new PlayerRecord(0, new Vector2()), body);
+        body = Mockito.mock(Creature.class);
+        player = makePlayer(new PlayerRecord(0, new Vector2()), body);
     }
 
     @Test

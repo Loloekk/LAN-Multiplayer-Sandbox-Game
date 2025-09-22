@@ -1,6 +1,8 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
+import io.github.terraria.logic.actions.PlayerWorldInteractor;
+import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.World;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +14,13 @@ class PlayerActivatorTest {
     final ActivePlayers activePlayers = Mockito.mock(ActivePlayers.class);
     PlayerRegistry playerRegistry = Mockito.mock(PlayerRegistry.class);
     PlayerActivator playerActivator;
+
+    PhysicalPlayer makePlayer(PlayerRecord record, Creature body){
+        PhysicalPlayer res = new PhysicalPlayer(null, Mockito.mock(PlayerWorldInteractor.class));
+        res.setId(record.id());
+        res.setCreature(body);
+        return res;
+    }
 
     @BeforeEach
     void setUp() {
@@ -35,8 +44,9 @@ class PlayerActivatorTest {
     void logoutPlayerSetSpawnPositionTest() {
         final int playersId = 10;
         final PlayerRecord playerRecord = new PlayerRecord(playersId, new Vector2());
-        final Body body = Mockito.mock(Body.class);
-        Mockito.when(activePlayers.remove(playersId)).thenReturn(new PhysicalPlayer(playerRecord, body));
+        final Creature body = Mockito.mock(Creature.class);
+        final PhysicalPlayer player = makePlayer(playerRecord, body);
+        Mockito.when(activePlayers.remove(playersId)).thenReturn(player);
         final Vector2 spawnPosition = new Vector2(1f, 0f);
         Mockito.when(body.getPosition()).thenReturn(spawnPosition);
 
@@ -49,8 +59,9 @@ class PlayerActivatorTest {
     void logoutPlayerDestroyBodyTest() {
         final int playersId = 10;
         final PlayerRecord playerRecord = new PlayerRecord(playersId, new Vector2());
-        final Body body = Mockito.mock(Body.class);
-        Mockito.when(activePlayers.remove(playersId)).thenReturn(new PhysicalPlayer(playerRecord, body));
+        final Creature body = Mockito.mock(Creature.class);
+        final PhysicalPlayer player = makePlayer(playerRecord, body);
+        Mockito.when(activePlayers.remove(playersId)).thenReturn(player);
 
         playerActivator.logoutPlayer(playersId);
         Mockito.verify(body).destroy();

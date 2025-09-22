@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Connection;
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
 import io.github.terraria.controler.network.PacketServerToClient.*;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,8 @@ public class ClientGameState {
 
     public Map<Integer, ClientChunk> chunks = new HashMap<>();
     public Map<Integer, ClientPlayerState> players = new HashMap<>();
+    public Map<Integer, ClientMobState> mobs = new HashMap<>();
+    public Map<Integer, ClientProjectileState> projectiles = new HashMap<>();
     public ClientGameState(Connection conn)
     {
         this.conn = conn;
@@ -59,9 +62,37 @@ public class ClientGameState {
             player.x = pla.x;
             player.y = pla.y;
         }
+        else if(obj instanceof PacketMobState mob)
+        {
+            if(!mobs.containsKey(mob.id))
+                mobs.put(mob.id, new ClientMobState());
+            ClientMobState mobState = mobs.get(mob.id);
+            mobState.id = mob.id;
+            mobState.mobType = mob.mobType;
+            mobState.x = mob.x;
+            mobState.y = mob.y;
+        }
+        else if(obj instanceof PacketProjectileState pro)
+        {
+            if(!projectiles.containsKey(pro.id))
+                projectiles.put(pro.id, new ClientProjectileState());
+            ClientProjectileState projectile = projectiles.get(pro.id);
+            projectile.id = pro.id;
+            projectile.projectileType = pro.projectileType;
+            projectile.x = pro.x;
+            projectile.y = pro.y;
+        }
         else if(obj instanceof PacketDisappearPlayer dis)
         {
             players.remove(dis.id);
+        }
+        else if(obj instanceof PacketDisappearMob mobDis)
+        {
+            mobs.remove(mobDis.id);
+        }
+        else if(obj instanceof PacketDisappearProjectile projectileDis)
+        {
+            projectiles.remove(projectileDis.id);
         }
         else if(obj instanceof PacketPlayerHeldItem held)
         {
@@ -99,6 +130,20 @@ public class ClientGameState {
             playersList.add(entry.getValue());
         }
         return playersList;
+    }
+    public List<ClientMobState> getMobs(){
+        ArrayList<ClientMobState> mobsList = new ArrayList<>();
+        for(Map.Entry<Integer, ClientMobState> entry : mobs.entrySet()){
+            mobsList.add(entry.getValue());
+        }
+        return mobsList;
+    }
+    public List<ClientProjectileState> getProjectiles(){
+        ArrayList<ClientProjectileState> projectilesList = new ArrayList<>();
+        for(var entry : projectiles.entrySet()){
+            projectilesList.add(entry.getValue());
+        }
+        return projectilesList;
     }
     public void throwTrash()
     {

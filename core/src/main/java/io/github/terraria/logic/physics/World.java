@@ -1,6 +1,7 @@
 package io.github.terraria.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
+import io.github.terraria.logic.creatures.CreatureBody;
 
 public interface World {
     // left, bottom - coordinates of the bottom-left corner of the area to be enclosed
@@ -9,6 +10,7 @@ public interface World {
     Body createBlockBody(Vector2 v, BlockFixture blockFixture);
 
     Body createDynamicBody(Vector2 v);
+    CreatureBody createCreatureBody(Vector2 v, float width, float height, float density, float friction, float restitution);
 
     void step(float timeStep, int velocityIterations, int positionIterations);
 

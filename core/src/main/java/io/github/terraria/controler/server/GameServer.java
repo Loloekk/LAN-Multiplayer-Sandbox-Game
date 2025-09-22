@@ -12,12 +12,18 @@ import io.github.terraria.controler.network.PacketJoinAck;
 import io.github.terraria.controler.playerNetworkData.PlayerData;
 import io.github.terraria.loading.BlockFactoryLoader;
 import io.github.terraria.logic.actions.GameState;
-import io.github.terraria.logic.actions.MoveService;
 import io.github.terraria.logic.actions.PlayerActionService;
 import io.github.terraria.logic.actions.PlayerActionServiceImpl;
+import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.building.BlockFactory;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
+import io.github.terraria.logic.creatures.CollisionHandler;
+import io.github.terraria.logic.creatures.Creature;
+import io.github.terraria.logic.creatures.CreatureRegistry;
+import io.github.terraria.logic.creatures.WorldEvent;
+import io.github.terraria.logic.creatures.bots.BotRegistry;
+import io.github.terraria.logic.creatures.projectiles.ProjectileRegistry;
 import io.github.terraria.logic.equipment.ItemRegistry;
 import io.github.terraria.logic.equipment.ObservableMultisetItemHolder;
 import io.github.terraria.logic.physics.*;
@@ -37,8 +43,12 @@ public class GameServer {
     private PlayerRegistry playerRegistry;
     private PlayerActivator playerActivator;
     private PlayerActionService actionService;
-
+    private CreatureRegistry creatureRegistry;
+    private ProjectileRegistry projectileRegistry;
+    private BotRegistry botRegistry = new BotRegistry();
     private ItemRegistry itemRegistry;
+    private List<com.badlogic.gdx.physics.box2d.Body> bodiesToDestroy = new ArrayList<>();
+    private Creature depressedZombie;
 
     public void start() throws IOException, InterruptedException {
         server = new Server();
@@ -47,21 +57,24 @@ public class GameServer {
         server.start();
 
         // initialize model
-        world = new Box2DWorld(new Vector2(0, -10), true);
+        com.badlogic.gdx.physics.box2d.World boxWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -10), true);
+        boxWorld.setContactListener(new CollisionHandler());
+        world = new Box2DWorld(boxWorld);
         BlockFactory blockFactory = new BlockFactoryLoader().getBlockFactory();
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder().blockFactory(blockFactory);
         itemRegistry = new ItemRegistry(blockFactory);
         builder.world(world);
         builder.width(100).height(40).zeroX(50).zeroY(20);
         PlaneContainer planeContainer = builder.build();
-        gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()));
 //        System.out.println("Plane container " + planeContainer);
 //        System.out.println("Gamestate grid = " + gameState.grid());
-
-
+        projectileRegistry = new ProjectileRegistry();
+        creatureRegistry = new CreatureRegistry(boxWorld, bodiesToDestroy, projectileRegistry);
         playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(0f, 0f));
-        playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer);
+        gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()), creatureRegistry, projectileRegistry);
+        playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry);
         actionService = new PlayerActionServiceImpl(gameState);
+        depressedZombie = creatureRegistry.spawnZombieCreature(new Vector2(0f, 10f));
 
         server.addListener(new Listener() {
             @Override public void connected(Connection connection) {}
@@ -75,10 +88,10 @@ public class GameServer {
             @Override public void received(Connection connection, Object obj) {
                 if (obj instanceof PacketJoin join) {
                     PlayerRecord pla;
-                    if(!playerRegistry.hasPlayer(0))
+//                    if(!playerRegistry.hasPlayer(0))
                         pla = playerRegistry.registerPlayer();
-                    else
-                        pla = playerRegistry.getPlayer(0);
+//                    else
+//                        pla = playerRegistry.getPlayer(0);
                     //TODO sensowne logowanie na podstawie name
                     int id = pla.id();
                     PacketJoinAck ack = new PacketJoinAck();
@@ -89,14 +102,10 @@ public class GameServer {
                     PlayerData playerState = new PlayerData(connection,gameState,id);
                     ObservableMultisetItemHolder observableMultisetItemHolder = new ObservableMultisetItemHolder(Config.PLAYER_DEFAULT_EQUIPMENT_CAPACITY);
                     observableMultisetItemHolder.addObserver(playerState.getItemHolderObserver());
-                    ObservablePhysicalPlayer player = new ObservablePhysicalPlayer(observableMultisetItemHolder);
-//                    PhysicalPlayer player = new PhysicalPlayer(new MultisetItemHolder(50));
+                    ObservablePhysicalPlayer player = new ObservablePhysicalPlayer(observableMultisetItemHolder, new PlayerWorldInteractor(boxWorld, bodiesToDestroy, actionService, creatureRegistry, projectileRegistry));
                     playerActivator.loginPlayer(player,id);
                     connectionIds.put(connection, playerState);
                     inputQueues.put(connection, new ConcurrentLinkedQueue<>());
-//                    Network.PlayerState ps = new Network.PlayerState();
-//                    ps.id = id; ps.x = 0; ps.y = 0; ps.name = join.name;
-//                    playerStates.put(id, ps);
                 } else if (obj instanceof PacketPlayer) {
                     inputQueues.getOrDefault(connection, new ConcurrentLinkedQueue<>()).add((PacketPlayer) obj);
                 }
@@ -106,8 +115,13 @@ public class GameServer {
         ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
         exec.scheduleAtFixedRate(() -> {
             handleInput();
+            botRegistry.update();
             handlePhysics();
             broadcastScenes();
+            for(var body : bodiesToDestroy){
+                boxWorld.destroyBody(body);
+            }
+            bodiesToDestroy.clear();
         }, 0, 20, TimeUnit.MILLISECONDS);
 
         new CountDownLatch(1).await();
@@ -121,29 +135,28 @@ public class GameServer {
             int playerId = connectionIds.get(entry.getKey()).getPlayerId();
             Queue<PacketPlayer> queue = entry.getValue();
             while ((in = queue.poll()) != null) {
-                System.out.println(in);
+//                System.out.println(in);
                 if(in.getPlayerId() != playerId) {
                     continue;
                 }
+                Creature playerCreature = gameState.activePlayers().get(playerId).creature();
                 if(in instanceof PacketPlayerMove move) {
-                    if (move.moveX > 0)
-                        MoveService.movePlayer(gameState.activePlayers().get(playerId), MoveService.Direction.right);
-                    else if (move.moveX < 0)
-                        MoveService.movePlayer(gameState.activePlayers().get(playerId), MoveService.Direction.left);
-
-                    if (move.jump == true) MoveService.jumpPlayer(gameState.activePlayers().get(playerId));
+                    playerCreature.move(move.direction);
+                    if (move.jump) playerCreature.jump();
                 }
                 if(in instanceof PacketPlayerHit hit)
                 {
                     Vector2 pos = new Vector2(hit.x,hit.y);
+                    playerCreature.normalAction(pos);
 //                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
-                    actionService.hitAt(gameState.activePlayers().get(playerId),pos);
+//                    actionService.hitAt(gameState.activePlayers().get(playerId),pos);
                 }
                 if(in instanceof PacketPlayerTouch touch)
                 {
                     Vector2 pos = new Vector2(touch.x,touch.y);
+                    playerCreature.specialAction(pos);
 //                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
-                    actionService.placeHeldAt(gameState.activePlayers().get(playerId),pos);
+//                    actionService.placeHeldAt(gameState.activePlayers().get(playerId),pos);
                 }
                 if(in instanceof PacketPlayerTakeItem take)
                 {
