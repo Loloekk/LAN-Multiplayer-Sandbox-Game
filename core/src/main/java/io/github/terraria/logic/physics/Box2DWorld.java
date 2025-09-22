@@ -76,7 +76,7 @@ public class Box2DWorld implements World {
         fixtureDef.friction = blockFixture.friction();
         fixtureDef.restitution = blockFixture.restitution();
         fixtureDef.filter.categoryBits = BodyCategory.BLOCK;
-        fixtureDef.filter.maskBits = (BodyCategory.MOB | BodyCategory.PLAYER);
+        fixtureDef.filter.maskBits = (BodyCategory.MOB | BodyCategory.PLAYER | BodyCategory.PROJECTILE);
         box2DBody.createFixture(fixtureDef);
         rectangle.dispose();
         return new Box2DBody(box2DBody);
@@ -92,7 +92,7 @@ public class Box2DWorld implements World {
 
     @Override
     public CreatureBody createCreatureBody(Vector2 v, float width, float height, float density, float friction, float restitution){
-        return new BasicCreatureBody(world, v, width, height, density, friction, restitution);
+        return null;
     }
 
     @Override

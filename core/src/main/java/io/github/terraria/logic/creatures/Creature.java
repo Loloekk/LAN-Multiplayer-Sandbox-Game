@@ -50,7 +50,7 @@ public class Creature {
         health.takeDamage(amount);
     }
     public Vector2 getPosition(){
-        return body.getPosition();
+        return body.getPosition().cpy();
     }
     public void addDeathEvent(WorldEvent event){
         onDeath.add(event);

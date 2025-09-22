@@ -1,12 +1,29 @@
 package io.github.terraria.logic.creatures;
 
 import com.badlogic.gdx.physics.box2d.*;
+import io.github.terraria.logic.creatures.projectiles.Projectile;
 import io.github.terraria.logic.physics.BodyCategory;
 
 public class CollisionHandler implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
         handleContact(contact, 1);
+        Fixture A = contact.getFixtureA();
+        Fixture B = contact.getFixtureB();
+        if(A.getUserData() instanceof Projectile projectile){
+            if(B.getUserData() instanceof Creature creature){
+                projectile.hitCreature(creature);
+            }else{
+                projectile.hitObstacle();
+            }
+        }
+        if(B.getUserData() instanceof Projectile projectile){
+            if(A.getUserData() instanceof  Creature creature){
+                projectile.hitCreature(creature);
+            }else{
+                projectile.hitObstacle();
+            }
+        }
     }
 
     @Override

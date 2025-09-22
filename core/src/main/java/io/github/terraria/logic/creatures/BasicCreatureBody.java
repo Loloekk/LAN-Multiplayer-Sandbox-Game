@@ -1,23 +1,26 @@
 package io.github.terraria.logic.creatures;
 
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import io.github.terraria.logic.physics.BodyCategory;
+
+import java.util.List;
 
 public class BasicCreatureBody implements CreatureBody{
     private final com.badlogic.gdx.physics.box2d.Body body;
     private final com.badlogic.gdx.physics.box2d.Fixture bodyFixture;
     private final CollisionSensor feet;
+    private final List<Body> bodiesToDestroy;
 
-    public BasicCreatureBody(World world, Vector2 position, float width, float height, float density, float friction, float restitution){
+    public BasicCreatureBody(World world, List<Body> bodiesToDestroy, Vector2 position, float width, float height, float density, float friction, float restitution){
+        this.bodiesToDestroy = bodiesToDestroy;
         PolygonShape rectangle = new PolygonShape();
         rectangle.setAsBox(width/2, height/2);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(position);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        this.body = world.createBody(bodyDef);
+        body = world.createBody(bodyDef);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = rectangle;
@@ -25,7 +28,7 @@ public class BasicCreatureBody implements CreatureBody{
         fixtureDef.friction = friction;
         fixtureDef.restitution = restitution;
         fixtureDef.filter.categoryBits = BodyCategory.MOB;
-        fixtureDef.filter.maskBits = (BodyCategory.BLOCK);
+        fixtureDef.filter.maskBits = (BodyCategory.BLOCK | BodyCategory.PROJECTILE);
         bodyFixture = body.createFixture(fixtureDef);
 
         body.setBullet(true);
@@ -65,7 +68,7 @@ public class BasicCreatureBody implements CreatureBody{
 
     @Override
     public void destroy() {
-        body.getWorld().destroyBody(body);
+        bodiesToDestroy.add(body);
     }
 
     @Override

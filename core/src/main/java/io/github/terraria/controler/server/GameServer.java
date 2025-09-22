@@ -23,6 +23,7 @@ import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.logic.creatures.CreatureRegistry;
 import io.github.terraria.logic.creatures.WorldEvent;
 import io.github.terraria.logic.creatures.bots.BotRegistry;
+import io.github.terraria.logic.creatures.projectiles.ProjectileRegistry;
 import io.github.terraria.logic.equipment.ItemRegistry;
 import io.github.terraria.logic.equipment.ObservableMultisetItemHolder;
 import io.github.terraria.logic.physics.*;
@@ -43,8 +44,10 @@ public class GameServer {
     private PlayerActivator playerActivator;
     private PlayerActionService actionService;
     private CreatureRegistry creatureRegistry;
+    private ProjectileRegistry projectileRegistry;
     private BotRegistry botRegistry = new BotRegistry();
     private ItemRegistry itemRegistry;
+    private List<com.badlogic.gdx.physics.box2d.Body> bodiesToDestroy = new ArrayList<>();
     private Creature depressedZombie;
 
     public void start() throws IOException, InterruptedException {
@@ -65,8 +68,8 @@ public class GameServer {
         PlaneContainer planeContainer = builder.build();
 //        System.out.println("Plane container " + planeContainer);
 //        System.out.println("Gamestate grid = " + gameState.grid());
-
-        creatureRegistry = new CreatureRegistry(boxWorld);
+        projectileRegistry = new ProjectileRegistry();
+        creatureRegistry = new CreatureRegistry(boxWorld, bodiesToDestroy, projectileRegistry);
         playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(0f, 0f));
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()), creatureRegistry);
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry);
@@ -99,7 +102,7 @@ public class GameServer {
                     PlayerData playerState = new PlayerData(connection,gameState,id);
                     ObservableMultisetItemHolder observableMultisetItemHolder = new ObservableMultisetItemHolder(Config.PLAYER_DEFAULT_EQUIPMENT_CAPACITY);
                     observableMultisetItemHolder.addObserver(playerState.getItemHolderObserver());
-                    ObservablePhysicalPlayer player = new ObservablePhysicalPlayer(observableMultisetItemHolder, new PlayerWorldInteractor(actionService, creatureRegistry));
+                    ObservablePhysicalPlayer player = new ObservablePhysicalPlayer(observableMultisetItemHolder, new PlayerWorldInteractor(boxWorld, bodiesToDestroy, actionService, creatureRegistry, projectileRegistry));
                     playerActivator.loginPlayer(player,id);
                     connectionIds.put(connection, playerState);
                     inputQueues.put(connection, new ConcurrentLinkedQueue<>());
@@ -115,6 +118,10 @@ public class GameServer {
             botRegistry.update();
             handlePhysics();
             broadcastScenes();
+            for(var body : bodiesToDestroy){
+                boxWorld.destroyBody(body);
+            }
+            bodiesToDestroy.clear();
         }, 0, 20, TimeUnit.MILLISECONDS);
 
         new CountDownLatch(1).await();
