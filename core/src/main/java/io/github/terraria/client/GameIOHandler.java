@@ -40,6 +40,7 @@ public class GameIOHandler {
     private TextureQuadBank blocksTexture;
     private TextureQuadBank playerTexture;
     private TextureQuadBank mobsTexture;
+    private TextureQuadBank projectilesTexture;
     private StationType currentStation;
 
     private boolean inventoryVisible = false;
@@ -64,9 +65,10 @@ public class GameIOHandler {
         blocksTexture = loaderQuad.getTextureQuadBank("textureBlocks.json");
         playerTexture = loaderQuad.getTextureQuadBank("texturePlayer.json");
         mobsTexture = loaderQuad.getTextureQuadBank("textureMobs.json");
+        projectilesTexture = loaderQuad.getTextureQuadBank("textureProjectiles.json");
 
 
-        generator = new SceneGenerator(blocksTexture, playerTexture, itemsTexture, mobsTexture);
+        generator = new SceneGenerator(blocksTexture, playerTexture, itemsTexture, mobsTexture, projectilesTexture);
         equipmentStage = new EquipmentStage(conn,gameState.getMainPlayerState(), itemsTexture);
         renderer = new SceneRenderer();
 

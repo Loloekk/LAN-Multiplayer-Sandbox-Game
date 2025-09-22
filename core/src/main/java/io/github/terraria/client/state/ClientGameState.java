@@ -27,6 +27,7 @@ public class ClientGameState {
     public Map<Integer, ClientChunk> chunks = new HashMap<>();
     public Map<Integer, ClientPlayerState> players = new HashMap<>();
     public Map<Integer, ClientMobState> mobs = new HashMap<>();
+    public Map<Integer, ClientProjectileState> projectiles = new HashMap<>();
     public ClientGameState(Connection conn)
     {
         this.conn = conn;
@@ -71,6 +72,16 @@ public class ClientGameState {
             mobState.x = mob.x;
             mobState.y = mob.y;
         }
+        else if(obj instanceof PacketProjectileState pro)
+        {
+            if(!projectiles.containsKey(pro.id))
+                projectiles.put(pro.id, new ClientProjectileState());
+            ClientProjectileState projectile = projectiles.get(pro.id);
+            projectile.id = pro.id;
+            projectile.projectileType = pro.projectileType;
+            projectile.x = pro.x;
+            projectile.y = pro.y;
+        }
         else if(obj instanceof PacketDisappearPlayer dis)
         {
             players.remove(dis.id);
@@ -78,6 +89,10 @@ public class ClientGameState {
         else if(obj instanceof PacketDisappearMob mobDis)
         {
             mobs.remove(mobDis.id);
+        }
+        else if(obj instanceof PacketDisappearProjectile projectileDis)
+        {
+            projectiles.remove(projectileDis.id);
         }
         else if(obj instanceof PacketPlayerHeldItem held)
         {
@@ -122,6 +137,13 @@ public class ClientGameState {
             mobsList.add(entry.getValue());
         }
         return mobsList;
+    }
+    public List<ClientProjectileState> getProjectiles(){
+        ArrayList<ClientProjectileState> projectilesList = new ArrayList<>();
+        for(var entry : projectiles.entrySet()){
+            projectilesList.add(entry.getValue());
+        }
+        return projectilesList;
     }
     public void throwTrash()
     {

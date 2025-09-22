@@ -101,6 +101,8 @@ public class CreatureRegistry {
         BasicCreatureBody playerBody = new BasicCreatureBody(world, bodiesToDestroy, position, Config.PLAYER_WIDTH,
             Config.PLAYER_HEIGHT, Config.PLAYER_DENSITY, Config.PLAYER_FRICTION, Config.PLAYER_RESTITUTION);
         WalkingMovement movement = new WalkingMovement(Config.MAX_PLAYER_VELOCITY_X, Config.MOVE_IMPULSE_X, Config.PLAYER_JUMP_STRENGTH);
+//        ProjectileType type = new BasicProjectileType(new Damage(10.0f), 5.0f, 0.1f, 0.0f);
+//        RangeWeapon weapon = new RangeWeapon(interactor, type, 1.0f);
         PlayerTool tool = new PlayerTool(interactor, new NoTool());
         BasicHealth health = new BasicHealth(100.0f);
         Creature playerCreature = new Creature(nextId++,0, playerBody, movement, tool, health);

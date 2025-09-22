@@ -71,7 +71,7 @@ public class GameServer {
         projectileRegistry = new ProjectileRegistry();
         creatureRegistry = new CreatureRegistry(boxWorld, bodiesToDestroy, projectileRegistry);
         playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(0f, 0f));
-        gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()), creatureRegistry);
+        gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()), creatureRegistry, projectileRegistry);
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry);
         actionService = new PlayerActionServiceImpl(gameState);
         depressedZombie = creatureRegistry.spawnZombieCreature(new Vector2(0f, 10f));
