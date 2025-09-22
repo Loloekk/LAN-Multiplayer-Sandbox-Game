@@ -63,4 +63,8 @@ public class CraftingService {
         StationType station = stationTypeMap.get(block);
         return station == required;
     }
+
+    public Recipe getById(int id) {
+        return repo.getById(id);
+    }
 }
