@@ -3,6 +3,9 @@ package io.github.terraria.logic.creatures;
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.utils.IntVector2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Creature {
     private int id;
     private int creatureType;
@@ -10,6 +13,7 @@ public class Creature {
     private Movement movement;
     private Tool tool;
     private Health health;
+    private List<WorldEvent> onDeath = new ArrayList<>();
 
     public Creature(int id, int creatureType, CreatureBody body, Movement movement, Tool tool, Health health){
         this.id = id;
@@ -48,7 +52,16 @@ public class Creature {
     public Vector2 getPosition(){
         return body.getPosition();
     }
+    public void addDeathEvent(WorldEvent event){
+        onDeath.add(event);
+    }
     public void destroy(){
-
+        body.destroy();
+    }
+    public void kill(){
+        destroy();
+        for(var event : onDeath){
+            event.trigger();
+        }
     }
 }

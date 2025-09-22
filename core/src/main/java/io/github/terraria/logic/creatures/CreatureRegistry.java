@@ -73,10 +73,6 @@ public class CreatureRegistry {
         return res;
     }
 
-    public boolean isMobAlive(int mobId){
-        return aliveMobs.contains(mobId);
-    }
-
     public List<Creature> aliveMobs(){
         return new ArrayList<>(mobs);
     }
@@ -85,10 +81,14 @@ public class CreatureRegistry {
         BasicCreatureBody zombieBody = new BasicCreatureBody(world, position, 0.8f, 1.6f, 2.0f, 1.3f, 0.1f);
         WalkingMovement movement = new WalkingMovement(Config.MAX_PLAYER_VELOCITY_X, Config.MOVE_IMPULSE_X, Config.PLAYER_JUMP_STRENGTH);
         NoTool tool = new NoTool();
-        BasicHealth health = new BasicHealth();
+        BasicHealth health = new BasicHealth(100.0f);
         Creature zombieCreature = new Creature(nextId++,1, zombieBody, movement, tool, health);
         mobs.add(zombieCreature);
         aliveMobs.add(zombieCreature.id());
+        zombieCreature.addDeathEvent(() -> {
+            mobs.remove(zombieCreature);
+            aliveMobs.remove(zombieCreature.id());
+        });
         return zombieCreature;
     }
 
@@ -97,9 +97,14 @@ public class CreatureRegistry {
             Config.PLAYER_HEIGHT, Config.PLAYER_DENSITY, Config.PLAYER_FRICTION, Config.PLAYER_RESTITUTION);
         WalkingMovement movement = new WalkingMovement(Config.MAX_PLAYER_VELOCITY_X, Config.MOVE_IMPULSE_X, Config.PLAYER_JUMP_STRENGTH);
         PlayerTool tool = new PlayerTool(interactor, new NoTool());
-        BasicHealth health = new BasicHealth();
+        BasicHealth health = new BasicHealth(100.0f);
         Creature playerCreature = new Creature(nextId++,0, playerBody, movement, tool, health);
         players.add(playerCreature);
+        playerCreature.addDeathEvent(() -> players.remove(playerCreature));
         return playerCreature;
+    }
+
+    public boolean isMobAlive(int id) {
+        return aliveMobs.contains(id);
     }
 }

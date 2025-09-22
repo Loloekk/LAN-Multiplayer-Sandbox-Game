@@ -9,7 +9,7 @@ public class PlayerTool implements Tool {
     private final WorldInteractor interactor;
     private final Tool heldTool;
     //TODO: load constants from file
-    private final static Damage BASE_DAMAGE = new Damage();
+    private final static Damage BASE_DAMAGE = new Damage(10.0f);
     private final static int BASE_MINING_SPEED = 35;
     private final static float BASE_RANGE = 5;
 

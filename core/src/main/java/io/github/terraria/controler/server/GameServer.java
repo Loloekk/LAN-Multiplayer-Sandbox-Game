@@ -21,6 +21,8 @@ import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
 import io.github.terraria.logic.creatures.CollisionHandler;
 import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.logic.creatures.CreatureRegistry;
+import io.github.terraria.logic.creatures.WorldEvent;
+import io.github.terraria.logic.creatures.bots.BotRegistry;
 import io.github.terraria.logic.equipment.ItemRegistry;
 import io.github.terraria.logic.equipment.ObservableMultisetItemHolder;
 import io.github.terraria.logic.physics.*;
@@ -41,7 +43,7 @@ public class GameServer {
     private PlayerActivator playerActivator;
     private PlayerActionService actionService;
     private CreatureRegistry creatureRegistry;
-
+    private BotRegistry botRegistry = new BotRegistry();
     private ItemRegistry itemRegistry;
     private Creature depressedZombie;
 
@@ -83,10 +85,10 @@ public class GameServer {
             @Override public void received(Connection connection, Object obj) {
                 if (obj instanceof PacketJoin join) {
                     PlayerRecord pla;
-                    if(!playerRegistry.hasPlayer(0))
+//                    if(!playerRegistry.hasPlayer(0))
                         pla = playerRegistry.registerPlayer();
-                    else
-                        pla = playerRegistry.getPlayer(0);
+//                    else
+//                        pla = playerRegistry.getPlayer(0);
                     //TODO sensowne logowanie na podstawie name
                     int id = pla.id();
                     PacketJoinAck ack = new PacketJoinAck();
@@ -110,6 +112,7 @@ public class GameServer {
         ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
         exec.scheduleAtFixedRate(() -> {
             handleInput();
+            botRegistry.update();
             handlePhysics();
             broadcastScenes();
         }, 0, 20, TimeUnit.MILLISECONDS);

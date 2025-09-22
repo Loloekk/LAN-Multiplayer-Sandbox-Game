@@ -30,29 +30,34 @@ public class Box2DWorld implements World {
         com.badlogic.gdx.physics.box2d.Body walls = world.createBody(bd);
 
         PolygonShape shape = new PolygonShape();
+        FixtureDef fixture = new FixtureDef();
+        fixture.density = 0.0f;
+        fixture.filter.categoryBits = BodyCategory.BLOCK;
+        fixture.filter.categoryBits = (BodyCategory.MOB | BodyCategory.PROJECTILE | BodyCategory.PLAYER);
+        fixture.shape = shape;
 
         // Bottom wall
         shape.setAsBox(width * 0.5f, thickness * 0.5f,
             new Vector2(left + width * 0.5f, bottom - thickness * 0.5f), 0f);
-        walls.createFixture(shape, 0f);
+        walls.createFixture(fixture);
 
         // Top wall
         shape.setAsBox(width * 0.5f, thickness * 0.5f,
             new Vector2(left + width * 0.5f,
                 bottom + height + thickness * 0.5f + PlayerActivator.MAX_PLAYERS_RADIUS * 2f), 0f);
-        walls.createFixture(shape, 0f);
+        walls.createFixture(fixture);
 
         // Left wall
         shape.setAsBox(thickness * 0.5f, height * 0.5f + PlayerActivator.MAX_PLAYERS_RADIUS,
             new Vector2(left - thickness * 0.5f,
                 bottom + height * 0.5f + PlayerActivator.MAX_PLAYERS_RADIUS), 0f);
-        walls.createFixture(shape, 0f);
+        walls.createFixture(fixture);
 
         // Right wall
         shape.setAsBox(thickness * 0.5f, height * 0.5f + PlayerActivator.MAX_PLAYERS_RADIUS,
             new Vector2(left + width + thickness * 0.5f,
                 bottom + height * 0.5f + PlayerActivator.MAX_PLAYERS_RADIUS), 0f);
-        walls.createFixture(shape, 0f);
+        walls.createFixture(fixture);
 
         shape.dispose();
     }
