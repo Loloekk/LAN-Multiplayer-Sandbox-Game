@@ -9,6 +9,9 @@ import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.World;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class PlayerActivator {
     public static final float MAX_PLAYERS_RADIUS = Config.PLAYER_ACTIVATOR_MAX_PLAYERS_RADIUS; // Z jakimś zapasem dla float błędów.
     private final PlayerRegistry registry;
@@ -22,6 +25,18 @@ public abstract class PlayerActivator {
 
     protected abstract Creature getNewPlayerCreature(Vector2 spawnPosition, PlayerWorldInteractor interactor);
 
+    public void respawnPlayer(PhysicalPlayer player, int playerId){
+        PlayerRecord playerRecord = registry.getPlayer(playerId);
+        player.setCreature(getNewPlayerCreature(playerRecord.spawn(), player.getInteractor()));
+        player.setId(playerId);
+        List<Item> toRemove = new ArrayList<>();
+        for(var item : player.equipment().browse())toRemove.add(item);
+        for(var item : toRemove){
+            player.equipment().remove(item);
+        }
+        player.setHeldItem(null);
+        player.creature().addDeathEvent(() -> respawnPlayer(player, playerId));
+    }
     // Sprawdzanie haseł poza modelem.
     public void loginPlayer(PhysicalPlayer player, int playerId) {
         PlayerRecord playerRecord = registry.getPlayer(playerId);
@@ -32,6 +47,7 @@ public abstract class PlayerActivator {
             player.collectItem(item);
         }
         activePlayers.add(player);
+        player.creature().addDeathEvent(() -> respawnPlayer(player, playerId));
     }
     public void logoutPlayer(int playersId) {
         PhysicalPlayer physicalPlayer = activePlayers.remove(playersId);
