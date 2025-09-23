@@ -13,6 +13,7 @@ import io.github.terraria.utils.PlayerZone;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class CraftingActionService {
     private final ActivePlayers activePlayers;
@@ -45,8 +46,23 @@ public class CraftingActionService {
         return service.getAvailableRecipes(type, player.equipment());
     }
 
-    public boolean craft(PhysicalPlayer player, Recipe recipe, Vector2 loc) {
-        List<Recipe> availableRecipes = getAvailableRecipes(player, loc);
+    public List<Recipe> getAvailableRecipes(PhysicalPlayer player) {
+        if (!activePlayers.isActive(player.id())) {
+            return Collections.emptyList();
+        }
+        List<Recipe> avail = service.getAvailableRecipes(StationType.INVENTORY, player.equipment());
+        IntVector2 intLoc = IntVector2.toInt(player.getPosition());
+        for (int a = -5; a <= 5; ++a) {
+            for (int b = -5; b <= 5; ++b) {
+                Vector2 curLoc = new Vector2(intLoc.x() + a, intLoc.y() + b);
+                avail = Stream.concat(avail.stream(), getAvailableRecipes(player, curLoc).stream()).toList();
+            }
+        }
+        return avail;
+    }
+
+    public boolean craft(PhysicalPlayer player, Recipe recipe) {
+        List<Recipe> availableRecipes = getAvailableRecipes(player);
         if (!availableRecipes.contains(recipe)) {
             return false;
         }

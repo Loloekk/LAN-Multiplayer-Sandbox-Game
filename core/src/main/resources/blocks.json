@@ -33,5 +33,15 @@
       "name": "Workbench",
       "isPhysical": 1,
       "station": "WORKBENCH"
+    },
+    {
+      "id": 7,
+      "name": "Wood",
+      "isPhysical": 1
+    },
+    {
+      "id": 8,
+      "name": "Bark",
+      "isPhysical": 0
     }
 ]

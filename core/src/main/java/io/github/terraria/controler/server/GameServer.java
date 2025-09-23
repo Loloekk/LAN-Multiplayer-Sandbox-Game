@@ -69,8 +69,8 @@ public class GameServer {
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer);
         actionService = new PlayerActionServiceImpl(gameState);
 
-        //craftingService = new CraftingService(new RecipeRepoImpl(new ItemRegistry(itemRegistry, new StationTypeMapLoader().getFactory()); // should be this but blocks.json is not filled yet
-        craftingService = new CraftingService(new RecipeRepoImpl(new ItemRegistry(new BlockFactoryLoader("testBlocks.json").getBlockFactory()), "testRecipes.json"), new StationTypeMapLoader().getFactory());
+        craftingService = new CraftingService(new RecipeRepoImpl(itemRegistry), new StationTypeMapLoader().getFactory()); // should be this but blocks.json is not filled yet
+        //craftingService = new CraftingService(new RecipeRepoImpl(new ItemRegistry(new BlockFactoryLoader("testBlocks.json").getBlockFactory()), "testRecipes.json"), new StationTypeMapLoader().getFactory());
         craftingActionService = new CraftingActionService(gameState, craftingService);
 
         server.addListener(new Listener() {
@@ -163,10 +163,13 @@ public class GameServer {
                 }
                 if(in instanceof PacketCraftItems craft)
                 {
+                    //System.out.println(craft.playerId);
                     PhysicalPlayer player = gameState.activePlayers().get(craft.playerId);
+                    //System.out.println(player.id());
                     if (player != null) {
                         Recipe recipe = craftingService.getById(craft.craftingId);
-                        if (recipe != null && craftingActionService.craft(player, recipe, null)) { // craft should not depend on pos
+                        //System.out.println(recipe.recipeId());
+                        if (recipe != null && craftingActionService.craft(player, recipe)) {
                             System.out.println("Player " + craft.playerId + " crafting " + craft.craftingId);
                         } else {
                             System.out.println("Player " + craft.playerId + " failed to craft " + craft.craftingId);
