@@ -72,6 +72,13 @@ public class StaticPlaneContainer extends PlaneContainer {
         if(!outOfBounds(x, y))
             bodies.get(x + zeroX).set(y + zeroY, body);
     }
+    private boolean canPlaceAt(int x, int y, Block block){
+        if(outOfBounds(x, y))
+            return false;
+        int layer = block.type().layer();
+        ArrayList<Block> point = getPointAt(x, y);
+        return point.get(layer) == null;
+    }
 
     @Override
     public Block getBlockAt(int x, int y, int layer) {
@@ -97,8 +104,11 @@ public class StaticPlaneContainer extends PlaneContainer {
 
     @Override
     public boolean placeBlockAt(int x, int y, Block block) {
-        return placeBlockAt(x, y, block,
-            block.type().isPhysical() ? bodyFactory.create(block, world, new IntVector2(x, y)) : null);
+        if(canPlaceAt(x, y, block)){
+            return placeBlockAt(x, y, block,
+                block.type().isPhysical() ? bodyFactory.create(block, world, new IntVector2(x, y)) : null);
+        }
+        return false;
     }
 
     @Override
