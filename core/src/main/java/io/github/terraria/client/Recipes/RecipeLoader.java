@@ -79,6 +79,12 @@ public class RecipeLoader {
 
         Button recipeButton = new Button(buttonStyle);
 
+        playerState.getEquipment().addRecipeAvailListener((r, avail) -> {
+            if (r.recipeId() == recipe.id()) {
+                recipeButton.setColor(avail ? Color.WHITE : Color.GRAY);
+            }
+        });
+
         Table table = new Table();
         table.pad(5).defaults().pad(5);
 

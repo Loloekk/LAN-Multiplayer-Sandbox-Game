@@ -15,6 +15,7 @@ public class ClientMainPlayerState {
     public ClientMainPlayerState()
     {
         equipment = new ClientEquipment();
+        equipment.updateAvailability();
         difference = true;
     }
     public void setPlayerId(int id)
