@@ -5,6 +5,7 @@ import io.github.terraria.common.Config;
 import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.logic.creatures.CreatureBody;
+import io.github.terraria.logic.creatures.CreatureRegistry;
 import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.World;
@@ -17,14 +18,19 @@ public abstract class PlayerActivator {
     private final PlayerRegistry registry;
     protected final World world;
     private final ActivePlayers activePlayers;
-    public PlayerActivator(PlayerRegistry registry, World world, ActivePlayers activePlayers) {
+    protected final CreatureRegistry creatureRegistry;
+    public PlayerActivator(PlayerRegistry registry, World world, ActivePlayers activePlayers, CreatureRegistry creatureRegistry) {
         this.registry = registry;
         this.world = world;
         this.activePlayers = activePlayers;
+        this.creatureRegistry = creatureRegistry;
     }
 
     protected abstract Creature getNewPlayerCreature(Vector2 spawnPosition, PlayerWorldInteractor interactor);
 
+    public boolean isActive(int playerId){
+        return activePlayers.isActive(playerId);
+    }
     public void respawnPlayer(PhysicalPlayer player, int playerId){
         PlayerRecord playerRecord = registry.getPlayer(playerId);
         player.setCreature(getNewPlayerCreature(playerRecord.spawn(), player.getInteractor()));
@@ -40,7 +46,7 @@ public abstract class PlayerActivator {
     // Sprawdzanie haseł poza modelem.
     public void loginPlayer(PhysicalPlayer player, int playerId) {
         PlayerRecord playerRecord = registry.getPlayer(playerId);
-        player.setCreature(getNewPlayerCreature(playerRecord.spawn(), player.getInteractor()));
+        player.setCreature(getNewPlayerCreature(playerRecord.lastPos(), player.getInteractor()));
         player.setId(playerId);
         for(Item item : playerRecord.equipment().browse())
         {
@@ -53,6 +59,7 @@ public abstract class PlayerActivator {
         PhysicalPlayer physicalPlayer = activePlayers.remove(player.id());
         PlayerRecord playerRecord = new PlayerRecord(player.id(), player.name(), physicalPlayer.equipment(), player.spawn(), physicalPlayer.getPosition());
         physicalPlayer.creature().destroy(); // ?
+        creatureRegistry.removePlayer(physicalPlayer.creature());
         registry.updateRecord(playerRecord.id(), playerRecord);
     }
 }

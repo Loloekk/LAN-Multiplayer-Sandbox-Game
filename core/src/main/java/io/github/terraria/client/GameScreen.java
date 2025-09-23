@@ -33,55 +33,42 @@ public class GameScreen implements Screen {
     private final Drop game;
     //    private final Viewport viewport = new FitViewport(SCENE_WIDTH, SCENE_HEIGHT);
     private final ScalingViewport viewport = new ScalingViewport(Scaling.fill, SCENE_WIDTH, SCENE_HEIGHT);
-    private boolean connectionAccept = false;
 
-    public GameScreen(Drop game) {
+    private String playerName;
+
+    public GameScreen(Drop game, Client client, String playerName, int playerId) {
         this.game = game;
-
-        client = new Client();
-        Network.register(client);
-        client.start();
+        this.client = client;
+        this.playerName = playerName;
         IOHandler = new GameIOHandler(client, viewport);
+        IOHandler.setPlayerId(playerId);
+        Gdx.app.log("GameScreen", "Joined as id=" + playerId + ", name=" + playerName);
 
         client.addListener(new Listener() {
             @Override
             public void received(com.esotericsoftware.kryonet.Connection c, Object obj) {
-                if (obj instanceof PacketJoinAck ack ) {
-                    IOHandler.setPlayerId(ack.playerId);
-                    connectionAccept = true;
-                    Gdx.app.log("GameScreen", "Joined as id=" + ack.playerId + ", name=" + ack.name);
-
+                if (obj instanceof ArrayList list)
+                {
+                    for (Object objj : list) {
+                        IOHandler.actualize(objj);
+                    }
                 }
-                else if(connectionAccept) {
-                    if (obj instanceof ArrayList list)
-                    {
-                        for (Object objj : list) {
-                            IOHandler.actualize(objj);
-                        }
-                    }
-                    else
-                    {
-                        IOHandler.actualize(obj);
-                    }
+                else
+                {
+                    IOHandler.actualize(obj);
                 }
             }
         });
-        try {
-            client.connect(5000, "localhost", Network.TCP_PORT, Network.UDP_PORT);
-            PacketJoin pj = new PacketJoin();
-            pj.name = "Gamer";
-            client.sendTCP(pj);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        PacketJoin pj = new PacketJoin();
+        pj.name = playerName;
+        pj.id = playerId;
+        client.sendTCP(pj);
     }
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.CYAN);
-        if(connectionAccept) {
-            IOHandler.handleInput();
-            IOHandler.draw(delta);
-        }
+        IOHandler.handleInput();
+        IOHandler.draw(delta);
     }
 
 
@@ -89,8 +76,7 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-        if(connectionAccept)
-            IOHandler.resize(width,height);
+        IOHandler.resize(width,height);
     }
     @Override public void show()    {}
     @Override public void pause()   {}

@@ -19,7 +19,7 @@ public class Drop extends Game {
         batch = new SpriteBatch();
         buttonTexture = new Texture(Gdx.files.internal("libgdx.png"));
         image = new Texture("libgdx.png");
-        this.setScreen(new GameScreen(this));
+        this.setScreen(new MenuScreen(this));
     }
 
     @Override

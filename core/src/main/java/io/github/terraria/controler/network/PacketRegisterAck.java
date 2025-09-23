@@ -1,6 +1,5 @@
 package io.github.terraria.controler.network;
 
-public class PacketJoin {
+public class PacketRegisterAck {
     public int id;
-    public String name;
 }

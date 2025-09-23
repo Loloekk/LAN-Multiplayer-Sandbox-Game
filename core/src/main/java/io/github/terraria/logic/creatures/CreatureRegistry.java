@@ -110,6 +110,9 @@ public class CreatureRegistry {
         playerCreature.addDeathEvent(() -> players.remove(playerCreature));
         return playerCreature;
     }
+    public void removePlayer(Creature player){
+        players.remove(player);
+    }
 
     public boolean isMobAlive(int id) {
         return aliveMobs.contains(id);

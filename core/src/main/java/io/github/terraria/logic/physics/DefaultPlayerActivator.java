@@ -17,11 +17,10 @@ import io.github.terraria.utils.MathUtils;
 
 public class DefaultPlayerActivator extends PlayerActivator {
     private final PlaneContainer planeContainer;
-    private final CreatureRegistry creatureRegistry;
+
     public DefaultPlayerActivator(PlayerRegistry registry, World world, ActivePlayers activePlayers, PlaneContainer planeContainer, CreatureRegistry creatureRegistry) {
-        super(registry, world, activePlayers);
+        super(registry, world, activePlayers, creatureRegistry);
         this.planeContainer = planeContainer;
-        this.creatureRegistry = creatureRegistry;
     }
 
     private static final PlayerFixture playerFixture = new PlayerFixture(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT,

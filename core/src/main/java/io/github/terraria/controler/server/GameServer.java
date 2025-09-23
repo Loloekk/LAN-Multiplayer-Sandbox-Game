@@ -5,10 +5,8 @@ import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.common.Config;
-import io.github.terraria.controler.network.Network;
+import io.github.terraria.controler.network.*;
 import io.github.terraria.controler.network.PacketClientToServer.*;
-import io.github.terraria.controler.network.PacketJoin;
-import io.github.terraria.controler.network.PacketJoinAck;
 import io.github.terraria.controler.playerNetworkData.PlayerData;
 import io.github.terraria.loading.BlockFactoryLoader;
 import io.github.terraria.loading.StationTypeMapLoader;
@@ -90,25 +88,40 @@ public class GameServer {
         server.addListener(new Listener() {
             @Override public void connected(Connection connection) {}
             @Override public void disconnected(Connection connection) {
-                Integer id = connectionIds.get(connection).getPlayerId();
+                PlayerData playerData = connectionIds.get(connection);
+                if(playerData == null)return;
+                Integer id = playerData.getPlayerId();
                 connectionIds.remove(connection);
                 inputQueues.remove(connection);
                 playerActivator.logoutPlayer(playerRegistry.getPlayer(id));
                 System.out.println("Player " + id + " dissconected");
             }
             @Override public void received(Connection connection, Object obj) {
-                if (obj instanceof PacketJoin join) {
+                if (obj instanceof PacketRegister register){
                     PlayerRecord pla;
-//                    if(!playerRegistry.hasPlayer(0))
-                        pla = playerRegistry.registerPlayer(join.name);
-//                    else
-//                        pla = playerRegistry.getPlayer(0);
-                    //TODO sensowne logowanie na podstawie name
+                    if(playerRegistry.hasPlayer(register.name)){
+                        pla = playerRegistry.getPlayer(playerRegistry.getId(register.name));
+                    }else{
+                        pla = playerRegistry.registerPlayer(register.name);
+                    }
+                    if(playerActivator.isActive(pla.id())){
+                        System.out.println("Trying to log as active user!");
+                        connection.sendTCP(new PacketNameTaken());
+                        connection.close();
+                    }else{
+                        System.out.println("Registering player name");
+                        PacketRegisterAck ack = new PacketRegisterAck();
+                        ack.id = pla.id();
+                        connection.sendTCP(ack);
+                    }
+                } else if (obj instanceof PacketJoin join) {
+                    if(playerRegistry.getId(join.name) != join.id){
+                        //invalid join packet
+                        connection.close();
+                    }
+                    PlayerRecord pla = playerRegistry.getPlayer(join.id);
                     int id = pla.id();
-                    PacketJoinAck ack = new PacketJoinAck();
-                    ack.playerId = id; ack.name = join.name;
-                    System.out.println("Player " + id + " dodany");
-                    connection.sendTCP(ack);
+                    System.out.println("Player " + id + " dodany " + join.name);
 
                     PlayerData playerState = new PlayerData(connection,gameState,id);
                     ObservableMultisetItemHolder observableMultisetItemHolder = new ObservableMultisetItemHolder(Config.PLAYER_DEFAULT_EQUIPMENT_CAPACITY);

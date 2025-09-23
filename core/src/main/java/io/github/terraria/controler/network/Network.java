@@ -41,5 +41,8 @@ public class Network {
         kryo.register(PacketMobState.class);
         kryo.register(PacketDisappearProjectile.class);
         kryo.register(PacketProjectileState.class);
+        kryo.register(PacketRegister.class);
+        kryo.register(PacketRegisterAck.class);
+        kryo.register(PacketNameTaken.class);
     }
 }
