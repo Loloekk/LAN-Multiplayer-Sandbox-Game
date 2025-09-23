@@ -33,5 +33,112 @@
       "name": "Workbench",
       "isPhysical": 1,
       "station": "WORKBENCH"
-    }
+    },
+    {
+      "id": 7,
+      "name": "Wood",
+      "isPhysical": 1
+    },
+    {
+      "id": 8,
+      "name": "Bark",
+      "isPhysical": 0
+    },
+  {
+    "id": 9,
+    "name": "Iron Bar",
+    "isPhysical": 0
+  },
+  {
+    "id": 10,
+    "name": "Chest",
+    "isPhysical": 1
+  },
+  {
+    "id": 11,
+    "name": "Furnace",
+    "isPhysical": 1,
+    "station": "FURNACE"
+  },
+  {
+    "id": 12,
+    "name": "Coal",
+    "isPhysical": 0
+  },
+  {
+    "id": 13,
+    "name": "Torch",
+    "isPhysical": 1
+  },
+  {
+    "id": 14,
+    "name": "Wood Pickaxe",
+    "isPhysical": 0
+  },
+  {
+    "id": 15,
+    "name": "Wood Axe",
+    "isPhysical": 0
+  },
+  {
+    "id": 16,
+    "name": "Gold Bar",
+    "isPhysical": 0
+  },
+  {
+    "id": 17,
+    "name": "Gold Sword",
+    "isPhysical": 0
+  },
+  {
+    "id": 18,
+    "name": "Gold Axe",
+    "isPhysical": 0
+  },
+  {
+    "id": 19,
+    "name": "Gold Pickaxe",
+    "isPhysical": 0
+  },
+  {
+    "id": 20,
+    "name": "Steel Sword",
+    "isPhysical": 0
+  },
+  {
+    "id": 21,
+    "name": "Birch Wood",
+    "isPhysical": 0
+  },
+  {
+    "id": 22,
+    "name": "Steel Axe",
+    "isPhysical": 0
+  },
+  {
+    "id": 22,
+    "name": "Steel Axe",
+    "isPhysical": 0
+  },
+  {
+    "id": 23,
+    "name": "Steel Pickaxe",
+    "isPhysical": 0
+  },
+  {
+    "id": 24,
+    "name": "Iron Ore",
+    "isPhysical": 0
+  },
+  {
+    "id": 25,
+    "name": "Gold Ore",
+    "isPhysical": 0
+  },
+  {
+    "id": 26,
+    "name": "Door",
+    "isPhysical": 0,
+    "layer": 0
+  }
 ]

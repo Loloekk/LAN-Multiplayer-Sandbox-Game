@@ -11,12 +11,16 @@ import io.github.terraria.controler.network.PacketJoin;
 import io.github.terraria.controler.network.PacketJoinAck;
 import io.github.terraria.controler.playerNetworkData.PlayerData;
 import io.github.terraria.loading.BlockFactoryLoader;
-import io.github.terraria.logic.actions.GameState;
-import io.github.terraria.logic.actions.PlayerActionService;
-import io.github.terraria.logic.actions.PlayerActionServiceImpl;
-import io.github.terraria.logic.actions.PlayerWorldInteractor;
+import io.github.terraria.loading.StationTypeMapLoader;
+import io.github.terraria.logic.actions.*;
 import io.github.terraria.logic.building.BlockFactory;
 import io.github.terraria.logic.building.PlaneContainer;
+import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
+import io.github.terraria.logic.crafting.CraftingService;
+import io.github.terraria.logic.crafting.Recipe;
+import io.github.terraria.logic.crafting.RecipeRepo;
+import io.github.terraria.logic.crafting.RecipeRepoImpl;
+import io.github.terraria.logic.crafting.station.StationTypeMap;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
 import io.github.terraria.logic.creatures.CollisionHandler;
 import io.github.terraria.logic.creatures.Creature;
@@ -50,6 +54,9 @@ public class GameServer {
     private List<com.badlogic.gdx.physics.box2d.Body> bodiesToDestroy = new ArrayList<>();
     private Creature depressedZombie;
 
+    private CraftingService craftingService;
+    private CraftingActionService craftingActionService;
+
     public void start() throws IOException, InterruptedException {
         server = new Server();
         Network.register(server);
@@ -75,6 +82,10 @@ public class GameServer {
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry);
         actionService = new PlayerActionServiceImpl(gameState);
         depressedZombie = creatureRegistry.spawnZombieCreature(new Vector2(0f, 10f));
+
+        craftingService = new CraftingService(new RecipeRepoImpl(itemRegistry), new StationTypeMapLoader().getFactory()); // should be this but blocks.json is not filled yet
+        //craftingService = new CraftingService(new RecipeRepoImpl(new ItemRegistry(new BlockFactoryLoader("testBlocks.json").getBlockFactory()), "testRecipes.json"), new StationTypeMapLoader().getFactory());
+        craftingActionService = new CraftingActionService(gameState, craftingService);
 
         server.addListener(new Listener() {
             @Override public void connected(Connection connection) {}
@@ -166,8 +177,18 @@ public class GameServer {
                 }
                 if(in instanceof PacketCraftItems craft)
                 {
-                    System.out.println("Player " + craft.playerId + " crafting " + craft.craftingId);
-                    // TODO
+                    //System.out.println(craft.playerId);
+                    PhysicalPlayer player = gameState.activePlayers().get(craft.playerId);
+                    //System.out.println(player.id());
+                    if (player != null) {
+                        Recipe recipe = craftingService.getById(craft.craftingId);
+                        //System.out.println(recipe.recipeId());
+                        if (recipe != null && craftingActionService.craft(player, recipe)) {
+                            System.out.println("Player " + craft.playerId + " crafting " + craft.craftingId);
+                        } else {
+                            System.out.println("Player " + craft.playerId + " failed to craft " + craft.craftingId);
+                        }
+                    }
                 }
             }
         }

@@ -3,15 +3,31 @@ package io.github.terraria.client.state;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
+import io.github.terraria.client.Recipes.RecipeAvailabilityListener;
 import io.github.terraria.controler.network.PacketServerToClient.PacketCollectItems;
 import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveItems;
+import io.github.terraria.loading.BlockFactoryLoader;
+import io.github.terraria.loading.StationTypeMapLoader;
+import io.github.terraria.logic.building.BlockFactory;
+import io.github.terraria.logic.crafting.CraftingService;
+import io.github.terraria.logic.crafting.Ingredient;
+import io.github.terraria.logic.crafting.Recipe;
+import io.github.terraria.logic.crafting.RecipeRepoImpl;
+import io.github.terraria.logic.crafting.station.StationTypeMap;
 import io.github.terraria.logic.equipment.Item;
+import io.github.terraria.logic.equipment.ItemRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class ClientEquipment {
     private final Multiset<Integer> set = HashMultiset.create();
+
+    private List<RecipeAvailabilityListener> listeners = new ArrayList<>();
+
     public void insert(Integer item, int count) {
         set.add(item, count);
     }
@@ -32,5 +48,35 @@ public class ClientEquipment {
         {
             remove(rem.id, rem.count);
         }
+        updateAvailability();
+    }
+
+    public void addRecipeAvailListener(RecipeAvailabilityListener listener) {
+        listeners.add(listener);
+    }
+    public void removeRecipeAvailListener(RecipeAvailabilityListener listener) {
+        listeners.remove(listener);
+    }
+    private void notifyAvailChanged(Recipe recipe, boolean available) {
+        for (RecipeAvailabilityListener listener : listeners) {
+            listener.onChange(recipe, available);
+        }
+    }
+    public void updateAvailability() {
+        RecipeRepoImpl repo = new RecipeRepoImpl(new ItemRegistry(new BlockFactoryLoader().getBlockFactory()));
+        for (Recipe recipe : repo.getAll()) {
+            boolean avail = canCraft(recipe);
+            notifyAvailChanged(recipe, avail);
+        }
+    }
+    boolean canCraft(Recipe recipe) {
+        List<Ingredient> ingredients = recipe.ingredients();
+        for (Ingredient ing : ingredients) {
+            int id = ing.item().type().id();
+            if (set.count(id) < ing.amount()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
