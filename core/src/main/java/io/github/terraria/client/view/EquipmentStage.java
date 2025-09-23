@@ -69,10 +69,11 @@ public class EquipmentStage{
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
+        viewport.apply();
         shapeRenderer.setProjectionMatrix(inventoryStage.getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(1, 1, 1, 0.9f);
-        shapeRenderer.rect(0, 0, Gdx.graphics.getWidth()*2, Gdx.graphics.getHeight()*2);//TODo debug why *2
+        shapeRenderer.rect(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         shapeRenderer.end();
 
         Gdx.gl.glDisable(GL20.GL_BLEND);
