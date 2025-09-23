@@ -1,6 +1,11 @@
 package io.github.terraria.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
+import io.github.terraria.logic.actions.PlayerWorldInteractor;
+import io.github.terraria.logic.creatures.Creature;
+import io.github.terraria.logic.creatures.CreatureBody;
+import io.github.terraria.logic.creatures.tools.PlayerTool;
+import io.github.terraria.logic.equipment.ToolItem;
 import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.equipment.ItemHolder;
@@ -10,31 +15,35 @@ public class PhysicalPlayer {
     private int id;
     private ItemHolder equipment;
     private Item heldItem; // Tylko takie pole spełnia nasze wymagania. Trzeba uważać przy używaniu.
-    private Body body;
-    public PhysicalPlayer(PlayerRecord playerRecord, Body body) {
-        this.id = playerRecord.id();
-        this.equipment = playerRecord.equipment();
-        this.body = body;
-    }
-    public PhysicalPlayer(ItemHolder equipment) {
+    private Creature creature;
+    private final PlayerWorldInteractor interactor;
+    public PhysicalPlayer(ItemHolder equipment, PlayerWorldInteractor interactor) {
         this.equipment = equipment;
+        this.interactor = interactor;
+        this.interactor.bindPlayer(this);
+    }
+    public PlayerWorldInteractor getInteractor(){
+        return interactor;
     }
     public void setId(int id)
     {
         this.id = id;
     }
-    public void setBody(Body body)
+    public void setCreature(Creature creature)
     {
-        this.body = body;
+        this.creature = creature;
     }
     public int id() { return id; }
-    public Body body() { return body; }
+    public Creature creature() { return creature; }
     public Item heldItem() { return heldItem; }
     public ItemHolder equipment() { return equipment; }
     public void collectItem(Item item) { equipment.insert(item); }
     public boolean setHeldItem(Item item) {
         if(equipment.getCount(item) > 0 || item == null) {// Nie wiem czy okej Karol
             heldItem = item;
+            if(heldItem instanceof ToolItem toolItem){
+                creature.setTool(new PlayerTool(interactor, toolItem.getTool(interactor)));
+            }
             return true;
         }
         return false;
@@ -47,8 +56,8 @@ public class PhysicalPlayer {
     }
 
     public IntVector2 getIntegerPosition() {
-        Vector2 pos = body.getPosition();
+        Vector2 pos = creature.getPosition();
         return new IntVector2((int) pos.x, (int) pos.y);
     }
-    public Vector2 getPosition() { return body.getPosition(); }
+    public Vector2 getPosition() { return creature.getPosition(); }
 }

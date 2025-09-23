@@ -2,9 +2,7 @@ package io.github.terraria.controler.playerNetworkData;
 
 import io.github.terraria.common.BlockState;
 import io.github.terraria.common.Config;
-import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerState;
-import io.github.terraria.controler.network.PacketServerToClient.PacketDisappearPlayer;
-import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerHeldItem;
+import io.github.terraria.controler.network.PacketServerToClient.*;
 import io.github.terraria.logic.actions.GameState;
 
 import java.util.ArrayList;
@@ -29,6 +27,8 @@ public class PlayerData {
 
     public Map<Integer, Chunk> chunks = new HashMap<>();
     public Map<Integer, PacketPlayerState> players = new HashMap<>();
+    public Map<Integer, PacketMobState> mobs = new HashMap<>();
+    public Map<Integer, PacketProjectileState> projectiles = new HashMap<>();
     private List<Object> bufferTCP = new ArrayList<>();
 //    private List<Object> bufforUDP = new ArrayList<>();
     public PlayerData(Connection conn, GameState gameState, int playerId)
@@ -103,9 +103,43 @@ public class PlayerData {
                 }
             }
         }
+        List<Integer> mobsToDelete = new ArrayList<>();
+        for(var entry : mobs.entrySet()){
+            PacketMobState mob = entry.getValue();
+            if(abs(x - mob.x) > Chunk.DEFAULT_WIDTH * CHUNK_WIDTH_RADIUS ||
+                abs(y - mob.y) > Chunk.DEFAULT_HEIGHT * CHUNK_HEIGHT_RADIUS ||
+                (!gameState.creatureRegistry().isMobAlive(mob.id)))
+                //conditions for removing mob
+            {
+                PacketDisappearMob dis = new PacketDisappearMob();
+                dis.id = mob.id;
+                bufferTCP.add(dis);
+                mobsToDelete.add(mob.id);
+            }
+        }
+        List<Integer> projectilesToDelete = new ArrayList<>();
+        for(var entry : projectiles.entrySet()){
+            PacketProjectileState projectile = entry.getValue();
+            if(abs(x - projectile.x) > Chunk.DEFAULT_WIDTH * CHUNK_WIDTH_RADIUS ||
+                abs(y - projectile.y) > Chunk.DEFAULT_HEIGHT * CHUNK_HEIGHT_RADIUS ||
+                (!gameState.projectileRegistry().isProjectileActive(projectile.id)))
+                //conditions for removing projectile
+            {
+                PacketDisappearProjectile dis = new PacketDisappearProjectile();
+                dis.id = projectile.id;
+                bufferTCP.add(dis);
+                projectilesToDelete.add(projectile.id);
+            }
+        }
         for(Integer deletedPlayerId : playersToDelete)
         {
             players.remove(deletedPlayerId);
+        }
+        for(Integer deletedMobId : mobsToDelete){
+            mobs.remove(deletedMobId);
+        }
+        for(var deletedProjectileId : projectilesToDelete){
+            projectiles.remove(deletedProjectileId);
         }
         for(PhysicalPlayer player : gameState.activePlayers().getList())
         {
@@ -141,6 +175,49 @@ public class PlayerData {
                 {
                     observablePlayer.addObserver(physicalPlayerObserver);
                 }
+            }
+        }
+        for(var mob : gameState.creatureRegistry().aliveMobs())
+        {
+            PacketMobState mobState = new PacketMobState();
+            mobState.id = mob.id();
+            mobState.mobType = mob.mobType();
+            mobState.x = mob.getPosition().x;
+            mobState.y = mob.getPosition().y;
+            if(mobs.containsKey(mobState.id)){
+                var tmp = mobs.get(mobState.id);
+                if(tmp.x != mobState.x || tmp.y != mobState.y){
+                    mobs.put(mobState.id, mobState);
+                    conn.sendUDP(mobState);
+                }
+            }
+            else if(abs(x - mobState.x) <= Chunk.DEFAULT_WIDTH * CHUNK_WIDTH_RADIUS &&
+                abs(y - mobState.y) <= Chunk.DEFAULT_HEIGHT * CHUNK_HEIGHT_RADIUS)
+                //conditions when we add mob
+            {
+                mobs.put(mobState.id, mobState);
+                bufferTCP.add(mobState);
+            }
+        }
+        for(var pro : gameState.projectileRegistry().activeProjectiles()){
+            PacketProjectileState projectile = new PacketProjectileState();
+            projectile.id = pro.getId();
+            projectile.projectileType = pro.getTypeId();
+            projectile.x = pro.getPosition().x;
+            projectile.y = pro.getPosition().y;
+            if(projectiles.containsKey(projectile.id)){
+                var tmp = projectiles.get(projectile.id);
+                if(tmp.x != projectile.x || tmp.y != projectile.y){
+                    projectiles.put(projectile.id, projectile);
+                    conn.sendUDP(projectile);
+                }
+            }
+            else if(abs(x - projectile.x) <= Chunk.DEFAULT_WIDTH * CHUNK_WIDTH_RADIUS &&
+                abs(y - projectile.y) <= Chunk.DEFAULT_HEIGHT * CHUNK_HEIGHT_RADIUS)
+                //conditions when we add projectile
+            {
+                projectiles.put(projectile.id, projectile);
+                bufferTCP.add(projectile);
             }
         }
         broadcast();

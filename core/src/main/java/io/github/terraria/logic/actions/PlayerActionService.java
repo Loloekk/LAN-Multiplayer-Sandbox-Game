@@ -16,7 +16,7 @@ public abstract class PlayerActionService {
     // Koordynaty jak w PlaneContainer.
     protected static final int rangeRadius = 5;
     // Można rozważyć przerobienie sygnatur na boole.
-    public abstract void hitAt(PhysicalPlayer physicalPlayer, Vector2 loc);
+    public abstract void hitAt(PhysicalPlayer physicalPlayer, Vector2 loc, int force);
     public abstract void stopHitting(PhysicalPlayer player);
     // Będzie potrzebne też specjalne dotknięcie, ale może to osobna metoda udostępniona zostanie
     // (głównie o crafting chodzi na tę chwilę).
