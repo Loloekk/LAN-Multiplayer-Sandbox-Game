@@ -3,6 +3,7 @@ package io.github.terraria.logic.players;
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.creatures.Creature;
+import io.github.terraria.logic.creatures.CreatureRegistry;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.World;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,7 @@ class PlayerActivatorTest {
     final World world = Mockito.mock(World.class);
     final ActivePlayers activePlayers = Mockito.mock(ActivePlayers.class);
     PlayerRegistry playerRegistry = Mockito.mock(PlayerRegistry.class);
+    CreatureRegistry creatureRegistry = Mockito.mock(CreatureRegistry.class);
     PlayerActivator playerActivator;
 
     PhysicalPlayer makePlayer(PlayerRecord record, Creature body){
@@ -25,7 +27,7 @@ class PlayerActivatorTest {
     @BeforeEach
     void setUp() {
         playerActivator = Mockito.mock(PlayerActivator.class,
-            Mockito.withSettings().useConstructor(playerRegistry, world, activePlayers)
+            Mockito.withSettings().useConstructor(playerRegistry, world, activePlayers, creatureRegistry)
                 .defaultAnswer(Mockito.CALLS_REAL_METHODS));
     }
 
@@ -52,7 +54,7 @@ class PlayerActivatorTest {
 
         playerActivator.logoutPlayer(playerRecord);
         Mockito.verify(playerRegistry).updateRecord(Mockito.eq(playersId),
-            Mockito.argThat(p -> p.id() == playersId && p.spawn().equals(spawnPosition)));
+            Mockito.argThat(p -> p.id() == playersId && p.lastPos().equals(spawnPosition)));
     }
 
     @Test
