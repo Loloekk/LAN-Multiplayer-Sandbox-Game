@@ -93,14 +93,14 @@ public class GameServer {
                 Integer id = connectionIds.get(connection).getPlayerId();
                 connectionIds.remove(connection);
                 inputQueues.remove(connection);
-                playerActivator.logoutPlayer(id);
+                playerActivator.logoutPlayer(playerRegistry.getPlayer(id));
                 System.out.println("Player " + id + " dissconected");
             }
             @Override public void received(Connection connection, Object obj) {
                 if (obj instanceof PacketJoin join) {
                     PlayerRecord pla;
 //                    if(!playerRegistry.hasPlayer(0))
-                        pla = playerRegistry.registerPlayer();
+                        pla = playerRegistry.registerPlayer(join.name);
 //                    else
 //                        pla = playerRegistry.getPlayer(0);
                     //TODO sensowne logowanie na podstawie name

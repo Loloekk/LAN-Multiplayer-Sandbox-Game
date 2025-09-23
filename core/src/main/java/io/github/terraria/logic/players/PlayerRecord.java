@@ -9,9 +9,9 @@ import io.github.terraria.logic.equipment.MultisetItemHolder;
 // should be a record for easy serialization.
 // It may (and probably should as fields of active players may not be final)
 // be exported through a custom method.
-public record PlayerRecord(int id, ItemHolder equipment, Vector2 spawn) {
+public record PlayerRecord(int id, String name, ItemHolder equipment, Vector2 spawn, Vector2 lastPos) {
     private static final int defaultEquipmentCap = Config.PLAYER_DEFAULT_EQUIPMENT_CAPACITY;
-    public PlayerRecord(int id, Vector2 spawn) {
-        this(id, new MultisetItemHolder(defaultEquipmentCap), spawn);
+    public PlayerRecord(int id, String name, Vector2 spawn, Vector2 lastPos) {
+        this(id, name, new MultisetItemHolder(defaultEquipmentCap), spawn, lastPos);
     }
 }

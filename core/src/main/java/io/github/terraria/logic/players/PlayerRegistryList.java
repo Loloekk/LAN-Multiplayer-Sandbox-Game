@@ -13,8 +13,8 @@ public class PlayerRegistryList implements PlayerRegistry {
     }
 
     @Override
-    public PlayerRecord registerPlayer() {
-        PlayerRecord playerRecord = new PlayerRecord(list.size(), firstSpawn);
+    public PlayerRecord registerPlayer(String name) {
+        PlayerRecord playerRecord = new PlayerRecord(list.size(), name, firstSpawn, firstSpawn);
         list.add(playerRecord);
         return playerRecord;
     }
@@ -39,13 +39,17 @@ public class PlayerRegistryList implements PlayerRegistry {
     @Override
     public boolean hasPlayer(String name)
     {
+        for(var pla : list){
+            if(pla.name().equals(name))return true;
+        }
         return false;
-        //TODO
     }
     @Override
     public int getId(String name)
     {
-        return 0;
-        //TODO
+        for(var pla : list){
+            if(pla.name().equals(name))return pla.id();
+        }
+        return -1;
     }
 }

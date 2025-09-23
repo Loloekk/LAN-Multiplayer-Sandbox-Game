@@ -32,7 +32,7 @@ class RectangleNeighbourhoodTest {
         rightTop = new Vector2(9f, 9f);
         rectangle = new RectangleNeighbourhood(leftBottom, rightTop);
         body = Mockito.mock(Creature.class);
-        player = makePlayer(new PlayerRecord(0, new Vector2()), body);
+        player = makePlayer(new PlayerRecord(0, "", new Vector2(), new Vector2()), body);
     }
 
     @Test

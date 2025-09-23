@@ -49,9 +49,9 @@ public abstract class PlayerActivator {
         activePlayers.add(player);
         player.creature().addDeathEvent(() -> respawnPlayer(player, playerId));
     }
-    public void logoutPlayer(int playersId) {
-        PhysicalPlayer physicalPlayer = activePlayers.remove(playersId);
-        PlayerRecord playerRecord = new PlayerRecord(physicalPlayer.id(), physicalPlayer.equipment(), physicalPlayer.getPosition());
+    public void logoutPlayer(PlayerRecord player) {
+        PhysicalPlayer physicalPlayer = activePlayers.remove(player.id());
+        PlayerRecord playerRecord = new PlayerRecord(player.id(), player.name(), physicalPlayer.equipment(), player.spawn(), physicalPlayer.getPosition());
         physicalPlayer.creature().destroy(); // ?
         registry.updateRecord(playerRecord.id(), playerRecord);
     }
