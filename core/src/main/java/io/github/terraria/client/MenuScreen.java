@@ -1,8 +1,6 @@
 package io.github.terraria.client;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Net;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,6 +15,7 @@ import com.esotericsoftware.kryonet.Listener;
 import io.github.terraria.controler.network.*;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 public class MenuScreen implements Screen {
     private final Drop game;
@@ -54,16 +53,22 @@ public class MenuScreen implements Screen {
         Network.register(client);
         client.start();
 
-        client.addListener(connectListener);
-        try{
-            client.connect(5000, "localhost", Network.TCP_PORT, Network.UDP_PORT);
-            PacketRegister pj = new PacketRegister();
-            pj.name = nameField.getText();
-            client.sendTCP(pj);
-        }catch (IOException e){
-            message.setText("Connection timed out");
-            joinButton.setDisabled(false);
-            e.printStackTrace();
+        InetAddress serverAddress = client.discoverHost(Network.UDP_PORT, 5000);
+        if (serverAddress != null) {
+            System.out.println("Discovered server at: " + serverAddress.getHostAddress());
+            client.addListener(connectListener);
+            try{
+                client.connect(5000, serverAddress, Network.TCP_PORT, Network.UDP_PORT);
+                PacketRegister pj = new PacketRegister();
+                pj.name = nameField.getText();
+                client.sendTCP(pj);
+            }catch (IOException e){
+                message.setText("Connection timed out");
+                joinButton.setDisabled(false);
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No server found on the LAN.");
         }
     }
 
