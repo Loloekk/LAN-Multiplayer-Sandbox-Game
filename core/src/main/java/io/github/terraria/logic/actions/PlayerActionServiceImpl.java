@@ -31,7 +31,7 @@ public class PlayerActionServiceImpl extends PlayerActionService {
     private final Map<Integer, MiningAction> currentMining = new HashMap<>();
 
     @Override
-    public void hitAt(PhysicalPlayer player, Vector2 loc, int force) {
+    public boolean hitAt(PhysicalPlayer player, Vector2 loc, int force) {
         IntVector2 intLoc = IntVector2.toInt(loc);
         Block block = grid.getFrontBlockAt(intLoc);
         if (block != null) {
@@ -49,8 +49,12 @@ public class PlayerActionServiceImpl extends PlayerActionService {
                     player.setHeldItem(block1);
                 currentMining.remove(player.id());
             }
+            return true;
         }
-        else currentMining.remove(player.id());
+        else {
+            currentMining.remove(player.id());
+            return false;
+        }
     }
 
     @Override

@@ -33,8 +33,9 @@ public class PlayerWorldInteractor implements WorldInteractor {
         this.player = player;
     }
     @Override
-    public void damageBlockAt(Vector2 loc, int force) {
-        if(player != null)actionService.hitAt(player, loc, force);
+    public boolean damageBlockAt(Vector2 loc, int force) {
+        if(player != null)return actionService.hitAt(player, loc, force);
+        return false;
     }
 
     @Override
@@ -64,6 +65,7 @@ public class PlayerWorldInteractor implements WorldInteractor {
 
     @Override
     public void fireProjectile(ProjectileType type, Vector2 pos, Vector2 dir) {
+        System.out.println("Firing projectile ");
         Projectile projectile = type.fire(projectileRegistry.getProjectileId(), world, bodiesToDestroy, pos, dir);
         projectileRegistry.addProjectile(projectile);
     }

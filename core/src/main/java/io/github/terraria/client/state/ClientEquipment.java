@@ -63,7 +63,7 @@ public class ClientEquipment {
         }
     }
     public void updateAvailability() {
-        RecipeRepoImpl repo = new RecipeRepoImpl(new ItemRegistry(new BlockFactoryLoader().getBlockFactory()));
+        RecipeRepoImpl repo = new RecipeRepoImpl(new ItemRegistry());
         for (Recipe recipe : repo.getAll()) {
             boolean avail = canCraft(recipe);
             notifyAvailChanged(recipe, avail);

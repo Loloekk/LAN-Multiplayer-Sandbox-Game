@@ -22,6 +22,7 @@ public class RangeWeapon implements Tool {
 
     @Override
     public boolean specialAction(Creature user, Vector2 actionPosition) {
+        System.out.println("Special action!");
         Vector2 dir = actionPosition.sub(user.getPosition()).nor();
         Vector2 pos = user.getPosition().add(dir.cpy().scl(separation));
         interactor.fireProjectile(projectileType, pos, dir);

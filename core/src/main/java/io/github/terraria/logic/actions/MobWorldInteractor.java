@@ -25,8 +25,8 @@ public class MobWorldInteractor implements WorldInteractor {
         this.projectileRegistry = projectileRegistry;
     }
     @Override
-    public void damageBlockAt(Vector2 loc, int force) {
-
+    public boolean damageBlockAt(Vector2 loc, int force) {
+        return false;
     }
 
     @Override

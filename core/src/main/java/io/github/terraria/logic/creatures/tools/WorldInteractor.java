@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface WorldInteractor {
 
-    void damageBlockAt(Vector2 loc, int force);
+    boolean damageBlockAt(Vector2 loc, int force);
     void placeHeldBlockAt(Vector2 loc);
     Creature getCreatureAt(Vector2 loc, Creature ignored);
     List<Creature> getCreaturesAt(Vector2 loc, Creature ignored);

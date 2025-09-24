@@ -67,7 +67,7 @@ public class GameServer {
         world = new Box2DWorld(boxWorld);
         BlockFactory blockFactory = new BlockFactoryLoader().getBlockFactory();
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder().blockFactory(blockFactory);
-        itemRegistry = new ItemRegistry(blockFactory);
+        itemRegistry = new ItemRegistry();
         builder.world(world);
         builder.width(100).height(40).zeroX(50).zeroY(20);
         PlaneContainer planeContainer = builder.build();

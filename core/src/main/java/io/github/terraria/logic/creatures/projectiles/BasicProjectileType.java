@@ -20,6 +20,7 @@ public class BasicProjectileType implements ProjectileType{
     }
     @Override
     public Projectile fire(int id, World world, List<Body> bodiesToDestroy, Vector2 position, Vector2 direction) {
+        System.out.println("Projectile fire " + id + " " + position + " " + direction);
         ProjectileBody body = new ProjectileBody(world, bodiesToDestroy, position, direction.scl(speed), radius, gravity);
         return new BasicProjectile(id, 1, body, damage);
     }

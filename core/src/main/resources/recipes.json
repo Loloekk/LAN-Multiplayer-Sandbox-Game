@@ -194,5 +194,45 @@
       "name": "Door", "amount": 1
     },
     "station": "WORKBENCH"
+  },
+  {
+    "id": 19,
+    "ingredients": [
+      {"name": "Wood", "amount": 3}
+    ],
+    "output": {
+      "name": "Wooden sword", "amount": 1
+    },
+    "station": "INVENTORY"
+  },
+  {
+    "id": 20,
+    "ingredients": [
+      {"name": "Dirt", "amount": 1}
+    ],
+    "output": {
+      "name": "Pickaxe", "amount": 1
+    },
+    "station": "INVENTORY"
+  },
+  {
+    "id": 21,
+    "ingredients": [
+      {"name": "Dirt", "amount": 3}
+    ],
+    "output": {
+      "name": "Bow", "amount": 1
+    },
+    "station": "INVENTORY"
+  },
+  {
+    "id": 22,
+    "ingredients": [
+      {"name": "Dirt", "amount": 3}
+    ],
+    "output": {
+      "name": "Wand", "amount": 1
+    },
+    "station": "INVENTORY"
   }
 ]

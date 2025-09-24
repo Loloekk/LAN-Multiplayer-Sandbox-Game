@@ -38,5 +38,25 @@
     "id": 27,
     "name": "Leaf",
     "texture": "leaf.png"
+  },
+  {
+    "id": 1001,
+    "name": "Wooden sword",
+    "texture": "sword.png"
+  },
+  {
+    "id": 2001,
+    "name": "Pickaxe",
+    "texture": "pickaxe.png"
+  },
+  {
+    "id": 3001,
+    "name": "Bow",
+    "texture": "bow.png"
+  },
+  {
+    "id": 3002,
+    "name": "Wand",
+    "texture": "wand.png"
   }
 ]

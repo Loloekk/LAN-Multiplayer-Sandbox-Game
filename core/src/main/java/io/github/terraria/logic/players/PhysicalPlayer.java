@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.logic.creatures.CreatureBody;
+import io.github.terraria.logic.creatures.tools.NoTool;
 import io.github.terraria.logic.creatures.tools.PlayerTool;
 import io.github.terraria.logic.equipment.ToolItem;
 import io.github.terraria.utils.IntVector2;
@@ -39,13 +40,17 @@ public class PhysicalPlayer {
     public ItemHolder equipment() { return equipment; }
     public void collectItem(Item item) { equipment.insert(item); }
     public boolean setHeldItem(Item item) {
+        if(item != null)System.out.println("SetHeldItem to " + item.type().id());
         if(equipment.getCount(item) > 0 || item == null) {// Nie wiem czy okej Karol
             heldItem = item;
             if(heldItem instanceof ToolItem toolItem){
                 creature.setTool(new PlayerTool(interactor, toolItem.getTool(interactor)));
+            }else{
+                creature.setTool(new PlayerTool(interactor, new NoTool()));
             }
             return true;
         }
+        System.out.println("This is weird " + equipment.getCount(item));
         return false;
     }
     public void discardInstanceOfHeldItem() {

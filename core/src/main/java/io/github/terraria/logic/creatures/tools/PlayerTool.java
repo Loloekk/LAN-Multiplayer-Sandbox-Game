@@ -35,7 +35,7 @@ public class PlayerTool implements Tool {
 
     @Override
     public boolean specialAction(Creature user, Vector2 actionPosition) {
-        if(!heldTool.normalAction(user, actionPosition)){
+        if(!heldTool.specialAction(user, actionPosition)){
             interactor.placeHeldBlockAt(actionPosition);
         }
         return true;
