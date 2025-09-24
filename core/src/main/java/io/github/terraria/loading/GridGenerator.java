@@ -46,6 +46,7 @@ public class GridGenerator {
             defaultGrid.add(column);
         }
         TreeGenerator.apply(defaultGrid, blockFactory, height - 1);
+        OreGenerator.apply(defaultGrid, blockFactory, height - 1);
         return defaultGrid;
     }
 }

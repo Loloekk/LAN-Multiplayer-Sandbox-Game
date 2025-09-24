@@ -12,13 +12,13 @@ public class TreeGenerator {
         int width = grid.size();
         int height = grid.get(0).size();
         for (int x = 1; x < width - 1; x += 3 + RANDOM.nextInt(10)) {
-            int y = findGroundLevel(grid, x, zeroY, blockFactory);
+            int y = findGroundLevel(grid, x, zeroY);
             if (y >= 0) {
                 placeTree(grid, x, y + 1, blockFactory, height);
             }
         }
     }
-    private static int findGroundLevel(ArrayList<ArrayList<ArrayList<Block>>> grid, int x, int zeroY, BlockFactory blockFactory) {
+    private static int findGroundLevel(ArrayList<ArrayList<ArrayList<Block>>> grid, int x, int zeroY) {
         for (int y = zeroY; y >= 0; --y) {
             Block block = grid.get(x).get(y).get(0);
             if (block != null && block.type().name().equals("Dirt")) {
@@ -29,8 +29,9 @@ public class TreeGenerator {
     }
     private static void placeTree(ArrayList<ArrayList<ArrayList<Block>>> grid, int x, int y, BlockFactory blockFactory, int height) {
         int trunkHeight = 3 + RANDOM.nextInt(4);
+        String tree = RANDOM.nextInt(2) == 0 ? "Wood" : "Birch Wood";
         for (int i = y; i < y + trunkHeight && i < height; ++i) {
-            grid.get(x).get(i).set(1, blockFactory.create("Wood"));
+            grid.get(x).get(i).set(1, blockFactory.create(tree));
         }
         int top = y + trunkHeight - 1;
         for (int dx = -2; dx <= 2; ++dx) {
