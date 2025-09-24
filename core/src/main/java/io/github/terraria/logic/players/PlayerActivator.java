@@ -9,6 +9,7 @@ import io.github.terraria.logic.creatures.CreatureRegistry;
 import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.World;
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public abstract class PlayerActivator {
     protected final World world;
     private final ActivePlayers activePlayers;
     protected final CreatureRegistry creatureRegistry;
+    private final List<PhysicalPlayer> respawnQueue = new ArrayList<>();
     public PlayerActivator(PlayerRegistry registry, World world, ActivePlayers activePlayers, CreatureRegistry creatureRegistry) {
         this.registry = registry;
         this.world = world;
@@ -31,7 +33,8 @@ public abstract class PlayerActivator {
     public boolean isActive(int playerId){
         return activePlayers.isActive(playerId);
     }
-    public void respawnPlayer(PhysicalPlayer player, int playerId){
+    private void respawnPlayer(PhysicalPlayer player){
+        int playerId = player.id();
         PlayerRecord playerRecord = registry.getPlayer(playerId);
         player.setCreature(getNewPlayerCreature(playerRecord.spawn(), player.getInteractor()));
         player.setId(playerId);
@@ -41,7 +44,7 @@ public abstract class PlayerActivator {
             player.equipment().remove(item);
         }
         player.setHeldItem(null);
-        player.creature().addDeathEvent(() -> respawnPlayer(player, playerId));
+        player.creature().addDeathEvent(() -> respawnQueue.add(player));
     }
     // Sprawdzanie haseł poza modelem.
     public void loginPlayer(PhysicalPlayer player, int playerId) {
@@ -53,7 +56,7 @@ public abstract class PlayerActivator {
             player.collectItem(item);
         }
         activePlayers.add(player);
-        player.creature().addDeathEvent(() -> respawnPlayer(player, playerId));
+        player.creature().addDeathEvent(() -> respawnQueue.add(player));
     }
     public void logoutPlayer(PlayerRecord player) {
         PhysicalPlayer physicalPlayer = activePlayers.remove(player.id());
@@ -61,5 +64,9 @@ public abstract class PlayerActivator {
         physicalPlayer.creature().destroy(); // ?
         creatureRegistry.removePlayer(physicalPlayer.creature());
         registry.updateRecord(playerRecord.id(), playerRecord);
+    }
+    public void respawnPlayers(){
+        for(var player : respawnQueue)respawnPlayer(player);
+        respawnQueue.clear();
     }
 }

@@ -141,11 +141,12 @@ public class GameServer {
             handleInput();
             botRegistry.update();
             handlePhysics();
-            broadcastScenes();
             for(var body : bodiesToDestroy){
                 boxWorld.destroyBody(body);
             }
             bodiesToDestroy.clear();
+            playerActivator.respawnPlayers();
+            broadcastScenes();
         }, 0, 20, TimeUnit.MILLISECONDS);
 
         new CountDownLatch(1).await();
