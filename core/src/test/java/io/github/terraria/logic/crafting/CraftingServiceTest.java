@@ -29,8 +29,7 @@ class CraftingServiceTest {
 
     @BeforeAll
     static void setup() {
-        BlockFactory blockFactory = new BlockFactoryLoader("testBlocks.json").getBlockFactory();
-        itemRegistry = new ItemRegistry(blockFactory);
+        itemRegistry = new ItemRegistry();
         recipeRepo = new RecipeRepoImpl(itemRegistry, "testRecipes.json");
     }
 

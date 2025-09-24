@@ -18,8 +18,7 @@ class RecipeRepoImplTest {
 
     @BeforeAll
     static void setup() {
-        BlockFactory blockFactory = new BlockFactoryLoader("testBlocks.json").getBlockFactory();
-        itemRegistry = new ItemRegistry(blockFactory);
+        itemRegistry = new ItemRegistry();
     }
 
     @BeforeEach
