@@ -28,5 +28,15 @@
     "id": 6,
     "name": "Workbench",
     "texture": "workbench.png"
+  },
+  {
+    "id": 7,
+    "name": "Wood",
+    "texture": "wood.png"
+  },
+  {
+    "id": 27,
+    "name": "Leaf",
+    "texture": "leaf.png"
   }
 ]

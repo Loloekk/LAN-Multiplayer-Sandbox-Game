@@ -37,10 +37,7 @@ public class GridGenerator {
                 ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
                 {
                     Block frontBlock;
-                    if(j%2 == 0)
-                        frontBlock = (j <= groundLevel) ? blockFactory.create("Dirt") : null;
-                    else
-                        frontBlock = (j <= groundLevel) ? blockFactory.create("Workbench") : null;
+                    frontBlock = (j <= groundLevel) ? blockFactory.create("Dirt") : null;
                     point.add(frontBlock);
                 }
                 point.add(null);
@@ -48,6 +45,7 @@ public class GridGenerator {
             }
             defaultGrid.add(column);
         }
+        TreeGenerator.apply(defaultGrid, blockFactory, height - 1);
         return defaultGrid;
     }
 }

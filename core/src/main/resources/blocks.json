@@ -140,5 +140,10 @@
     "name": "Door",
     "isPhysical": 0,
     "layer": 0
+  },
+  {
+    "id": 27,
+    "name": "Leaf",
+    "isPhysical": 0
   }
 ]
