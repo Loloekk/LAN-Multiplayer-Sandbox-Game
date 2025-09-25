@@ -2,6 +2,7 @@ package io.github.terraria.client.view.textures.textureQuad;
 
 import com.badlogic.gdx.graphics.Texture;
 import io.github.terraria.client.view.textures.TextureFixture;
+import io.github.terraria.common.Config;
 import io.github.terraria.loading.RecordLoader;
 
 import java.util.HashMap;
@@ -11,8 +12,9 @@ import java.util.stream.Collectors;
 public class TextureQuadBankLoader {
     TextureQuad missing;
 
-    public TextureQuadBankLoader(String missing)
+    public TextureQuadBankLoader()
     {
+        String missing = Config.MISSING_TEXTURE_PATH;
         this.missing = new TextureQuad(new Texture(missing),1,1,0.5f,0.5f,true);
     }
 

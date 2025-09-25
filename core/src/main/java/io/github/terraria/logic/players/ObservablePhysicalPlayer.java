@@ -25,7 +25,6 @@ public class ObservablePhysicalPlayer extends PhysicalPlayer{
         for (PhysicalPlayerObserver obs: observers) {
             obs.onSetHeldItem(super.id(), item);
         }
-        System.out.println("wysylam ze wzial item");
     }
     @Override
     public boolean setHeldItem(Item item) {

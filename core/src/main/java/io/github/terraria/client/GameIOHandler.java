@@ -59,9 +59,9 @@ public class GameIOHandler {
         stationBank = new StationBank("blocks.json");
 
 
-        TextureBankLoader loader = new TextureBankLoader("missing.png");
+        TextureBankLoader loader = new TextureBankLoader();
         itemsTexture = loader.getTextureBank("textureItems.json");
-        TextureQuadBankLoader loaderQuad = new TextureQuadBankLoader("missing.png");
+        TextureQuadBankLoader loaderQuad = new TextureQuadBankLoader();
         blocksTexture = loaderQuad.getTextureQuadBank("textureBlocks.json");
         playerTexture = loaderQuad.getTextureQuadBank("texturePlayer.json");
         mobsTexture = loaderQuad.getTextureQuadBank("textureMobs.json");
