@@ -33,7 +33,7 @@ public class Box2DWorld implements World {
         FixtureDef fixture = new FixtureDef();
         fixture.density = 0.0f;
         fixture.filter.categoryBits = BodyCategory.BLOCK;
-        fixture.filter.categoryBits = (BodyCategory.MOB | BodyCategory.PROJECTILE | BodyCategory.PLAYER);
+        fixture.filter.maskBits = (BodyCategory.MOB | BodyCategory.PROJECTILE | BodyCategory.PLAYER);
         fixture.shape = shape;
 
         // Bottom wall
