@@ -21,6 +21,11 @@ public class MeleeWeapon implements Tool {
         Creature target = interactor.getCreatureAt(actionPosition, user);
         if(target != null){
             target.takeDamage(damage);
+            if(user.getPosition().x < target.getPosition().x){
+                target.applyImpulse(new Vector2(5, 5));
+            }else{
+                target.applyImpulse(new Vector2(-5, 5));
+            }
             return true;
         }
         return false;
