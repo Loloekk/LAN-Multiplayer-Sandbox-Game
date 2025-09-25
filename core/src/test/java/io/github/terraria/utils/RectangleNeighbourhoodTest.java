@@ -3,7 +3,6 @@ package io.github.terraria.utils;
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.players.PhysicalPlayer;
 import io.github.terraria.logic.players.PlayerRecord;
 import io.github.terraria.logic.players.PlayerActivator;
