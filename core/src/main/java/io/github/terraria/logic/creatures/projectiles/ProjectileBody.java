@@ -34,7 +34,6 @@ public class ProjectileBody {
         fixture = body.createFixture(fixtureDef);
 
         body.setGravityScale(gravity);
-        body.setBullet(true);
         circle.dispose();
     }
 
