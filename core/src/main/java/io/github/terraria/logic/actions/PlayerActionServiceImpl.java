@@ -8,8 +8,6 @@ import io.github.terraria.logic.players.PhysicalPlayer;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: Test.
-// But refactor first.
 public class PlayerActionServiceImpl extends PlayerActionService {
     public PlayerActionServiceImpl(GameState gameState) {
         super(gameState);

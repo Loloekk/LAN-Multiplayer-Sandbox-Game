@@ -3,14 +3,12 @@ package io.github.terraria.logic.players;
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.logic.creatures.tools.NoTool;
 import io.github.terraria.logic.creatures.tools.PlayerTool;
 import io.github.terraria.logic.equipment.ToolItem;
 import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.equipment.ItemHolder;
-import io.github.terraria.logic.physics.Body;
 
 public class PhysicalPlayer {
     private int id;
