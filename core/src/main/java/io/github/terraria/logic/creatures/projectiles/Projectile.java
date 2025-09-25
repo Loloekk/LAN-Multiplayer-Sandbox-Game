@@ -22,6 +22,7 @@ public abstract class Projectile {
     public abstract void hitCreature(Creature creature);
     public abstract void hitObstacle();
     protected void destroy(){
+        if(!alive)return;
         alive = false;
         body.destroy();
         for(var event : afterDestruction){

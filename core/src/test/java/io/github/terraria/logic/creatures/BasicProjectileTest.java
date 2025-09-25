@@ -47,4 +47,11 @@ public class BasicProjectileTest {
         eventOrder.verify(event2).trigger();
         eventOrder.verify(event3).trigger();
     }
+
+    @Test
+    void destroyOnceTest(){
+        projectile.hitObstacle();
+        projectile.hitObstacle();
+        Mockito.verify(body, Mockito.times(1)).destroy();
+    }
 }
