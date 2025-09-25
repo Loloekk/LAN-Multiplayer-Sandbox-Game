@@ -68,10 +68,8 @@ public class GameServer {
         StaticPlaneContainerBuilder builder = new StaticPlaneContainerBuilder().blockFactory(blockFactory);
         itemRegistry = new ItemRegistry();
         builder.world(world);
-        builder.width(100).height(40).zeroX(50).zeroY(20);
+        builder.zeroX(50).zeroY(20);
         PlaneContainer planeContainer = builder.build();
-//        System.out.println("Plane container " + planeContainer);
-//        System.out.println("Gamestate grid = " + gameState.grid());
         projectileRegistry = new ProjectileRegistry();
         creatureRegistry = new CreatureRegistry(boxWorld, bodiesToDestroy, projectileRegistry);
         mobWorldInteractor = new MobWorldInteractor(boxWorld, bodiesToDestroy, creatureRegistry, projectileRegistry);

@@ -69,7 +69,7 @@ public class Config {
         MAX_PLAYER_VELOCITY_X = Float.parseFloat(properties.getProperty("maxPlayerVelocityX", "5f"));
         PLAYER_JUMP_STRENGTH = Float.parseFloat(properties.getProperty("playerJumpStrength", "20f"));
 
-        STATIC_PLANE_CONTAINER_DEFAULT_WIDTH = Integer.parseInt(properties.getProperty("staticPlaneContainer.defaultWidth", "100"));
+        STATIC_PLANE_CONTAINER_DEFAULT_WIDTH = Integer.parseInt(properties.getProperty("staticPlaneContainer.defaultWidth", "500"));
         STATIC_PLANE_CONTAINER_DEFAULT_HEIGHT = Integer.parseInt(properties.getProperty("staticPlaneContainer.defaultHeight", "100"));
         STATIC_PLANE_CONTAINER_LAYERS = Integer.parseInt(properties.getProperty("staticPlaneContainer.layers", "2"));
 
@@ -81,7 +81,7 @@ public class Config {
         PLAYER_DENSITY = Float.parseFloat(properties.getProperty("player.density", "2f"));
         PLAYER_FRICTION = Float.parseFloat(properties.getProperty("player.friction", "1.3f"));
         PLAYER_RESTITUTION = Float.parseFloat(properties.getProperty("player.restitution", "0.1f"));
-        PLAYER_DEFAULT_EQUIPMENT_CAPACITY = Integer.parseInt(properties.getProperty("player.defaultEquipmentCapacity", "50"));
+        PLAYER_DEFAULT_EQUIPMENT_CAPACITY = Integer.parseInt(properties.getProperty("player.defaultEquipmentCapacity", "200"));
 
         PLAYER_ACTIVATOR_MAX_PLAYERS_RADIUS = Float.parseFloat(properties.getProperty("playerActivator.maxPlayersRadius", "0.99f"));
 

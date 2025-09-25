@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BodyFactoryLoader {
-    final Map<Integer, BlockFixture> map; // TODO: ?
+    final Map<Integer, BlockFixture> map;
     private final BodyFactory bodyFactory;
     public BodyFactoryLoader(String jsonName) {
         record BlockFixtureId(int id, boolean isPhysical, BlockFixture fixture) {
