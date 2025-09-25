@@ -32,7 +32,7 @@ class StaticPlaneContainerBuilderTest {
     void boundaryTest() {
         int width = 10, height = 20, zeroX = 5, zeroY = 5;
         getBuilder().width(width).height(height).zeroX(zeroX).zeroY(zeroY).build();
-        world.createBoundaries(
+        Mockito.verify(world).createBoundaries(
             width, height, -zeroX, -zeroY
         );
     }
