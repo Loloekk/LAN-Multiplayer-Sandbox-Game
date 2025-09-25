@@ -17,9 +17,8 @@ public class BasicHealth implements Health{
 
     @Override
     public void takeDamage(Damage damage) {
-        System.out.println("Taking damage " + damage.getAmount());
+        if(health <= 0)return;
         health -= damage.getAmount();
-        System.out.println("Current health " + health);
         if (health <= 0)creature.kill();
     }
 }
