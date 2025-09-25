@@ -81,37 +81,23 @@ public class CreatureRegistry {
     public List<Creature> aliveMobs(){
         return new ArrayList<>(mobs);
     }
-
-    public Creature spawnZombieCreature(Vector2 position){
-        BasicCreatureBody zombieBody = new BasicCreatureBody(world, bodiesToDestroy, position, 0.8f, 1.6f, 2.0f, 1.3f, 0.1f);
-        WalkingMovement movement = new WalkingMovement(Config.MAX_PLAYER_VELOCITY_X, Config.MOVE_IMPULSE_X, Config.PLAYER_JUMP_STRENGTH);
-        NoTool tool = new NoTool();
-        BasicHealth health = new BasicHealth(100.0f);
-        Creature zombieCreature = new Creature(nextId++,1, zombieBody, movement, tool, health);
-        mobs.add(zombieCreature);
-        aliveMobs.add(zombieCreature.id());
-        zombieCreature.addDeathEvent(() -> {
-            mobs.remove(zombieCreature);
-            aliveMobs.remove(zombieCreature.id());
-        });
-        return zombieCreature;
+    public void registerPlayer(Creature player){
+        players.add(player);
+        player.addDeathEvent(() -> players.remove(player));
     }
-
-    public Creature spawnPlayerCreature(Vector2 position, PlayerWorldInteractor interactor){
-        BasicCreatureBody playerBody = new BasicCreatureBody(world, bodiesToDestroy, position, Config.PLAYER_WIDTH,
-            Config.PLAYER_HEIGHT, Config.PLAYER_DENSITY, Config.PLAYER_FRICTION, Config.PLAYER_RESTITUTION);
-        WalkingMovement movement = new WalkingMovement(Config.MAX_PLAYER_VELOCITY_X, Config.MOVE_IMPULSE_X, Config.PLAYER_JUMP_STRENGTH);
-//        ProjectileType type = new BasicProjectileType(new Damage(10.0f), 5.0f, 0.1f, 0.0f);
-//        RangeWeapon weapon = new RangeWeapon(interactor, type, 1.0f);
-        PlayerTool tool = new PlayerTool(interactor, new NoTool());
-        BasicHealth health = new BasicHealth(100.0f);
-        Creature playerCreature = new Creature(nextId++,0, playerBody, movement, tool, health);
-        players.add(playerCreature);
-        playerCreature.addDeathEvent(() -> players.remove(playerCreature));
-        return playerCreature;
+    public void registerMob(Creature mob){
+        mobs.add(mob);
+        aliveMobs.add(mob.id());
+        mob.addDeathEvent(() ->{
+            mobs.remove(mob);
+            aliveMobs.remove(mob.id());
+        });
     }
     public void removePlayer(Creature player){
         players.remove(player);
+    }
+    public void removeMob(Creature mob){
+        mobs.remove(mob);
     }
 
     public boolean isMobAlive(int id) {

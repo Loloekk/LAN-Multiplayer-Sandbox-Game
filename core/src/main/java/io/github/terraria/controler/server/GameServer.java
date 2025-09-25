@@ -20,10 +20,7 @@ import io.github.terraria.logic.crafting.RecipeRepo;
 import io.github.terraria.logic.crafting.RecipeRepoImpl;
 import io.github.terraria.logic.crafting.station.StationTypeMap;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
-import io.github.terraria.logic.creatures.CollisionHandler;
-import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.CreatureRegistry;
-import io.github.terraria.logic.creatures.WorldEvent;
+import io.github.terraria.logic.creatures.*;
 import io.github.terraria.logic.creatures.bots.BotRegistry;
 import io.github.terraria.logic.creatures.projectiles.ProjectileRegistry;
 import io.github.terraria.logic.equipment.ItemRegistry;
@@ -45,6 +42,8 @@ public class GameServer {
     private PlayerRegistry playerRegistry;
     private PlayerActivator playerActivator;
     private PlayerActionService actionService;
+    private MobWorldInteractor mobWorldInteractor;
+    private CreatureFactory creatureFactory;
     private CreatureRegistry creatureRegistry;
     private ProjectileRegistry projectileRegistry;
     private BotRegistry botRegistry = new BotRegistry();
@@ -75,11 +74,14 @@ public class GameServer {
 //        System.out.println("Gamestate grid = " + gameState.grid());
         projectileRegistry = new ProjectileRegistry();
         creatureRegistry = new CreatureRegistry(boxWorld, bodiesToDestroy, projectileRegistry);
+        mobWorldInteractor = new MobWorldInteractor(boxWorld, bodiesToDestroy, creatureRegistry, projectileRegistry);
+        creatureFactory = new CreatureFactory(boxWorld, bodiesToDestroy, mobWorldInteractor);
         playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(0f, 0f));
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()), creatureRegistry, projectileRegistry);
-        playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry);
+        playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry, creatureFactory);
         actionService = new PlayerActionServiceImpl(gameState);
-        depressedZombie = creatureRegistry.spawnZombieCreature(new Vector2(0f, 10f));
+        depressedZombie = creatureFactory.createZombieCreature(new Vector2(0f, 10f));
+        creatureRegistry.registerMob(depressedZombie);
 
         craftingService = new CraftingService(new RecipeRepoImpl(itemRegistry), new StationTypeMapLoader().getFactory()); // should be this but blocks.json is not filled yet
         //craftingService = new CraftingService(new RecipeRepoImpl(new ItemRegistry(new BlockFactoryLoader("testBlocks.json").getBlockFactory()), "testRecipes.json"), new StationTypeMapLoader().getFactory());
