@@ -8,6 +8,7 @@ public class BotRegistry {
     private HashSet<Bot> bots = new HashSet<>();
     public void addBot(Bot bot){
         bots.add(bot);
+        bot.getCreature().addDeathEvent(() -> removeBot(bot));
     }
     public void removeBot(Bot bot){
         bots.remove(bot);

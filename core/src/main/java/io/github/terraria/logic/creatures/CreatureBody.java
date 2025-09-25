@@ -11,5 +11,7 @@ public interface CreatureBody {
     void setGravity(float scale);
     void destroy();
     boolean isGrounded();
+    boolean obstacleLeft();
+    boolean obstacleRight();
     boolean liesOn(Vector2 desired);
 }

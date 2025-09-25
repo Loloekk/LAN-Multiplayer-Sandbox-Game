@@ -44,6 +44,16 @@ public class EmptyBody implements CreatureBody{
     }
 
     @Override
+    public boolean obstacleLeft() {
+        return false;
+    }
+
+    @Override
+    public boolean obstacleRight() {
+        return false;
+    }
+
+    @Override
     public boolean liesOn(Vector2 desired) {
         return false;
     }

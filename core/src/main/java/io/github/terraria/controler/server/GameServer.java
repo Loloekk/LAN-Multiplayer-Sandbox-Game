@@ -38,6 +38,7 @@ public class GameServer {
     private final Map<Connection, PlayerData> connectionIds = new ConcurrentHashMap<>();
 
     private GameState gameState;
+    private com.badlogic.gdx.physics.box2d.World boxWorld;
     private World world;
     private PlayerRegistry playerRegistry;
     private PlayerActivator playerActivator;
@@ -46,13 +47,13 @@ public class GameServer {
     private CreatureFactory creatureFactory;
     private CreatureRegistry creatureRegistry;
     private ProjectileRegistry projectileRegistry;
+    private MobSpawner mobSpawner;
     private BotRegistry botRegistry = new BotRegistry();
     private ItemRegistry itemRegistry;
     private List<com.badlogic.gdx.physics.box2d.Body> bodiesToDestroy = new ArrayList<>();
-    private Creature depressedZombie;
-
     private CraftingService craftingService;
     private CraftingActionService craftingActionService;
+    private boolean spawnMobs = false;
 
     public void start() throws IOException, InterruptedException {
         server = new Server();
@@ -61,7 +62,7 @@ public class GameServer {
         server.start();
 
         // initialize model
-        com.badlogic.gdx.physics.box2d.World boxWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -10), true);
+        boxWorld = new com.badlogic.gdx.physics.box2d.World(new Vector2(0, -10), true);
         boxWorld.setContactListener(new CollisionHandler());
         world = new Box2DWorld(boxWorld);
         BlockFactory blockFactory = new BlockFactoryLoader().getBlockFactory();
@@ -74,12 +75,11 @@ public class GameServer {
         creatureRegistry = new CreatureRegistry(boxWorld, bodiesToDestroy, projectileRegistry);
         mobWorldInteractor = new MobWorldInteractor(boxWorld, bodiesToDestroy, creatureRegistry, projectileRegistry);
         creatureFactory = new CreatureFactory(boxWorld, bodiesToDestroy, mobWorldInteractor);
+        mobSpawner = new MobSpawner(planeContainer, creatureFactory, creatureRegistry, botRegistry,-50, 49, -20, 18, 20, 1);
         playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(0f, 0f));
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()), creatureRegistry, projectileRegistry);
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry, creatureFactory);
         actionService = new PlayerActionServiceImpl(gameState);
-        depressedZombie = creatureFactory.createZombieCreature(new Vector2(0f, 10f));
-        creatureRegistry.registerMob(depressedZombie);
 
         craftingService = new CraftingService(new RecipeRepoImpl(itemRegistry), new StationTypeMapLoader().getFactory()); // should be this but blocks.json is not filled yet
         //craftingService = new CraftingService(new RecipeRepoImpl(new ItemRegistry(new BlockFactoryLoader("testBlocks.json").getBlockFactory()), "testRecipes.json"), new StationTypeMapLoader().getFactory());
@@ -137,20 +137,23 @@ public class GameServer {
         });
 
         ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
-        exec.scheduleAtFixedRate(() -> {
-            handleInput();
-            botRegistry.update();
-            handlePhysics();
-            for(var body : bodiesToDestroy){
-                boxWorld.destroyBody(body);
-            }
-            bodiesToDestroy.clear();
-            playerActivator.respawnPlayers();
-            broadcastScenes();
-        }, 0, 20, TimeUnit.MILLISECONDS);
+        exec.scheduleAtFixedRate(this::gameLoop, 0, 20, TimeUnit.MILLISECONDS);
 
         new CountDownLatch(1).await();
             System.out.println("Server started on TCP=" + Network.TCP_PORT + ", UDP=" + Network.UDP_PORT);
+    }
+
+    private void gameLoop(){
+        handleInput();
+        botRegistry.update();
+        handlePhysics();
+        for(var body : bodiesToDestroy){
+            boxWorld.destroyBody(body);
+        }
+        bodiesToDestroy.clear();
+        playerActivator.respawnPlayers();
+        if(spawnMobs)mobSpawner.trySpawningMob();
+        broadcastScenes();
     }
 
     int licz = 0;
@@ -178,6 +181,7 @@ public class GameServer {
                 }
                 if(in instanceof PacketPlayerTouch touch)
                 {
+                    spawnMobs = true;
                     Vector2 pos = new Vector2(touch.x,touch.y);
                     playerCreature.specialAction(pos);
 //                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);

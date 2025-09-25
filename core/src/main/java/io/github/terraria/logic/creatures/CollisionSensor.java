@@ -9,7 +9,6 @@ import io.github.terraria.logic.physics.BodyCategory;
 
 public class CollisionSensor {
     private final Body parent;
-    //TODO: make it not public or something
     public int contacts = 0;
 
     public CollisionSensor(Body body, float width, float height, Vector2 offset){

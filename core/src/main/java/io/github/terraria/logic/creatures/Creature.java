@@ -36,6 +36,9 @@ public class Creature {
     }
     public void jump(){movement.jump();}
     public boolean liesOn(Vector2 desired){return body.liesOn(desired);}
+    public boolean isGrounded(){return body.isGrounded();}
+    public boolean obstacleLeft(){return body.obstacleLeft();}
+    public boolean obstacleRight(){return body.obstacleRight();}
 
     public void normalAction(Vector2 actionPosition){
         tool.normalAction(this, actionPosition);

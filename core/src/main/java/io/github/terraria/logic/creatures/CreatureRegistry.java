@@ -77,6 +77,18 @@ public class CreatureRegistry {
         }
         return res;
     }
+    public Creature getClosestPlayer(Vector2 loc){
+        Creature res = null;
+        float minDist = Float.POSITIVE_INFINITY;
+        for(var player : players){
+            float dist = player.getPosition().dst2(loc);
+            if(dist < minDist){
+                dist = minDist;
+                res = player;
+            }
+        }
+        return res;
+    }
 
     public List<Creature> aliveMobs(){
         return new ArrayList<>(mobs);
@@ -103,4 +115,5 @@ public class CreatureRegistry {
     public boolean isMobAlive(int id) {
         return aliveMobs.contains(id);
     }
+    public int mobCnt(){ return aliveMobs.size();}
 }

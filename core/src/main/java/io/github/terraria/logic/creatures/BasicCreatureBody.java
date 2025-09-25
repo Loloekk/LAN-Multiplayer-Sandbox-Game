@@ -10,6 +10,8 @@ public class BasicCreatureBody implements CreatureBody{
     private final com.badlogic.gdx.physics.box2d.Body body;
     private final com.badlogic.gdx.physics.box2d.Fixture bodyFixture;
     private final CollisionSensor feet;
+    private final CollisionSensor sensorLeft;
+    private final CollisionSensor sensorRight;
     private final List<Body> bodiesToDestroy;
 
     public BasicCreatureBody(World world, List<Body> bodiesToDestroy, Vector2 position, float width, float height, float density, float friction, float restitution){
@@ -34,6 +36,8 @@ public class BasicCreatureBody implements CreatureBody{
         body.setBullet(true);
         body.setFixedRotation(true);
         feet = new CollisionSensor(body, 0.9f*width, 0.1f, new Vector2(0, - (height / 2 + 0.05f)));
+        sensorLeft = new CollisionSensor(body, 1.0f, 0.9f * height, new Vector2(-0.5f - 0.5f * width, 0));
+        sensorRight = new CollisionSensor(body, 1.0f, 0.9f * height, new Vector2(0.5f + 0.5f * width, 0));
         rectangle.dispose();
     }
 
@@ -75,6 +79,11 @@ public class BasicCreatureBody implements CreatureBody{
     public boolean isGrounded() {
         return feet.isActive();
     }
+
+    @Override
+    public boolean obstacleLeft(){return sensorLeft.isActive();}
+    @Override
+    public boolean obstacleRight(){return sensorRight.isActive();}
 
     @Override
     public boolean liesOn(Vector2 desired){
