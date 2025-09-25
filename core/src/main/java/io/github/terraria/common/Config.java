@@ -86,7 +86,7 @@ public class Config {
         PLAYER_ACTIVATOR_MAX_PLAYERS_RADIUS = Float.parseFloat(properties.getProperty("playerActivator.maxPlayersRadius", "0.99f"));
 
         PHYSICS_TIME_STEP = Float.parseFloat(properties.getProperty("physics.timeStep", "0.02f"));
-        PHYSICS_VELOCITY_ITERATIONS = Integer.parseInt(properties.getProperty("physics.velocityIterations", "8"));
-        PHYSICS_POSITION_ITERATIONS = Integer.parseInt(properties.getProperty("physics.positionIterations", "4"));
+        PHYSICS_VELOCITY_ITERATIONS = Integer.parseInt(properties.getProperty("physics.velocityIterations", "6"));
+        PHYSICS_POSITION_ITERATIONS = Integer.parseInt(properties.getProperty("physics.positionIterations", "2"));
     }
 }

@@ -72,7 +72,6 @@ public class Box2DBody implements Body {
             body.createFixture(fixtureDef);
         }
         corner.dispose();
-        body.setBullet(true); // Costly.
         body.setFixedRotation(true);
     }
 
