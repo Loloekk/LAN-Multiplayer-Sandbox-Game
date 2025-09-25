@@ -63,7 +63,7 @@
   {
     "id": 12,
     "name": "Coal",
-    "isPhysical": 0
+    "isPhysical": 1
   },
   {
     "id": 13,
@@ -128,12 +128,12 @@
   {
     "id": 24,
     "name": "Iron Ore",
-    "isPhysical": 0
+    "isPhysical": 1
   },
   {
     "id": 25,
     "name": "Gold Ore",
-    "isPhysical": 0
+    "isPhysical": 1
   },
   {
     "id": 26,
