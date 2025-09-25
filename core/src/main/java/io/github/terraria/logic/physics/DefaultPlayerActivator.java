@@ -3,10 +3,7 @@ package io.github.terraria.logic.physics;
 import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.common.Config;
 import io.github.terraria.logic.actions.PlayerWorldInteractor;
-import io.github.terraria.logic.creatures.BasicCreatureBody;
-import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.CreatureBody;
-import io.github.terraria.logic.creatures.CreatureRegistry;
+import io.github.terraria.logic.creatures.*;
 import io.github.terraria.logic.players.PhysicalPlayer;
 import io.github.terraria.utils.IntVector2;
 import io.github.terraria.logic.building.PlaneContainer;
@@ -17,10 +14,12 @@ import io.github.terraria.utils.MathUtils;
 
 public class DefaultPlayerActivator extends PlayerActivator {
     private final PlaneContainer planeContainer;
+    private final CreatureFactory creatureFactory;
 
-    public DefaultPlayerActivator(PlayerRegistry registry, World world, ActivePlayers activePlayers, PlaneContainer planeContainer, CreatureRegistry creatureRegistry) {
+    public DefaultPlayerActivator(PlayerRegistry registry, World world, ActivePlayers activePlayers, PlaneContainer planeContainer, CreatureRegistry creatureRegistry, CreatureFactory creatureFactory) {
         super(registry, world, activePlayers, creatureRegistry);
         this.planeContainer = planeContainer;
+        this.creatureFactory = creatureFactory;
     }
 
     private static final PlayerFixture playerFixture = new PlayerFixture(Config.PLAYER_WIDTH, Config.PLAYER_HEIGHT,
@@ -45,6 +44,8 @@ public class DefaultPlayerActivator extends PlayerActivator {
     @Override
     protected Creature getNewPlayerCreature(Vector2 spawnPosition, PlayerWorldInteractor interactor) {
         spawnPosition = shiftToFree(IntVector2.toInt(spawnPosition), 2);
-        return creatureRegistry.spawnPlayerCreature(spawnPosition, interactor);
+        Creature playerCreature = creatureFactory.createPlayerCreature(spawnPosition, interactor);
+        creatureRegistry.registerPlayer(playerCreature);
+        return playerCreature;
     }
 }
