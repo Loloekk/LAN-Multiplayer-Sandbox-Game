@@ -8,10 +8,15 @@ public class WalkingMeleeBot implements Bot{
     private final Creature creature;
     private final CreatureRegistry creatureRegistry;
     private float sightRange;
-    public WalkingMeleeBot(Creature creature, CreatureRegistry creatureRegistry, float sightRange){
+    private float attackRange;
+    private int currentAttackTick = 0;
+    private int attackDelay;
+    public WalkingMeleeBot(Creature creature, CreatureRegistry creatureRegistry, float sightRange, float attackRange, int attackDelay){
         this.creature = creature;
         this.creatureRegistry = creatureRegistry;
         this.sightRange = sightRange;
+        this.attackRange = attackRange;
+        this.attackDelay = attackDelay;
     }
     void goLeft(){
         if(creature.obstacleLeft())creature.jump();
@@ -31,10 +36,18 @@ public class WalkingMeleeBot implements Bot{
     public void think() {
         Creature nearPlayer = creatureRegistry.getClosestPlayer(creature.getPosition());
         if(nearPlayer != null && nearPlayer.getPosition().epsilonEquals(creature.getPosition(), sightRange)){
-            if(nearPlayer.getPosition().x < creature.getPosition().x){
-                goLeft();
+            if(nearPlayer.getPosition().epsilonEquals(creature.getPosition(), attackRange)){
+                currentAttackTick++;
+                if(currentAttackTick == attackDelay){
+                    currentAttackTick = 0;
+                    creature.normalAction(nearPlayer.getPosition());
+                }
             }else{
-                goRight();
+                if(nearPlayer.getPosition().x < creature.getPosition().x){
+                    goLeft();
+                }else{
+                    goRight();
+                }
             }
         }
     }

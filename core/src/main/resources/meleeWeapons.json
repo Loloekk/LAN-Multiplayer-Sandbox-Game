@@ -2,7 +2,7 @@
   {
     "id": 1001,
     "name": "Wooden sword",
-    "damage": 100.0,
+    "damage": 40.0,
     "range": 5
   }
 ]

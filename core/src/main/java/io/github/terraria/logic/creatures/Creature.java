@@ -55,6 +55,9 @@ public class Creature {
     public Vector2 getPosition(){
         return body.getPosition().cpy();
     }
+    public void applyImpulse(Vector2 impulse){
+        body.applyLinearImpulse(impulse);
+    }
     public void addDeathEvent(WorldEvent event){
         onDeath.add(event);
     }

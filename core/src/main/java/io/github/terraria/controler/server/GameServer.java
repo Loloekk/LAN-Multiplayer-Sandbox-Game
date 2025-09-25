@@ -53,7 +53,6 @@ public class GameServer {
     private List<com.badlogic.gdx.physics.box2d.Body> bodiesToDestroy = new ArrayList<>();
     private CraftingService craftingService;
     private CraftingActionService craftingActionService;
-    private boolean spawnMobs = false;
 
     public void start() throws IOException, InterruptedException {
         server = new Server();
@@ -75,7 +74,9 @@ public class GameServer {
         creatureRegistry = new CreatureRegistry(boxWorld, bodiesToDestroy, projectileRegistry);
         mobWorldInteractor = new MobWorldInteractor(boxWorld, bodiesToDestroy, creatureRegistry, projectileRegistry);
         creatureFactory = new CreatureFactory(boxWorld, bodiesToDestroy, mobWorldInteractor);
-        mobSpawner = new MobSpawner(planeContainer, creatureFactory, creatureRegistry, botRegistry,-50, 49, -20, 18, 20, 1);
+        int width = Config.STATIC_PLANE_CONTAINER_DEFAULT_WIDTH;
+        int height = Config.STATIC_PLANE_CONTAINER_DEFAULT_HEIGHT;
+        mobSpawner = new MobSpawner(planeContainer, creatureFactory, creatureRegistry, botRegistry,-(width/2), (width/2), -20, height - 20, 10, 10);
         playerRegistry = new PlayerRegistryList(new ArrayList<>(), new Vector2(0f, 0f));
         gameState = new GameState(planeContainer, new ActivePlayersMap(new HashMap<>()), creatureRegistry, projectileRegistry);
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry, creatureFactory);
@@ -152,7 +153,7 @@ public class GameServer {
         }
         bodiesToDestroy.clear();
         playerActivator.respawnPlayers();
-        if(spawnMobs)mobSpawner.trySpawningMob();
+        mobSpawner.trySpawningMob();
         broadcastScenes();
     }
 
@@ -181,7 +182,6 @@ public class GameServer {
                 }
                 if(in instanceof PacketPlayerTouch touch)
                 {
-                    spawnMobs = true;
                     Vector2 pos = new Vector2(touch.x,touch.y);
                     playerCreature.specialAction(pos);
 //                    System.out.println("Player " + playerId + " hit at " + pos.x + " "+ pos.y);
