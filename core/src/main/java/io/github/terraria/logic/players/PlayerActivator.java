@@ -4,12 +4,9 @@ import com.badlogic.gdx.math.Vector2;
 import io.github.terraria.common.Config;
 import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.CreatureBody;
 import io.github.terraria.logic.creatures.CreatureRegistry;
 import io.github.terraria.logic.equipment.Item;
-import io.github.terraria.logic.physics.Body;
 import io.github.terraria.logic.physics.World;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +35,7 @@ public abstract class PlayerActivator {
         PlayerRecord playerRecord = registry.getPlayer(playerId);
         player.setCreature(getNewPlayerCreature(playerRecord.spawn(), player.getInteractor()));
         player.setId(playerId);
-        List<Item> toRemove = new ArrayList<>();
-        for(var item : player.equipment().browse())toRemove.add(item);
+        List<Item> toRemove = new ArrayList<>(player.equipment().browse());
         for(var item : toRemove){
             player.equipment().remove(item);
         }

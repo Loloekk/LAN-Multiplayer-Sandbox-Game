@@ -36,8 +36,8 @@ class PlayerActionServiceImplTest {
     void hitAt() {
         for(int i=0; i<3; i++)
             service.hitAt(player, loc.toFloat(), 35);
-        Mockito.verify(player, Mockito.times(1)).collectItem(block);
-        Mockito.verify(container, Mockito.times(1))
+        Mockito.verify(player).collectItem(block);
+        Mockito.verify(container)
             .removeFrontBlockAt(loc.x(), loc.y());
     }
 }

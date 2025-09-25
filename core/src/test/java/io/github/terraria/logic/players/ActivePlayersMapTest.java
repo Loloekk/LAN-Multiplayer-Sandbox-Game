@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableList;
 import io.github.terraria.logic.actions.PlayerWorldInteractor;
 import io.github.terraria.logic.creatures.Creature;
 import io.github.terraria.utils.RectangleNeighbourhood;
-import io.github.terraria.logic.physics.Body;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
