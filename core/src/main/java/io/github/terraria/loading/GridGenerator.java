@@ -26,24 +26,27 @@ public class GridGenerator {
         return defaultGrid;
     }
 
-    public static ArrayList<ArrayList<ArrayList<Block>>> getRandomGrid(int width, int height, int zeroY, BlockFactory blockFactory) {
+    public static ArrayList<ArrayList<ArrayList<Block>>> getRandomGrid(int width, int height, int zeroX, int zeroY, BlockFactory blockFactory) {
         ArrayList<ArrayList<ArrayList<Block>>> defaultGrid = new ArrayList<>(width);
+        for (int i = 0; i < width; i++) { defaultGrid.add(null); }
         final int maxDeviation = 3;
-        int groundLevel = zeroY;
-        for(int i = 0; i < width; i++) {
-            ArrayList<ArrayList<Block>> column = new ArrayList<>(height);
-            groundLevel += MathUtils.binomialRandom(maxDeviation);
-            for (int j = 0; j < height; j++) {
-                ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
-                {
-                    Block frontBlock;
-                    frontBlock = (j <= groundLevel) ? blockFactory.create("Dirt") : null;
-                    point.add(frontBlock);
+        for (int direction : new int[]{-1, 1}) {
+            int groundLevel = zeroY;
+            for(int i = zeroX; i >= 0 && i < width; i += direction) {
+                ArrayList<ArrayList<Block>> column = new ArrayList<>(height);
+                groundLevel += MathUtils.binomialRandom(maxDeviation);
+                for (int j = 0; j < height; j++) {
+                    ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
+                    {
+                        Block frontBlock;
+                        frontBlock = (j <= groundLevel) ? blockFactory.create("Dirt") : null;
+                        point.add(frontBlock);
+                    }
+                    point.add(null);
+                    column.add(point);
                 }
-                point.add(null);
-                column.add(point);
+                defaultGrid.set(i, column);
             }
-            defaultGrid.add(column);
         }
         TreeGenerator.apply(defaultGrid, blockFactory, height - 1);
         OreGenerator.apply(defaultGrid, blockFactory, height - 1);
