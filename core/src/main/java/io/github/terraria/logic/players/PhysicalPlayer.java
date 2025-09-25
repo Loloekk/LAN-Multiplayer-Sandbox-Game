@@ -37,6 +37,11 @@ public class PhysicalPlayer {
     public int id() { return id; }
     public Creature creature() { return creature; }
     public Item heldItem() { return heldItem; }
+    public void actualizeHeldItem() {
+        if (equipment.getCount(heldItem) == 0) {
+            setHeldItem(null);
+        }
+    }
     public ItemHolder equipment() { return equipment; }
     public void collectItem(Item item) { equipment.insert(item); }
     public boolean setHeldItem(Item item) {

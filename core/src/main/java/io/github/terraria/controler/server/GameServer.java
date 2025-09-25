@@ -202,6 +202,7 @@ public class GameServer {
                         } else {
                             System.out.println("Player " + craft.playerId + " failed to craft " + craft.craftingId);
                         }
+                        player.actualizeHeldItem();
                     }
                 }
             }
