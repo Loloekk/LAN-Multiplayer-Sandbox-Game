@@ -30,7 +30,7 @@ class CraftingServiceTest {
     @BeforeAll
     static void setup() {
         itemRegistry = new ItemRegistry();
-        recipeRepo = new RecipeRepoImpl(itemRegistry, "testRecipes.json");
+        recipeRepo = RecipeRepoFactory.fromJson(itemRegistry, "testRecipes.json");
     }
 
     @BeforeEach

@@ -23,7 +23,7 @@ class RecipeRepoImplTest {
 
     @BeforeEach
     void setupTest() {
-        recipeRepo = new RecipeRepoImpl(itemRegistry, "testRecipes.json");
+        recipeRepo = RecipeRepoFactory.fromJson(itemRegistry, "testRecipes.json");
     }
 
     @Test

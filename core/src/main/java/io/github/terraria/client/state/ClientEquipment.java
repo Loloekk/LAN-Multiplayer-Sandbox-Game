@@ -9,10 +9,7 @@ import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveIte
 import io.github.terraria.loading.BlockFactoryLoader;
 import io.github.terraria.loading.StationTypeMapLoader;
 import io.github.terraria.logic.building.BlockFactory;
-import io.github.terraria.logic.crafting.CraftingService;
-import io.github.terraria.logic.crafting.Ingredient;
-import io.github.terraria.logic.crafting.Recipe;
-import io.github.terraria.logic.crafting.RecipeRepoImpl;
+import io.github.terraria.logic.crafting.*;
 import io.github.terraria.logic.crafting.station.StationTypeMap;
 import io.github.terraria.logic.equipment.Item;
 import io.github.terraria.logic.equipment.ItemRegistry;
@@ -63,7 +60,7 @@ public class ClientEquipment {
         }
     }
     public void updateAvailability() {
-        RecipeRepoImpl repo = new RecipeRepoImpl(new ItemRegistry());
+        RecipeRepoImpl repo = RecipeRepoFactory.fromJson(new ItemRegistry());
         for (Recipe recipe : repo.getAll()) {
             boolean avail = canCraft(recipe);
             notifyAvailChanged(recipe, avail);

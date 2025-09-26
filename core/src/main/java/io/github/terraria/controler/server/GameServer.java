@@ -14,10 +14,7 @@ import io.github.terraria.logic.actions.*;
 import io.github.terraria.logic.building.BlockFactory;
 import io.github.terraria.logic.building.PlaneContainer;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
-import io.github.terraria.logic.crafting.CraftingService;
-import io.github.terraria.logic.crafting.Recipe;
-import io.github.terraria.logic.crafting.RecipeRepo;
-import io.github.terraria.logic.crafting.RecipeRepoImpl;
+import io.github.terraria.logic.crafting.*;
 import io.github.terraria.logic.crafting.station.StationTypeMap;
 import io.github.terraria.logic.building.StaticPlaneContainerBuilder;
 import io.github.terraria.logic.creatures.*;
@@ -82,7 +79,7 @@ public class GameServer {
         playerActivator = new DefaultPlayerActivator(playerRegistry, world, gameState.activePlayers(), planeContainer, creatureRegistry, creatureFactory);
         actionService = new PlayerActionServiceImpl(gameState);
 
-        craftingService = new CraftingService(new RecipeRepoImpl(itemRegistry), new StationTypeMapLoader().getFactory()); // should be this but blocks.json is not filled yet
+        craftingService = new CraftingService(RecipeRepoFactory.fromJson(itemRegistry), new StationTypeMapLoader().getFactory()); // should be this but blocks.json is not filled yet
         //craftingService = new CraftingService(new RecipeRepoImpl(new ItemRegistry(new BlockFactoryLoader("testBlocks.json").getBlockFactory()), "testRecipes.json"), new StationTypeMapLoader().getFactory());
         craftingActionService = new CraftingActionService(gameState, craftingService);
 
