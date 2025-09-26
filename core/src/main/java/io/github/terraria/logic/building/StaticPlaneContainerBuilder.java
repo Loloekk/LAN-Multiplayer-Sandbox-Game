@@ -69,7 +69,7 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
         if(blockFactory == null)
             blockFactory = new BlockFactoryLoader().getBlockFactory();
         if(savedGrid == null)
-            savedGrid = GridGenerator.getRandomGrid(width, height, zeroY, blockFactory);
+            savedGrid = GridGenerator.getRandomGrid(width, height, zeroX, zeroY, blockFactory);
 
         return new StaticPlaneContainer(width, height, zeroX, zeroY, world, savedGrid, bodyFactory);
     }

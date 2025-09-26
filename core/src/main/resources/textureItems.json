@@ -35,6 +35,26 @@
     "texture": "wood.png"
   },
   {
+    "id": 12,
+    "name": "Coal",
+    "texture": "coal.png"
+  },
+  {
+    "id": 21,
+    "name": "Birch Wood",
+    "texture": "birch.png"
+  },
+  {
+    "id": 24,
+    "name": "Iron Ore",
+    "texture": "iron.png"
+  },
+  {
+    "id": 25,
+    "name": "Gold Ore",
+    "texture": "gold.png"
+  },
+  {
     "id": 27,
     "name": "Leaf",
     "texture": "leaf.png"
