@@ -40,6 +40,11 @@
     "texture": "coal.png"
   },
   {
+    "id": 21,
+    "name": "Birch Wood",
+    "texture": "birch.png"
+  },
+  {
     "id": 24,
     "name": "Iron Ore",
     "texture": "iron.png"
