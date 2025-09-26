@@ -2,7 +2,7 @@
   {
     "id": 1,
     "ingredients": [
-      {"name": "Wood", "amount": 10}
+      {"name": "Wood", "amount": 4}
     ],
     "output": {
       "name": "Workbench", "amount": 1
