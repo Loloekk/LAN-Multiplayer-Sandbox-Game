@@ -17,14 +17,14 @@ public class TreeGeneratorDecorator extends GridGeneratorDecorator {
     public ArrayList<ArrayList<ArrayList<Block>>> generate(int width, int height, int zeroX, int zeroY, BlockFactory blockFactory) {
         var grid = generator.generate(width, height, zeroX, zeroY, blockFactory);
         for (int x = 1; x < width - 1; x += 3 + RANDOM.nextInt(10)) {
-            int y = findGroundLevel(grid, x, height);
+            int y = findDirtLevel(grid, x, height);
             if (y >= 0) {
                 placeTree(grid, x, y + 1, blockFactory, height);
             }
         }
         return grid;
     }
-    private int findGroundLevel(ArrayList<ArrayList<ArrayList<Block>>> grid, int x, int height) {
+    private int findDirtLevel(ArrayList<ArrayList<ArrayList<Block>>> grid, int x, int height) {
         for (int y = height - 1; y >= 0; --y) {
             Block block = grid.get(x).get(y).get(0);
             if (block != null && block.type().name().equals("Dirt")) {
