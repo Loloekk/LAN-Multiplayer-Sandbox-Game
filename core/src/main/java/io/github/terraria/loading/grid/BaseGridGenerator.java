@@ -1,5 +1,4 @@
-/*
-package io.github.terraria.loading;
+package io.github.terraria.loading.grid;
 
 import io.github.terraria.logic.building.Block;
 import io.github.terraria.logic.building.BlockFactory;
@@ -8,26 +7,9 @@ import io.github.terraria.utils.MathUtils;
 
 import java.util.ArrayList;
 
-public class GridGenerator {
-    public static ArrayList<ArrayList<ArrayList<Block>>> getDefaultGrid(int width, int height, int zeroY, BlockFactory blockFactory) {
-        ArrayList<ArrayList<ArrayList<Block>>> defaultGrid = new ArrayList<>(width);
-        for(int i = 0; i < width; i++) {
-            ArrayList<ArrayList<Block>> column = new ArrayList<>(height);
-            for (int j = 0; j < height; j++) {
-                ArrayList<Block> point = new ArrayList<>(StaticPlaneContainer.layers);
-                {
-                    Block frontBlock = (j < zeroY || i == 0 || i == width-1 || (i == 6 && j < zeroY + 3) || (i == 7 && j == zeroY + 3) || (i == 8 && j == zeroY + 3)) ? blockFactory.create("Dirt") : null;
-                    point.add(frontBlock);
-                }
-                point.add(null);
-                column.add(point);
-            }
-            defaultGrid.add(column);
-        }
-        return defaultGrid;
-    }
-
-    public static ArrayList<ArrayList<ArrayList<Block>>> getRandomGrid(int width, int height, int zeroX, int zeroY, BlockFactory blockFactory) {
+public class BaseGridGenerator implements GridGenerator {
+    @Override
+    public ArrayList<ArrayList<ArrayList<Block>>> generate(int width, int height, int zeroX, int zeroY, BlockFactory blockFactory) {
         ArrayList<ArrayList<ArrayList<Block>>> defaultGrid = new ArrayList<>(width);
         for (int i = 0; i < width; i++) { defaultGrid.add(null); }
         final int maxDeviation = 3;
@@ -49,9 +31,6 @@ public class GridGenerator {
                 defaultGrid.set(i, column);
             }
         }
-        TreeGenerator.apply(defaultGrid, blockFactory, height - 1);
-        OreGenerator.apply(defaultGrid, blockFactory, height - 1);
         return defaultGrid;
     }
 }
-*/

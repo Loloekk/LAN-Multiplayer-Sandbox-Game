@@ -1,4 +1,4 @@
-package io.github.terraria.loading;
+package io.github.terraria.loading.grid;
 
 import io.github.terraria.logic.building.Block;
 import io.github.terraria.logic.building.BlockFactory;
@@ -6,20 +6,26 @@ import io.github.terraria.logic.building.BlockFactory;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class TreeGenerator {
-    private static final Random RANDOM = new Random();
-    public static void apply(ArrayList<ArrayList<ArrayList<Block>>> grid, BlockFactory blockFactory, int zeroY) {
-        int width = grid.size();
-        int height = grid.get(0).size();
+public class TreeGeneratorDecorator extends GridGeneratorDecorator {
+    Random RANDOM = new Random();
+
+    public TreeGeneratorDecorator(GridGenerator generator) {
+        super(generator);
+    }
+
+    @Override
+    public ArrayList<ArrayList<ArrayList<Block>>> generate(int width, int height, int zeroX, int zeroY, BlockFactory blockFactory) {
+        var grid = generator.generate(width, height, zeroX, zeroY, blockFactory);
         for (int x = 1; x < width - 1; x += 3 + RANDOM.nextInt(10)) {
-            int y = findGroundLevel(grid, x, zeroY);
+            int y = findGroundLevel(grid, x, height);
             if (y >= 0) {
                 placeTree(grid, x, y + 1, blockFactory, height);
             }
         }
+        return grid;
     }
-    private static int findGroundLevel(ArrayList<ArrayList<ArrayList<Block>>> grid, int x, int zeroY) {
-        for (int y = zeroY; y >= 0; --y) {
+    private int findGroundLevel(ArrayList<ArrayList<ArrayList<Block>>> grid, int x, int height) {
+        for (int y = height - 1; y >= 0; --y) {
             Block block = grid.get(x).get(y).get(0);
             if (block != null && block.type().name().equals("Dirt")) {
                 return y;
@@ -27,7 +33,7 @@ public class TreeGenerator {
         }
         return -1;
     }
-    private static void placeTree(ArrayList<ArrayList<ArrayList<Block>>> grid, int x, int y, BlockFactory blockFactory, int height) {
+    private void placeTree(ArrayList<ArrayList<ArrayList<Block>>> grid, int x, int y, BlockFactory blockFactory, int height) {
         int trunkHeight = 3 + RANDOM.nextInt(4);
         String tree = RANDOM.nextInt(2) == 0 ? "Wood" : "Birch Wood";
         for (int i = y; i < y + trunkHeight && i < height; ++i) {

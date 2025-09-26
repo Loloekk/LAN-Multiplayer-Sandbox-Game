@@ -2,7 +2,10 @@ package io.github.terraria.logic.building;
 
 import io.github.terraria.loading.BlockFactoryLoader;
 import io.github.terraria.loading.BodyFactoryLoader;
-import io.github.terraria.loading.GridGenerator;
+import io.github.terraria.loading.grid.GridGenerator;
+import io.github.terraria.loading.grid.BaseGridGenerator;
+import io.github.terraria.loading.grid.OreGeneratorDecorator;
+import io.github.terraria.loading.grid.TreeGeneratorDecorator;
 import io.github.terraria.logic.physics.*;
 
 import java.util.ArrayList;
@@ -68,8 +71,10 @@ public class StaticPlaneContainerBuilder extends PlaneContainerBuilder {
             bodyFactory = new BodyFactoryLoader().getBodyFactory();
         if(blockFactory == null)
             blockFactory = new BlockFactoryLoader().getBlockFactory();
-        if(savedGrid == null)
-            savedGrid = GridGenerator.getRandomGrid(width, height, zeroX, zeroY, blockFactory);
+        if(savedGrid == null) {
+            GridGenerator gridGenerator = new OreGeneratorDecorator(new TreeGeneratorDecorator(new BaseGridGenerator()));
+            savedGrid = gridGenerator.generate(width, height, zeroX, zeroY, blockFactory);
+        }
 
         return new StaticPlaneContainer(width, height, zeroX, zeroY, world, savedGrid, bodyFactory);
     }
