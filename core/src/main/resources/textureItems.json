@@ -35,6 +35,11 @@
     "texture": "wood.png"
   },
   {
+    "id": 11,
+    "name": "Furnace",
+    "texture": "furnace.png"
+  },
+  {
     "id": 12,
     "name": "Coal",
     "texture": "coal.png"

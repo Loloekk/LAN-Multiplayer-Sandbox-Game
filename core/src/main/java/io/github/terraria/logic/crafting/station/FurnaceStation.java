@@ -5,7 +5,7 @@ import io.github.terraria.logic.equipment.ItemHolder;
 import io.github.terraria.logic.crafting.Recipe;
 
 public class FurnaceStation implements CraftingStation {
-    private int coal;
+    private int coal = Integer.MAX_VALUE;
 
     @Override
     public StationType getStationType() {
