@@ -11,23 +11,18 @@ import java.util.Map;
 
 public class CraftingService {
     private final RecipeRepoImpl repo;
-    private final Map<StationType, CraftingStation> stations;
+    private final CraftingStationRegistry stationRegistry;
     private final StationTypeMap stationTypeMap;
 
-    public CraftingService(RecipeRepoImpl repo, StationTypeMap stationTypeMap) {
+    public CraftingService(RecipeRepoImpl repo, StationTypeMap stationTypeMap, CraftingStationRegistry stationRegistry) {
         this.repo = repo;
         this.stationTypeMap = stationTypeMap;
-        this.stations = Map.of(
-            StationType.WORKBENCH, new WorkBenchStation(),
-            StationType.FURNACE, new FurnaceStation(),
-            StationType.ANVIL, new AnvilStation(),
-            StationType.INVENTORY, new InventoryStation()
-        );
+        this.stationRegistry = stationRegistry;
     }
 
     public boolean canCraft(Recipe recipe, ItemHolder inventory) {
         StationType type = recipe.station();
-        CraftingStation station = stations.get(type);
+        CraftingStation station = stationRegistry.get(type);
         return station.canCraft(recipe, inventory);
     }
 
@@ -45,12 +40,12 @@ public class CraftingService {
         if (!canCraft(recipe, inventory)) {
             return false;
         }
-        stations.get(recipe.station()).craft(recipe, inventory);
+        stationRegistry.get(recipe.station()).craft(recipe, inventory);
         return true;
     }
 
     public StationType getStationType(Block block) {
-        for (var entry : stations.entrySet()) {
+        for (var entry : stationRegistry.all().entrySet()) {
             var key =  entry.getKey();
             if (isCorrectStation(block, key)) {
                 return key;

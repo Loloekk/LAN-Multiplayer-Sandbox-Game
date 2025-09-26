@@ -1,5 +1,9 @@
 package io.github.terraria.logic.crafting;
 
+import io.github.terraria.logic.crafting.station.CraftingStation;
+import io.github.terraria.logic.crafting.station.CraftingStationRegistry;
+import io.github.terraria.logic.crafting.station.InventoryStation;
+import io.github.terraria.logic.crafting.station.WorkBenchStation;
 import io.github.terraria.logic.equipment.ItemHolder;
 import io.github.terraria.logic.equipment.ItemRegistry;
 import io.github.terraria.logic.equipment.MultisetItemHolder;
@@ -36,7 +40,7 @@ class CraftingServiceTest {
     @BeforeEach
     void setupTest() {
         itemHolder = new DummyItemHolder();
-        service = new CraftingService(recipeRepo, null);
+        service = new CraftingService(recipeRepo, null, new CraftingStationRegistry(List.of(new WorkBenchStation(), new InventoryStation())));
     }
 
     @Test
