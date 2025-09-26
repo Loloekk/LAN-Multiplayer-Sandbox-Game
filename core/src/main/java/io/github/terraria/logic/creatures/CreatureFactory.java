@@ -25,7 +25,7 @@ public class CreatureFactory {
     }
     public Creature createZombieCreature(Vector2 position){
         BasicCreatureBody zombieBody = new BasicCreatureBody(world, bodiesToDestroy, position, 0.8f, 1.6f, 2.0f, 1.3f, 0.1f);
-        WalkingMovement movement = new WalkingMovement(Config.MAX_PLAYER_VELOCITY_X, Config.MOVE_IMPULSE_X, Config.PLAYER_JUMP_STRENGTH);
+        WalkingMovement movement = new WalkingMovement(3.0f, 0.5f, 7.0f);
         MeleeWeapon weapon = new MeleeWeapon(mobWorldInteractor, new Damage(10.0f), 3.0f);
         BasicHealth health = new BasicHealth(100.0f);
         return new Creature(nextCreatureId++,1, zombieBody, movement, weapon, health);

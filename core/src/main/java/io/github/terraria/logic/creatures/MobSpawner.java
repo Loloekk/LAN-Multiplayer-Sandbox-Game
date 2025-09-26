@@ -37,7 +37,7 @@ public class MobSpawner {
         if(planeContainer.getPhysicalAt(x, y) == null && planeContainer.getPhysicalAt(x, y+1) == null && planeContainer.getPhysicalAt(x, y-1) != null){
             Creature zombie = creatureFactory.createZombieCreature(new Vector2(x, y + 0.5f));
             creatureRegistry.registerMob(zombie);
-            botRegistry.addBot(new WalkingMeleeBot(zombie, creatureRegistry, 10, 2.5f, 30));
+            botRegistry.addBot(new WalkingMeleeBot(zombie, creatureRegistry, 7, 2.5f, 30));
             return true;
         }
         return false;
