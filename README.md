@@ -1,33 +1,73 @@
-# sandboxGame
+# LAN Multiplayer Sandbox Game
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+## Project Overview
+A multiplayer 2D sandbox game featuring a client-server architecture, designed to operate over a Local Area Network (LAN). This project was developed as a practical implementation of network programming, real-time game state synchronization, and procedural generation. It serves as a fully functional prototype demonstrating core survival and sandbox mechanics.
 
-This project was generated with a template including simple application launchers and an `ApplicationAdapter` extension that draws libGDX logo.
+## Tech Stack & Architecture
+* Language: Java
+* Framework: LibGDX
+* Build System: Gradle
+* Architecture: Authoritative Server (Client-Server model)
+* Networking: TCP (reliable events) and UDP (fast position synchronization)
 
-## Platforms
+## Core Systems Implemented
 
-- `core`: Main module with the application logic shared by all platforms.
-- `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
+* Network & Session Management:
+Asynchronous client-server communication over TCP/UDP. The server manages player sessions and retains individual progress (inventory, position) based on a unique nickname. This allows players to disconnect and safely rejoin the ongoing session.
 
-## Gradle
+* Voxel Engine & World Generation:
+Features real-time terrain modification. Players can destroy and place blocks dynamically. The game world is procedurally generated at the server's startup with a fixed, limited size.
 
-This project uses [Gradle](https://gradle.org/) to manage dependencies.
-The Gradle wrapper was included, so you can run Gradle tasks using `gradlew.bat` or `./gradlew` commands.
-Useful Gradle tasks and flags:
+* Entity & Combat System:
+Includes both PvE (basic Zombie enemies) and PvP mechanics. The combat system differentiates between melee weapons (close-range collision detection) and ranged weapons (projectile spawning).
 
-- `--continue`: when using this flag, errors will not stop the tasks from running.
-- `--daemon`: thanks to this flag, Gradle daemon will be used to run chosen tasks.
-- `--offline`: when using this flag, cached dependency archives will be used.
-- `--refresh-dependencies`: this flag forces validation of all dependencies. Useful for snapshot versions.
-- `build`: builds sources and archives of every project.
-- `cleanEclipse`: removes Eclipse project data.
-- `cleanIdea`: removes IntelliJ project data.
-- `clean`: removes `build` folders, which store compiled classes and built archives.
-- `eclipse`: generates Eclipse project data.
-- `idea`: generates IntelliJ project data.
-- `lwjgl3:jar`: builds application's runnable jar, which can be found at `lwjgl3/build/libs`.
-- `lwjgl3:run`: starts the application.
-- `test`: runs unit tests (if any).
+* Gameplay Mechanics:
+Custom grid-based inventory and a proof-of-concept crafting system. Players can gather resources and combine them to create items and weaponry.
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
+## Controls
+* A / D: Move Left / Right
+* Space: Jump
+* E: Open Inventory / Crafting Menu
+* Left Mouse Button (Hold): Destroy blocks
+* Left Mouse Button (Click): Melee attack
+* Right Mouse Button (Click): Place blocks / Shoot ranged weapon
+
+## How to Run
+The project uses Gradle. To test the environment, run the following commands in your terminal from the root directory:
+
+1. Start the Server:
+```
+./gradlew core:runServer
+```
+2. Start the Client (Player):
+```
+./gradlew lwjgl3:run
+```
+## Network Configuration
+The server listens on the following ports. If testing across multiple machines on a LAN, these ports must be allowed through the host's firewall:
+* UDP: 54777
+* TCP: 54555
+
+Example UFW configuration (Linux) for a 192.168.1.0/24 subnet:
+```
+sudo ufw allow from 192.168.1.0/24 to any port 54777 proto udp
+sudo ufw allow from 192.168.1.0/24 to any port 54555 proto tcp
+```
+## Technical Limitations & Retrospective
+As a completed prototype, this project was designed with specific scope limitations:
+* No Data Serialization: The game state (world modifications, player inventories) is stored entirely in RAM. There is no database or local file saving implemented, meaning all progress is permanently lost when the server process is terminated.
+* Proof-of-Concept Crafting: The crafting system is structurally functional but contains only a few basic recipes. The rest of the crafting tree was not implemented.
+
+
+---
+
+### About the Project
+
+This project was developed as part of the **Software Engineering** course within the **Theoretical Computer Science** program at the **Jagiellonian University (UJ)**.
+
+## Authors
+
+* **Karol Bielaszka**
+* **Michał Mańka**
+* **Kacper Paciorek**
+* **Oleksandr Tymkovych**
