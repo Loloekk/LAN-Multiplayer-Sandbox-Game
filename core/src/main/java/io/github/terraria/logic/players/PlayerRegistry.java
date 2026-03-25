@@ -1,4 +1,4 @@
-package io.github.terraria.logic.players;
+package io.github.sandboxGame.logic.players;
 
 import java.util.List;
 

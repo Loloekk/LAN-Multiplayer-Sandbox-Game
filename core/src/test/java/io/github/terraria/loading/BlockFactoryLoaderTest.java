@@ -1,7 +1,7 @@
-package io.github.terraria.loading;
+package io.github.sandboxGame.loading;
 
-import io.github.terraria.logic.building.Block;
-import io.github.terraria.logic.building.BlockType;
+import io.github.sandboxGame.logic.building.Block;
+import io.github.sandboxGame.logic.building.BlockType;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,6 +1,6 @@
-package io.github.terraria.client.Recipes;
+package io.github.sandboxGame.client.Recipes;
 
-import io.github.terraria.logic.crafting.Recipe;
+import io.github.sandboxGame.logic.crafting.Recipe;
 
 public interface RecipeAvailabilityListener {
     void onChange(Recipe recipe, boolean available);

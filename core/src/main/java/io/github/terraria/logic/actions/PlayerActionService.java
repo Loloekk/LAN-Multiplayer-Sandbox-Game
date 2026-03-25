@@ -1,9 +1,9 @@
-package io.github.terraria.logic.actions;
+package io.github.sandboxGame.logic.actions;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.building.PlaneContainer;
-import io.github.terraria.logic.players.ActivePlayers;
-import io.github.terraria.logic.players.PhysicalPlayer;
+import io.github.sandboxGame.logic.building.PlaneContainer;
+import io.github.sandboxGame.logic.players.ActivePlayers;
+import io.github.sandboxGame.logic.players.PhysicalPlayer;
 
 public abstract class PlayerActionService {
     protected final ActivePlayers activePlayers;

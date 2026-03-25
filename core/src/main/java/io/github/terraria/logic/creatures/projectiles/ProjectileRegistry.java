@@ -1,4 +1,4 @@
-package io.github.terraria.logic.creatures.projectiles;
+package io.github.sandboxGame.logic.creatures.projectiles;
 
 import java.util.ArrayList;
 import java.util.HashSet;

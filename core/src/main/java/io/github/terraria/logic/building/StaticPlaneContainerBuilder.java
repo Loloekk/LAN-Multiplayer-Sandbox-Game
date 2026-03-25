@@ -1,9 +1,9 @@
-package io.github.terraria.logic.building;
+package io.github.sandboxGame.logic.building;
 
-import io.github.terraria.loading.BlockFactoryLoader;
-import io.github.terraria.loading.BodyFactoryLoader;
-import io.github.terraria.loading.grid.*;
-import io.github.terraria.logic.physics.*;
+import io.github.sandboxGame.loading.BlockFactoryLoader;
+import io.github.sandboxGame.loading.BodyFactoryLoader;
+import io.github.sandboxGame.loading.grid.*;
+import io.github.sandboxGame.logic.physics.*;
 
 import java.util.ArrayList;
 

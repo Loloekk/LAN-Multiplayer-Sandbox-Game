@@ -1,4 +1,4 @@
-package io.github.terraria.logic.physics;
+package io.github.sandboxGame.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
 

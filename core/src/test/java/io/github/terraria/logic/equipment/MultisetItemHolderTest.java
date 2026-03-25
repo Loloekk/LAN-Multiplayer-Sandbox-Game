@@ -1,4 +1,4 @@
-package io.github.terraria.logic.equipment;
+package io.github.sandboxGame.logic.equipment;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;

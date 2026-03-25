@@ -1,10 +1,10 @@
-package io.github.terraria.logic.players;
+package io.github.sandboxGame.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.actions.PlayerWorldInteractor;
-import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.CreatureRegistry;
-import io.github.terraria.logic.physics.World;
+import io.github.sandboxGame.logic.actions.PlayerWorldInteractor;
+import io.github.sandboxGame.logic.creatures.Creature;
+import io.github.sandboxGame.logic.creatures.CreatureRegistry;
+import io.github.sandboxGame.logic.physics.World;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

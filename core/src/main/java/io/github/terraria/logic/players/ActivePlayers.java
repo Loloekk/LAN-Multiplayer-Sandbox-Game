@@ -1,7 +1,7 @@
-package io.github.terraria.logic.players;
+package io.github.sandboxGame.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.utils.RectangleNeighbourhood;
+import io.github.sandboxGame.utils.RectangleNeighbourhood;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
-package io.github.terraria.client.state;
+package io.github.sandboxGame.client.state;
 
-import io.github.terraria.common.BlockState;
-import io.github.terraria.common.Config;
+import io.github.sandboxGame.common.BlockState;
+import io.github.sandboxGame.common.Config;
 
 public class ClientChunk {
     public static int DEFAULT_WIDTH = Config.CHUNK_DEFAULT_WIDTH;

@@ -1,15 +1,15 @@
-package io.github.terraria;
+package io.github.sandboxGame;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import io.github.terraria.client.Drop;
+import io.github.sandboxGame.client.Drop;
 
 public class DesktopLauncher {
     public static void main (String[] arg) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setWindowedMode(1920,1080);
         config.setForegroundFPS(60);
-        config.setTitle("Terraria");
+        config.setTitle("sandboxGame");
         new Lwjgl3Application(new Drop(), config);
     }
 }

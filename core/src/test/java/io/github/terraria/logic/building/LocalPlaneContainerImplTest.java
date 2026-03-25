@@ -1,4 +1,4 @@
-package io.github.terraria.logic.building;
+package io.github.sandboxGame.logic.building;
 
 import org.junit.jupiter.api.Test;
 

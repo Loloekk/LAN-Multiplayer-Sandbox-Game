@@ -1,7 +1,7 @@
-package io.github.terraria.client.view;
+package io.github.sandboxGame.client.view;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.github.terraria.client.view.textures.textureQuad.TextureQuad;
+import io.github.sandboxGame.client.view.textures.textureQuad.TextureQuad;
 
 public class DrawableRectangle {
     public float X;

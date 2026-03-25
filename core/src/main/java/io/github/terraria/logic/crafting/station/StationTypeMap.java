@@ -1,7 +1,7 @@
-package io.github.terraria.logic.crafting.station;
+package io.github.sandboxGame.logic.crafting.station;
 
-import io.github.terraria.common.StationType;
-import io.github.terraria.logic.building.Block;
+import io.github.sandboxGame.common.StationType;
+import io.github.sandboxGame.logic.building.Block;
 
 import java.util.Map;
 

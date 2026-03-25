@@ -1,4 +1,4 @@
-package io.github.terraria.client.view.textures.texture;
+package io.github.sandboxGame.client.view.textures.texture;
 
 import com.badlogic.gdx.graphics.Texture;
 

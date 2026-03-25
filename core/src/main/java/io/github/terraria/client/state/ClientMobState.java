@@ -1,4 +1,4 @@
-package io.github.terraria.client.state;
+package io.github.sandboxGame.client.state;
 
 public class ClientMobState {
     public int id;

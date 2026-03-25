@@ -1,4 +1,4 @@
-package io.github.terraria.logic.physics;
+package io.github.sandboxGame.logic.physics;
 
 public final class BodyCategory {
     public static final short BLOCK = 0x0001;

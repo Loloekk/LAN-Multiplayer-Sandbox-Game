@@ -1,4 +1,4 @@
-package io.github.terraria.client.view.textures.textureQuad;
+package io.github.sandboxGame.client.view.textures.textureQuad;
 
 import java.util.Map;
 

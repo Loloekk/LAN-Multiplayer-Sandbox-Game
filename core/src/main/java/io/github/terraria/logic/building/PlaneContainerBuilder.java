@@ -1,7 +1,7 @@
-package io.github.terraria.logic.building;
+package io.github.sandboxGame.logic.building;
 
-import io.github.terraria.logic.physics.BodyFactory;
-import io.github.terraria.logic.physics.World;
+import io.github.sandboxGame.logic.physics.BodyFactory;
+import io.github.sandboxGame.logic.physics.World;
 
 public abstract class PlaneContainerBuilder {
     protected BodyFactory bodyFactory;

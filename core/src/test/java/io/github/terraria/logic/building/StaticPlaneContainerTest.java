@@ -1,11 +1,11 @@
-package io.github.terraria.logic.building;
+package io.github.sandboxGame.logic.building;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.utils.IntVector2;
-import io.github.terraria.utils.RectangleNeighbourhood;
-import io.github.terraria.logic.physics.BodyFactory;
-import io.github.terraria.logic.physics.Box2DBody;
-import io.github.terraria.logic.physics.World;
+import io.github.sandboxGame.utils.IntVector2;
+import io.github.sandboxGame.utils.RectangleNeighbourhood;
+import io.github.sandboxGame.logic.physics.BodyFactory;
+import io.github.sandboxGame.logic.physics.Box2DBody;
+import io.github.sandboxGame.logic.physics.World;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

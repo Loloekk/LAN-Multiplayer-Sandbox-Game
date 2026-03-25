@@ -1,11 +1,11 @@
-package io.github.terraria.client;
+package io.github.sandboxGame.client;
 
 import com.badlogic.gdx.graphics.Texture;
-import io.github.terraria.client.view.textures.TextureFixture;
-import io.github.terraria.client.view.textures.textureQuad.TextureQuad;
-import io.github.terraria.client.view.textures.textureQuad.TextureQuadBank;
-import io.github.terraria.common.StationType;
-import io.github.terraria.loading.RecordLoader;
+import io.github.sandboxGame.client.view.textures.TextureFixture;
+import io.github.sandboxGame.client.view.textures.textureQuad.TextureQuad;
+import io.github.sandboxGame.client.view.textures.textureQuad.TextureQuadBank;
+import io.github.sandboxGame.common.StationType;
+import io.github.sandboxGame.loading.RecordLoader;
 
 import java.util.Map;
 import java.util.HashMap;

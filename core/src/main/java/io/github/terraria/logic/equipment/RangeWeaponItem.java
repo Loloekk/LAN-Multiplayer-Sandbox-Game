@@ -1,10 +1,10 @@
-package io.github.terraria.logic.equipment;
+package io.github.sandboxGame.logic.equipment;
 
-import io.github.terraria.logic.creatures.Damage;
-import io.github.terraria.logic.creatures.Tool;
-import io.github.terraria.logic.creatures.projectiles.BasicProjectileType;
-import io.github.terraria.logic.creatures.tools.RangeWeapon;
-import io.github.terraria.logic.creatures.tools.WorldInteractor;
+import io.github.sandboxGame.logic.creatures.Damage;
+import io.github.sandboxGame.logic.creatures.Tool;
+import io.github.sandboxGame.logic.creatures.projectiles.BasicProjectileType;
+import io.github.sandboxGame.logic.creatures.tools.RangeWeapon;
+import io.github.sandboxGame.logic.creatures.tools.WorldInteractor;
 
 public record RangeWeaponItem(Type type) implements Item, ToolItem {
     public record Type(int id, String name, int projectileId, float damage, float speed, float radius, float gravity, float separation) implements ItemType {}

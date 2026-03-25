@@ -1,7 +1,7 @@
-package io.github.terraria.logic.equipment;
+package io.github.sandboxGame.logic.equipment;
 
 import com.google.common.util.concurrent.FutureCallback;
-import io.github.terraria.loading.RecordLoader;
+import io.github.sandboxGame.loading.RecordLoader;
 
 import java.util.List;
 import java.util.function.Function;

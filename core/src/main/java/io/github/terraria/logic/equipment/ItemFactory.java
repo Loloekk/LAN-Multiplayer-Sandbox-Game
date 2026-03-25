@@ -1,4 +1,4 @@
-package io.github.terraria.logic.equipment;
+package io.github.sandboxGame.logic.equipment;
 
 public interface ItemFactory {
     boolean contains(String name);

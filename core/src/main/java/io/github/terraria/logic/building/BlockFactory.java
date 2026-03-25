@@ -1,6 +1,6 @@
-package io.github.terraria.logic.building;
+package io.github.sandboxGame.logic.building;
 
-import io.github.terraria.logic.equipment.ItemFactory;
+import io.github.sandboxGame.logic.equipment.ItemFactory;
 import org.checkerframework.checker.optional.qual.Present;
 
 import java.util.List;

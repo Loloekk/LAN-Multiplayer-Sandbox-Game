@@ -1,4 +1,4 @@
-package io.github.terraria.logic.creatures;
+package io.github.sandboxGame.logic.creatures;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

@@ -1,17 +1,17 @@
-package io.github.terraria.logic.creatures;
+package io.github.sandboxGame.logic.creatures;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import io.github.terraria.common.Config;
-import io.github.terraria.logic.actions.MobWorldInteractor;
-import io.github.terraria.logic.actions.PlayerWorldInteractor;
-import io.github.terraria.logic.creatures.movements.WalkingMovement;
-import io.github.terraria.logic.creatures.projectiles.BasicProjectileType;
-import io.github.terraria.logic.creatures.projectiles.ProjectileRegistry;
-import io.github.terraria.logic.creatures.projectiles.ProjectileType;
-import io.github.terraria.logic.creatures.tools.NoTool;
-import io.github.terraria.logic.creatures.tools.PlayerTool;
-import io.github.terraria.logic.creatures.tools.RangeWeapon;
+import io.github.sandboxGame.common.Config;
+import io.github.sandboxGame.logic.actions.MobWorldInteractor;
+import io.github.sandboxGame.logic.actions.PlayerWorldInteractor;
+import io.github.sandboxGame.logic.creatures.movements.WalkingMovement;
+import io.github.sandboxGame.logic.creatures.projectiles.BasicProjectileType;
+import io.github.sandboxGame.logic.creatures.projectiles.ProjectileRegistry;
+import io.github.sandboxGame.logic.creatures.projectiles.ProjectileType;
+import io.github.sandboxGame.logic.creatures.tools.NoTool;
+import io.github.sandboxGame.logic.creatures.tools.PlayerTool;
+import io.github.sandboxGame.logic.creatures.tools.RangeWeapon;
 
 import java.util.ArrayList;
 import java.util.HashSet;

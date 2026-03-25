@@ -1,10 +1,10 @@
-package io.github.terraria.logic.building;
+package io.github.sandboxGame.logic.building;
 
-import io.github.terraria.utils.RectangleNeighbourhood;
-import io.github.terraria.utils.IntVector2;
-import io.github.terraria.logic.physics.Body;
-import io.github.terraria.logic.physics.BodyFactory;
-import io.github.terraria.logic.physics.World;
+import io.github.sandboxGame.utils.RectangleNeighbourhood;
+import io.github.sandboxGame.utils.IntVector2;
+import io.github.sandboxGame.logic.physics.Body;
+import io.github.sandboxGame.logic.physics.BodyFactory;
+import io.github.sandboxGame.logic.physics.World;
 
 // Kontener bez istotnej logiki. Tylko logika przypisania do warstw.
 // Delegowanie stworzenia ciał fizycznych do innych klas.

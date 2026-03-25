@@ -1,6 +1,6 @@
-package io.github.terraria.controler.network.PacketClientToServer;
+package io.github.sandboxGame.controler.network.PacketClientToServer;
 
-import io.github.terraria.utils.IntVector2;
+import io.github.sandboxGame.utils.IntVector2;
 
 public class PacketPlayerMove implements PacketPlayer{
     public int playerId;

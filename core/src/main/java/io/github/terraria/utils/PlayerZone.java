@@ -1,7 +1,7 @@
-package io.github.terraria.utils;
+package io.github.sandboxGame.utils;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.players.PhysicalPlayer;
+import io.github.sandboxGame.logic.players.PhysicalPlayer;
 
 public class PlayerZone {
     public static boolean isBlockInInteractionZone(PhysicalPlayer player, Vector2 blockPos, int radius) {

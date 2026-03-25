@@ -1,9 +1,9 @@
-package io.github.terraria.logic.creatures.movements;
+package io.github.sandboxGame.logic.creatures.movements;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.creatures.CreatureBody;
-import io.github.terraria.logic.creatures.Movement;
-import io.github.terraria.utils.IntVector2;
+import io.github.sandboxGame.logic.creatures.CreatureBody;
+import io.github.sandboxGame.logic.creatures.Movement;
+import io.github.sandboxGame.utils.IntVector2;
 
 public class FloatingMovement implements Movement {
     private CreatureBody body;

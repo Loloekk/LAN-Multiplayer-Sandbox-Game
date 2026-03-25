@@ -1,15 +1,15 @@
-package io.github.terraria.logic.creatures;
+package io.github.sandboxGame.logic.creatures;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import io.github.terraria.common.Config;
-import io.github.terraria.logic.actions.MobWorldInteractor;
-import io.github.terraria.logic.actions.PlayerWorldInteractor;
-import io.github.terraria.logic.creatures.movements.WalkingMovement;
-import io.github.terraria.logic.creatures.tools.MeleeWeapon;
-import io.github.terraria.logic.creatures.tools.NoTool;
-import io.github.terraria.logic.creatures.tools.PlayerTool;
+import io.github.sandboxGame.common.Config;
+import io.github.sandboxGame.logic.actions.MobWorldInteractor;
+import io.github.sandboxGame.logic.actions.PlayerWorldInteractor;
+import io.github.sandboxGame.logic.creatures.movements.WalkingMovement;
+import io.github.sandboxGame.logic.creatures.tools.MeleeWeapon;
+import io.github.sandboxGame.logic.creatures.tools.NoTool;
+import io.github.sandboxGame.logic.creatures.tools.PlayerTool;
 
 import java.util.List;
 

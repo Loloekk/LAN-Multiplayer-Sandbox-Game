@@ -1,12 +1,12 @@
-package io.github.terraria.logic.players;
+package io.github.sandboxGame.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.common.Config;
-import io.github.terraria.logic.actions.PlayerWorldInteractor;
-import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.CreatureRegistry;
-import io.github.terraria.logic.equipment.Item;
-import io.github.terraria.logic.physics.World;
+import io.github.sandboxGame.common.Config;
+import io.github.sandboxGame.logic.actions.PlayerWorldInteractor;
+import io.github.sandboxGame.logic.creatures.Creature;
+import io.github.sandboxGame.logic.creatures.CreatureRegistry;
+import io.github.sandboxGame.logic.equipment.Item;
+import io.github.sandboxGame.logic.physics.World;
 
 import java.util.ArrayList;
 import java.util.List;

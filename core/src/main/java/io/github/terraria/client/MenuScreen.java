@@ -1,4 +1,4 @@
-package io.github.terraria.client;
+package io.github.sandboxGame.client;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import io.github.terraria.controler.network.*;
+import io.github.sandboxGame.controler.network.*;
 
 import java.io.IOException;
 import java.net.InetAddress;

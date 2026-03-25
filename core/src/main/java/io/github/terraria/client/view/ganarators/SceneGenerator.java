@@ -1,15 +1,15 @@
-package io.github.terraria.client.view.ganarators;
+package io.github.sandboxGame.client.view.ganarators;
 
-import io.github.terraria.client.state.ClientGameState;
-import io.github.terraria.client.state.ClientPlayerState;
-import io.github.terraria.client.view.DrawableRectangle;
-import io.github.terraria.client.view.Scene;
-import io.github.terraria.client.view.textures.texture.TextureBank;
-import io.github.terraria.client.view.textures.textureQuad.TextureQuadBank;
-import io.github.terraria.client.view.textures.textureQuad.TextureQuadBankLoader;
-import io.github.terraria.client.view.textures.textureQuad.TextureQuad;
-import io.github.terraria.common.Config;
-import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerState;
+import io.github.sandboxGame.client.state.ClientGameState;
+import io.github.sandboxGame.client.state.ClientPlayerState;
+import io.github.sandboxGame.client.view.DrawableRectangle;
+import io.github.sandboxGame.client.view.Scene;
+import io.github.sandboxGame.client.view.textures.texture.TextureBank;
+import io.github.sandboxGame.client.view.textures.textureQuad.TextureQuadBank;
+import io.github.sandboxGame.client.view.textures.textureQuad.TextureQuadBankLoader;
+import io.github.sandboxGame.client.view.textures.textureQuad.TextureQuad;
+import io.github.sandboxGame.common.Config;
+import io.github.sandboxGame.controler.network.PacketServerToClient.PacketPlayerState;
 import org.w3c.dom.Text;
 
 import java.util.Stack;

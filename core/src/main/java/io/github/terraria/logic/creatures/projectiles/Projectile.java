@@ -1,8 +1,8 @@
-package io.github.terraria.logic.creatures.projectiles;
+package io.github.sandboxGame.logic.creatures.projectiles;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.WorldEvent;
+import io.github.sandboxGame.logic.creatures.Creature;
+import io.github.sandboxGame.logic.creatures.WorldEvent;
 
 import java.util.ArrayList;
 import java.util.List;

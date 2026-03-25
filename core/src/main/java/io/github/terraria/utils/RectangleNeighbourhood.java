@@ -1,8 +1,8 @@
-package io.github.terraria.utils;
+package io.github.sandboxGame.utils;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.players.PhysicalPlayer;
-import io.github.terraria.logic.players.PlayerActivator;
+import io.github.sandboxGame.logic.players.PhysicalPlayer;
+import io.github.sandboxGame.logic.players.PlayerActivator;
 
 public record RectangleNeighbourhood(Vector2 leftBottom, Vector2 rightTop) {
 

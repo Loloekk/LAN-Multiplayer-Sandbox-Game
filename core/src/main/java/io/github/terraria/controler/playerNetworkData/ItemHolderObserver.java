@@ -1,6 +1,6 @@
-package io.github.terraria.controler.playerNetworkData;
+package io.github.sandboxGame.controler.playerNetworkData;
 
-import io.github.terraria.logic.equipment.Item;
+import io.github.sandboxGame.logic.equipment.Item;
 
 public interface ItemHolderObserver {
     void onInsert(Item item, int count);

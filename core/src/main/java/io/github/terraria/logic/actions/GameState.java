@@ -1,12 +1,12 @@
-package io.github.terraria.logic.actions;
+package io.github.sandboxGame.logic.actions;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.building.LocalPlaneContainer;
-import io.github.terraria.logic.building.PlaneContainer;
-import io.github.terraria.logic.creatures.CreatureRegistry;
-import io.github.terraria.logic.creatures.projectiles.ProjectileRegistry;
-import io.github.terraria.logic.players.ActivePlayers;
-import io.github.terraria.utils.RectangleNeighbourhood;
+import io.github.sandboxGame.logic.building.LocalPlaneContainer;
+import io.github.sandboxGame.logic.building.PlaneContainer;
+import io.github.sandboxGame.logic.creatures.CreatureRegistry;
+import io.github.sandboxGame.logic.creatures.projectiles.ProjectileRegistry;
+import io.github.sandboxGame.logic.players.ActivePlayers;
+import io.github.sandboxGame.utils.RectangleNeighbourhood;
 
 public record GameState(PlaneContainer grid, ActivePlayers activePlayers, CreatureRegistry creatureRegistry, ProjectileRegistry projectileRegistry) {
     public LocalPlaneContainer getLocalPlaneRelativeToPlayer(int playersId, Vector2 offsetToCorner) {

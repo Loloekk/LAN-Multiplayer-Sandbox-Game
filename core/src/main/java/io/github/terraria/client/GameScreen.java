@@ -1,4 +1,4 @@
-package io.github.terraria.client;
+package io.github.sandboxGame.client;
 
 
 import com.badlogic.gdx.Screen;
@@ -8,24 +8,24 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.*;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Listener;
-import io.github.terraria.client.view.*;
-import io.github.terraria.client.view.ganarators.SceneGenerator;
-import io.github.terraria.client.view.textures.texture.TextureBank;
-import io.github.terraria.client.view.textures.texture.TextureBankLoader;
-import io.github.terraria.client.view.textures.textureQuad.TextureQuadBank;
-import io.github.terraria.client.view.textures.textureQuad.TextureQuadBankLoader;
-import io.github.terraria.controler.network.Network;
-import io.github.terraria.controler.network.PacketJoin;
-import io.github.terraria.controler.network.PacketJoinAck;
-import io.github.terraria.client.state.ClientGameState;
+import io.github.sandboxGame.client.view.*;
+import io.github.sandboxGame.client.view.ganarators.SceneGenerator;
+import io.github.sandboxGame.client.view.textures.texture.TextureBank;
+import io.github.sandboxGame.client.view.textures.texture.TextureBankLoader;
+import io.github.sandboxGame.client.view.textures.textureQuad.TextureQuadBank;
+import io.github.sandboxGame.client.view.textures.textureQuad.TextureQuadBankLoader;
+import io.github.sandboxGame.controler.network.Network;
+import io.github.sandboxGame.controler.network.PacketJoin;
+import io.github.sandboxGame.controler.network.PacketJoinAck;
+import io.github.sandboxGame.client.state.ClientGameState;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.Input;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static io.github.terraria.common.Config.SCENE_HEIGHT;
-import static io.github.terraria.common.Config.SCENE_WIDTH;
+import static io.github.sandboxGame.common.Config.SCENE_HEIGHT;
+import static io.github.sandboxGame.common.Config.SCENE_WIDTH;
 
 public class GameScreen implements Screen {
     private Client client;

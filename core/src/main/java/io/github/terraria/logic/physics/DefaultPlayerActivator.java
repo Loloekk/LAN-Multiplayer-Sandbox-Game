@@ -1,14 +1,14 @@
-package io.github.terraria.logic.physics;
+package io.github.sandboxGame.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.actions.PlayerWorldInteractor;
-import io.github.terraria.logic.creatures.*;
-import io.github.terraria.utils.IntVector2;
-import io.github.terraria.logic.building.PlaneContainer;
-import io.github.terraria.logic.players.ActivePlayers;
-import io.github.terraria.logic.players.PlayerActivator;
-import io.github.terraria.logic.players.PlayerRegistry;
-import io.github.terraria.utils.MathUtils;
+import io.github.sandboxGame.logic.actions.PlayerWorldInteractor;
+import io.github.sandboxGame.logic.creatures.*;
+import io.github.sandboxGame.utils.IntVector2;
+import io.github.sandboxGame.logic.building.PlaneContainer;
+import io.github.sandboxGame.logic.players.ActivePlayers;
+import io.github.sandboxGame.logic.players.PlayerActivator;
+import io.github.sandboxGame.logic.players.PlayerRegistry;
+import io.github.sandboxGame.utils.MathUtils;
 
 public class DefaultPlayerActivator extends PlayerActivator {
     private final PlaneContainer planeContainer;

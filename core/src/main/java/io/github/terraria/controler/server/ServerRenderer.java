@@ -1,8 +1,8 @@
-package io.github.terraria.controler.server;
+package io.github.sandboxGame.controler.server;
 
-import io.github.terraria.logic.building.LocalPlaneContainer;
-import io.github.terraria.client.view.DrawableRectangle;
-import io.github.terraria.client.view.Scene;
+import io.github.sandboxGame.logic.building.LocalPlaneContainer;
+import io.github.sandboxGame.client.view.DrawableRectangle;
+import io.github.sandboxGame.client.view.Scene;
 
 public class ServerRenderer {
 

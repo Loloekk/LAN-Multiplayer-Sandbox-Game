@@ -1,14 +1,14 @@
-package io.github.terraria.logic.players;
+package io.github.sandboxGame.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.actions.PlayerWorldInteractor;
-import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.tools.NoTool;
-import io.github.terraria.logic.creatures.tools.PlayerTool;
-import io.github.terraria.logic.equipment.ToolItem;
-import io.github.terraria.utils.IntVector2;
-import io.github.terraria.logic.equipment.Item;
-import io.github.terraria.logic.equipment.ItemHolder;
+import io.github.sandboxGame.logic.actions.PlayerWorldInteractor;
+import io.github.sandboxGame.logic.creatures.Creature;
+import io.github.sandboxGame.logic.creatures.tools.NoTool;
+import io.github.sandboxGame.logic.creatures.tools.PlayerTool;
+import io.github.sandboxGame.logic.equipment.ToolItem;
+import io.github.sandboxGame.utils.IntVector2;
+import io.github.sandboxGame.logic.equipment.Item;
+import io.github.sandboxGame.logic.equipment.ItemHolder;
 
 public class PhysicalPlayer {
     private int id;

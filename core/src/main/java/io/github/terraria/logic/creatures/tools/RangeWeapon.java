@@ -1,9 +1,9 @@
-package io.github.terraria.logic.creatures.tools;
+package io.github.sandboxGame.logic.creatures.tools;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.Tool;
-import io.github.terraria.logic.creatures.projectiles.ProjectileType;
+import io.github.sandboxGame.logic.creatures.Creature;
+import io.github.sandboxGame.logic.creatures.Tool;
+import io.github.sandboxGame.logic.creatures.projectiles.ProjectileType;
 
 public class RangeWeapon implements Tool {
     private final WorldInteractor interactor;

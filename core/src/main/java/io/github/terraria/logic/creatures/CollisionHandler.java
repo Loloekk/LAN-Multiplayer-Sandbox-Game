@@ -1,8 +1,8 @@
-package io.github.terraria.logic.creatures;
+package io.github.sandboxGame.logic.creatures;
 
 import com.badlogic.gdx.physics.box2d.*;
-import io.github.terraria.logic.creatures.projectiles.Projectile;
-import io.github.terraria.logic.physics.BodyCategory;
+import io.github.sandboxGame.logic.creatures.projectiles.Projectile;
+import io.github.sandboxGame.logic.physics.BodyCategory;
 
 public class CollisionHandler implements ContactListener {
     @Override

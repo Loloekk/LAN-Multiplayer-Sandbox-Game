@@ -1,6 +1,6 @@
-package io.github.terraria.logic.equipment;
+package io.github.sandboxGame.logic.equipment;
 
-import io.github.terraria.controler.playerNetworkData.ItemHolderObserver;
+import io.github.sandboxGame.controler.playerNetworkData.ItemHolderObserver;
 
 import com.google.common.collect.Multiset;
 

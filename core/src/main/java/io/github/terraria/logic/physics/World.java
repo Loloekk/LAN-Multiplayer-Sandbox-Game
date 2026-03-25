@@ -1,7 +1,7 @@
-package io.github.terraria.logic.physics;
+package io.github.sandboxGame.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.creatures.CreatureBody;
+import io.github.sandboxGame.logic.creatures.CreatureBody;
 
 public interface World {
     // left, bottom - coordinates of the bottom-left corner of the area to be enclosed

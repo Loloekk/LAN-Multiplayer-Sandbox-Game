@@ -1,4 +1,4 @@
-package io.github.terraria.client.view;
+package io.github.sandboxGame.client.view;
 
 import java.util.ArrayList;
 

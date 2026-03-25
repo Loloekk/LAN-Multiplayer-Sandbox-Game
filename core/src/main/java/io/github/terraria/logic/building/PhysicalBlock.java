@@ -1,5 +1,5 @@
-package io.github.terraria.logic.building;
+package io.github.sandboxGame.logic.building;
 
-import io.github.terraria.logic.physics.Body;
+import io.github.sandboxGame.logic.physics.Body;
 
 public record PhysicalBlock (Block block, Body body) {}

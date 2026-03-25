@@ -1,7 +1,7 @@
-package io.github.terraria.logic.creatures.projectiles;
+package io.github.sandboxGame.logic.creatures.projectiles;
 
-import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.Damage;
+import io.github.sandboxGame.logic.creatures.Creature;
+import io.github.sandboxGame.logic.creatures.Damage;
 
 public class BasicProjectile extends Projectile{
     private Damage damage;

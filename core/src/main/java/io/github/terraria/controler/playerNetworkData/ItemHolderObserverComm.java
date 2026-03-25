@@ -1,8 +1,8 @@
-package io.github.terraria.controler.playerNetworkData;
+package io.github.sandboxGame.controler.playerNetworkData;
 
-import io.github.terraria.controler.network.PacketServerToClient.PacketCollectItems;
-import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveItems;
-import io.github.terraria.logic.equipment.Item;
+import io.github.sandboxGame.controler.network.PacketServerToClient.PacketCollectItems;
+import io.github.sandboxGame.controler.network.PacketServerToClient.PacketRemoveItems;
+import io.github.sandboxGame.logic.equipment.Item;
 import java.util.List;
 
 public class ItemHolderObserverComm implements ItemHolderObserver{

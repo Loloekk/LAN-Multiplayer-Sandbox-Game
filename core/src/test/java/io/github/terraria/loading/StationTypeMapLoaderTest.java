@@ -1,9 +1,9 @@
-package io.github.terraria.loading;
+package io.github.sandboxGame.loading;
 
-import io.github.terraria.logic.building.Block;
-import io.github.terraria.logic.building.BlockBuilder;
-import io.github.terraria.common.StationType;
-import io.github.terraria.logic.crafting.station.StationTypeMap;
+import io.github.sandboxGame.logic.building.Block;
+import io.github.sandboxGame.logic.building.BlockBuilder;
+import io.github.sandboxGame.common.StationType;
+import io.github.sandboxGame.logic.crafting.station.StationTypeMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

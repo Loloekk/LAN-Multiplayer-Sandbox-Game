@@ -1,4 +1,4 @@
-package io.github.terraria.controler.network.PacketClientToServer;
+package io.github.sandboxGame.controler.network.PacketClientToServer;
 
 public class PacketPlayerTouch implements PacketPlayer{
     public int playerId;

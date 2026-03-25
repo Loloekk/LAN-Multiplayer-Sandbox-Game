@@ -1,18 +1,18 @@
-package io.github.terraria.client.state;
+package io.github.sandboxGame.client.state;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
-import io.github.terraria.client.Recipes.RecipeAvailabilityListener;
-import io.github.terraria.controler.network.PacketServerToClient.PacketCollectItems;
-import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveItems;
-import io.github.terraria.loading.BlockFactoryLoader;
-import io.github.terraria.loading.StationTypeMapLoader;
-import io.github.terraria.logic.building.BlockFactory;
-import io.github.terraria.logic.crafting.*;
-import io.github.terraria.logic.crafting.station.StationTypeMap;
-import io.github.terraria.logic.equipment.Item;
-import io.github.terraria.logic.equipment.ItemRegistry;
+import io.github.sandboxGame.client.Recipes.RecipeAvailabilityListener;
+import io.github.sandboxGame.controler.network.PacketServerToClient.PacketCollectItems;
+import io.github.sandboxGame.controler.network.PacketServerToClient.PacketRemoveItems;
+import io.github.sandboxGame.loading.BlockFactoryLoader;
+import io.github.sandboxGame.loading.StationTypeMapLoader;
+import io.github.sandboxGame.logic.building.BlockFactory;
+import io.github.sandboxGame.logic.crafting.*;
+import io.github.sandboxGame.logic.crafting.station.StationTypeMap;
+import io.github.sandboxGame.logic.equipment.Item;
+import io.github.sandboxGame.logic.equipment.ItemRegistry;
 
 import java.util.ArrayList;
 import java.util.List;

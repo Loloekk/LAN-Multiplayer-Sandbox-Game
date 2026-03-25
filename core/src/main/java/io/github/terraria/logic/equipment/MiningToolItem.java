@@ -1,8 +1,8 @@
-package io.github.terraria.logic.equipment;
+package io.github.sandboxGame.logic.equipment;
 
-import io.github.terraria.logic.creatures.Tool;
-import io.github.terraria.logic.creatures.tools.MiningTool;
-import io.github.terraria.logic.creatures.tools.WorldInteractor;
+import io.github.sandboxGame.logic.creatures.Tool;
+import io.github.sandboxGame.logic.creatures.tools.MiningTool;
+import io.github.sandboxGame.logic.creatures.tools.WorldInteractor;
 
 public record MiningToolItem(Type type) implements Item, ToolItem {
     public record Type(int id, String name, int strength, float range) implements ItemType{}

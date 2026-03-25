@@ -1,8 +1,8 @@
-package io.github.terraria.logic.creatures.bots;
+package io.github.sandboxGame.logic.creatures.bots;
 
-import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.CreatureRegistry;
-import io.github.terraria.utils.IntVector2;
+import io.github.sandboxGame.logic.creatures.Creature;
+import io.github.sandboxGame.logic.creatures.CreatureRegistry;
+import io.github.sandboxGame.utils.IntVector2;
 
 public class WalkingMeleeBot implements Bot{
     private final Creature creature;

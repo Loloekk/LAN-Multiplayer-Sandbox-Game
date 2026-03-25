@@ -1,4 +1,4 @@
-package io.github.terraria.controler.network.PacketServerToClient;
+package io.github.sandboxGame.controler.network.PacketServerToClient;
 
 public class PacketProjectileState {
     public int id, projectileType;

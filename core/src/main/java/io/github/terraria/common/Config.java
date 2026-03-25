@@ -1,4 +1,4 @@
-package io.github.terraria.common;
+package io.github.sandboxGame.common;
 
 import java.io.InputStream;
 import java.util.Properties;

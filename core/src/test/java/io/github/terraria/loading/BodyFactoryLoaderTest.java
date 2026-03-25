@@ -1,6 +1,6 @@
-package io.github.terraria.loading;
+package io.github.sandboxGame.loading;
 
-import io.github.terraria.logic.physics.BlockFixture;
+import io.github.sandboxGame.logic.physics.BlockFixture;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,7 @@
-package io.github.terraria.logic.physics;
+package io.github.sandboxGame.logic.physics;
 
-import io.github.terraria.utils.IntVector2;
-import io.github.terraria.logic.building.Block;
+import io.github.sandboxGame.utils.IntVector2;
+import io.github.sandboxGame.logic.building.Block;
 
 import java.util.Map;
 

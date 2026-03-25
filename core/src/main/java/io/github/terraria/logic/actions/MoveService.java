@@ -1,10 +1,10 @@
-//package io.github.terraria.logic.actions;
+//package io.github.sandboxGame.logic.actions;
 //
 //import com.badlogic.gdx.math.Vector2;
-//import io.github.terraria.common.Config;
-//import io.github.terraria.logic.creatures.CreatureBody;
-//import io.github.terraria.logic.physics.Body;
-//import io.github.terraria.logic.players.PhysicalPlayer;
+//import io.github.sandboxGame.common.Config;
+//import io.github.sandboxGame.logic.creatures.CreatureBody;
+//import io.github.sandboxGame.logic.physics.Body;
+//import io.github.sandboxGame.logic.players.PhysicalPlayer;
 //
 //public class MoveService {
 //    public enum Direction {

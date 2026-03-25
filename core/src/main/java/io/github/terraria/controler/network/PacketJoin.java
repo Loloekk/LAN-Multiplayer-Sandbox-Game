@@ -1,4 +1,4 @@
-package io.github.terraria.controler.network;
+package io.github.sandboxGame.controler.network;
 
 public class PacketJoin {
     public int id;

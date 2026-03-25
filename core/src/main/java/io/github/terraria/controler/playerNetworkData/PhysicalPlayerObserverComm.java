@@ -1,7 +1,7 @@
-package io.github.terraria.controler.playerNetworkData;
+package io.github.sandboxGame.controler.playerNetworkData;
 
-import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerHeldItem;
-import io.github.terraria.logic.equipment.Item;
+import io.github.sandboxGame.controler.network.PacketServerToClient.PacketPlayerHeldItem;
+import io.github.sandboxGame.logic.equipment.Item;
 
 import java.util.List;
 

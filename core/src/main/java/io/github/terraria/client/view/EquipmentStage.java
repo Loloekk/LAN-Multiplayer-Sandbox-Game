@@ -1,4 +1,4 @@
-package io.github.terraria.client.view;
+package io.github.sandboxGame.client.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -15,14 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.*;
-import io.github.terraria.client.Recipes.RecipeLoader;
-import io.github.terraria.client.state.ClientMainPlayerState;
+import io.github.sandboxGame.client.Recipes.RecipeLoader;
+import io.github.sandboxGame.client.state.ClientMainPlayerState;
 
 import com.esotericsoftware.kryonet.Connection;
-import io.github.terraria.client.view.textures.texture.TextureBank;
+import io.github.sandboxGame.client.view.textures.texture.TextureBank;
 
-import io.github.terraria.common.StationType;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTakeItem;
+import io.github.sandboxGame.common.StationType;
+import io.github.sandboxGame.controler.network.PacketClientToServer.PacketPlayerTakeItem;
 
 public class EquipmentStage{
     public static int ITEMS_PER_ROW = 10;

@@ -1,9 +1,9 @@
-package io.github.terraria.client.state;
+package io.github.sandboxGame.client.state;
 
-import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerState;
-import io.github.terraria.controler.network.PacketServerToClient.PacketCollectItems;
-import io.github.terraria.controler.network.PacketServerToClient.PacketPlayerHeldItem;
-import io.github.terraria.controler.network.PacketServerToClient.PacketRemoveItems;
+import io.github.sandboxGame.controler.network.PacketServerToClient.PacketPlayerState;
+import io.github.sandboxGame.controler.network.PacketServerToClient.PacketCollectItems;
+import io.github.sandboxGame.controler.network.PacketServerToClient.PacketPlayerHeldItem;
+import io.github.sandboxGame.controler.network.PacketServerToClient.PacketRemoveItems;
 
 public class ClientMainPlayerState {
     private float x;

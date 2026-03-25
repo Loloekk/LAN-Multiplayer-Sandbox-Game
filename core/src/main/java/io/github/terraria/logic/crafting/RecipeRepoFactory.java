@@ -1,8 +1,8 @@
-package io.github.terraria.logic.crafting;
+package io.github.sandboxGame.logic.crafting;
 
-import io.github.terraria.common.StationType;
-import io.github.terraria.loading.RecordLoader;
-import io.github.terraria.logic.equipment.ItemRegistry;
+import io.github.sandboxGame.common.StationType;
+import io.github.sandboxGame.loading.RecordLoader;
+import io.github.sandboxGame.logic.equipment.ItemRegistry;
 
 import java.util.List;
 

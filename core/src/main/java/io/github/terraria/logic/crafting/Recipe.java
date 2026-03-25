@@ -1,9 +1,9 @@
-package io.github.terraria.logic.crafting;
+package io.github.sandboxGame.logic.crafting;
 
 import com.google.common.collect.Multiset;
-import io.github.terraria.logic.equipment.Item;
-import io.github.terraria.logic.equipment.ItemHolder;
-import io.github.terraria.common.StationType;
+import io.github.sandboxGame.logic.equipment.Item;
+import io.github.sandboxGame.logic.equipment.ItemHolder;
+import io.github.sandboxGame.common.StationType;
 
 import java.util.List;
 

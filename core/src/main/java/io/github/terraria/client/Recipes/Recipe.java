@@ -1,7 +1,7 @@
-package io.github.terraria.client.Recipes;
+package io.github.sandboxGame.client.Recipes;
 
 
-import io.github.terraria.common.StationType;
+import io.github.sandboxGame.common.StationType;
 
 import java.util.List;
 

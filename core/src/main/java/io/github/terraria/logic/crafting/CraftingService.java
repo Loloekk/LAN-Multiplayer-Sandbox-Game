@@ -1,9 +1,9 @@
-package io.github.terraria.logic.crafting;
+package io.github.sandboxGame.logic.crafting;
 
-import io.github.terraria.common.StationType;
-import io.github.terraria.logic.building.Block;
-import io.github.terraria.logic.equipment.ItemHolder;
-import io.github.terraria.logic.crafting.station.*;
+import io.github.sandboxGame.common.StationType;
+import io.github.sandboxGame.logic.building.Block;
+import io.github.sandboxGame.logic.equipment.ItemHolder;
+import io.github.sandboxGame.logic.crafting.station.*;
 
 import java.util.ArrayList;
 import java.util.List;

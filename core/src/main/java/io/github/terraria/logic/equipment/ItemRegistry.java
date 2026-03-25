@@ -1,7 +1,7 @@
-package io.github.terraria.logic.equipment;
+package io.github.sandboxGame.logic.equipment;
 
-import io.github.terraria.loading.BlockFactoryLoader;
-import io.github.terraria.logic.building.BlockFactory;
+import io.github.sandboxGame.loading.BlockFactoryLoader;
+import io.github.sandboxGame.logic.building.BlockFactory;
 
 import java.util.ArrayList;
 import java.util.List;

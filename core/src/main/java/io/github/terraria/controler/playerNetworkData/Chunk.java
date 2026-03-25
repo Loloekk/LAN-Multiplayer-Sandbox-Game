@@ -1,9 +1,9 @@
-package io.github.terraria.controler.playerNetworkData;
+package io.github.sandboxGame.controler.playerNetworkData;
 
-import io.github.terraria.common.BlockState;
-import io.github.terraria.common.Config;
-import io.github.terraria.logic.building.Block;
-import io.github.terraria.logic.building.PlaneContainer;
+import io.github.sandboxGame.common.BlockState;
+import io.github.sandboxGame.common.Config;
+import io.github.sandboxGame.logic.building.Block;
+import io.github.sandboxGame.logic.building.PlaneContainer;
 
 import java.util.ArrayList;
 

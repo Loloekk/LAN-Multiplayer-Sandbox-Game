@@ -1,9 +1,9 @@
-package io.github.terraria.logic.creatures;
+package io.github.sandboxGame.logic.creatures;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.building.PlaneContainer;
-import io.github.terraria.logic.creatures.bots.BotRegistry;
-import io.github.terraria.logic.creatures.bots.WalkingMeleeBot;
+import io.github.sandboxGame.logic.building.PlaneContainer;
+import io.github.sandboxGame.logic.creatures.bots.BotRegistry;
+import io.github.sandboxGame.logic.creatures.bots.WalkingMeleeBot;
 
 import java.util.Random;
 

@@ -1,9 +1,9 @@
-package io.github.terraria.logic.players;
+package io.github.sandboxGame.logic.players;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.common.Config;
-import io.github.terraria.logic.equipment.ItemHolder;
-import io.github.terraria.logic.equipment.MultisetItemHolder;
+import io.github.sandboxGame.common.Config;
+import io.github.sandboxGame.logic.equipment.ItemHolder;
+import io.github.sandboxGame.logic.equipment.MultisetItemHolder;
 
 // The player part exported to PlayerRegistry (in between logging)
 // should be a record for easy serialization.

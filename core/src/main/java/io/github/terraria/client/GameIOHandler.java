@@ -1,4 +1,4 @@
-package io.github.terraria.client;
+package io.github.sandboxGame.client;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,22 +7,22 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.esotericsoftware.kryonet.Connection;
-import io.github.terraria.client.Recipes.RecipeLoader;
-import io.github.terraria.client.state.ClientGameState;
-import io.github.terraria.client.view.EquipmentStage;
-import io.github.terraria.client.view.SceneRenderer;
-import io.github.terraria.client.view.ganarators.SceneGenerator;
-import io.github.terraria.client.view.textures.texture.TextureBank;
-import io.github.terraria.client.view.textures.texture.TextureBankLoader;
-import io.github.terraria.client.view.textures.textureQuad.TextureQuadBank;
-import io.github.terraria.client.view.textures.textureQuad.TextureQuadBankLoader;
-import io.github.terraria.common.Config;
-import io.github.terraria.common.StationType;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerHit;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerMove;
-import io.github.terraria.controler.network.PacketClientToServer.PacketPlayerTouch;
-import io.github.terraria.utils.IntVector2;
-import io.github.terraria.utils.MathUtils;
+import io.github.sandboxGame.client.Recipes.RecipeLoader;
+import io.github.sandboxGame.client.state.ClientGameState;
+import io.github.sandboxGame.client.view.EquipmentStage;
+import io.github.sandboxGame.client.view.SceneRenderer;
+import io.github.sandboxGame.client.view.ganarators.SceneGenerator;
+import io.github.sandboxGame.client.view.textures.texture.TextureBank;
+import io.github.sandboxGame.client.view.textures.texture.TextureBankLoader;
+import io.github.sandboxGame.client.view.textures.textureQuad.TextureQuadBank;
+import io.github.sandboxGame.client.view.textures.textureQuad.TextureQuadBankLoader;
+import io.github.sandboxGame.common.Config;
+import io.github.sandboxGame.common.StationType;
+import io.github.sandboxGame.controler.network.PacketClientToServer.PacketPlayerHit;
+import io.github.sandboxGame.controler.network.PacketClientToServer.PacketPlayerMove;
+import io.github.sandboxGame.controler.network.PacketClientToServer.PacketPlayerTouch;
+import io.github.sandboxGame.utils.IntVector2;
+import io.github.sandboxGame.utils.MathUtils;
 
 public class GameIOHandler {
     private Connection conn;

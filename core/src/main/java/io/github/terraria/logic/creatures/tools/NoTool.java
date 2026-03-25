@@ -1,8 +1,8 @@
-package io.github.terraria.logic.creatures.tools;
+package io.github.sandboxGame.logic.creatures.tools;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.logic.creatures.Creature;
-import io.github.terraria.logic.creatures.Tool;
+import io.github.sandboxGame.logic.creatures.Creature;
+import io.github.sandboxGame.logic.creatures.Tool;
 
 public class NoTool implements Tool {
     @Override

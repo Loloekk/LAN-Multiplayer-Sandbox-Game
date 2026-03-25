@@ -1,5 +1,5 @@
 /*
-package io.github.terraria.logic.block;
+package io.github.sandboxGame.logic.block;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;

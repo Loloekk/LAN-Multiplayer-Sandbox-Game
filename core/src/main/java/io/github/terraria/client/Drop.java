@@ -1,11 +1,11 @@
-package io.github.terraria.client;
+package io.github.sandboxGame.client;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Game;
-import io.github.terraria.client.GameScreen;
+import io.github.sandboxGame.client.GameScreen;
 
 ///** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Drop extends Game {

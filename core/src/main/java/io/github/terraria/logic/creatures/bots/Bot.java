@@ -1,6 +1,6 @@
-package io.github.terraria.logic.creatures.bots;
+package io.github.sandboxGame.logic.creatures.bots;
 
-import io.github.terraria.logic.creatures.Creature;
+import io.github.sandboxGame.logic.creatures.Creature;
 
 public interface Bot {
     Creature getCreature();

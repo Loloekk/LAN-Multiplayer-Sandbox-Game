@@ -1,4 +1,4 @@
-package io.github.terraria.logic.creatures.bots;
+package io.github.sandboxGame.logic.creatures.bots;
 
 import java.util.ArrayList;
 import java.util.HashSet;

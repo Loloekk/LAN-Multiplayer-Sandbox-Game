@@ -1,7 +1,7 @@
-package io.github.terraria.loading;
+package io.github.sandboxGame.loading;
 
-import io.github.terraria.common.StationType;
-import io.github.terraria.logic.crafting.station.StationTypeMap;
+import io.github.sandboxGame.common.StationType;
+import io.github.sandboxGame.logic.crafting.station.StationTypeMap;
 
 import java.util.Map;
 import java.util.stream.Collectors;

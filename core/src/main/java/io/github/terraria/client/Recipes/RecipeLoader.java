@@ -1,4 +1,4 @@
-package io.github.terraria.client.Recipes;
+package io.github.sandboxGame.client.Recipes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -13,12 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import io.github.terraria.client.StationBank;
-import io.github.terraria.client.state.ClientMainPlayerState;
-import io.github.terraria.client.view.textures.texture.TextureBank;
-import io.github.terraria.common.StationType;
-import io.github.terraria.controler.network.PacketClientToServer.PacketCraftItems;
-import io.github.terraria.loading.RecordLoader;
+import io.github.sandboxGame.client.StationBank;
+import io.github.sandboxGame.client.state.ClientMainPlayerState;
+import io.github.sandboxGame.client.view.textures.texture.TextureBank;
+import io.github.sandboxGame.common.StationType;
+import io.github.sandboxGame.controler.network.PacketClientToServer.PacketCraftItems;
+import io.github.sandboxGame.loading.RecordLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;

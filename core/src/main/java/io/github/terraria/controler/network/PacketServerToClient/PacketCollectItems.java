@@ -1,6 +1,6 @@
-package io.github.terraria.controler.network.PacketServerToClient;
+package io.github.sandboxGame.controler.network.PacketServerToClient;
 
-import io.github.terraria.logic.equipment.ItemType;
+import io.github.sandboxGame.logic.equipment.ItemType;
 
 public class PacketCollectItems {
     public int id;

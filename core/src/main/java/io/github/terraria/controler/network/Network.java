@@ -1,14 +1,14 @@
-package io.github.terraria.controler.network;
+package io.github.sandboxGame.controler.network;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.EndPoint;
-import io.github.terraria.common.BlockState;
-import io.github.terraria.common.Config;
-import io.github.terraria.controler.network.PacketServerToClient.*;
-import io.github.terraria.client.view.DrawableRectangle;
-import io.github.terraria.client.view.Scene;
-import io.github.terraria.controler.network.PacketClientToServer.*;
-import io.github.terraria.utils.IntVector2;
+import io.github.sandboxGame.common.BlockState;
+import io.github.sandboxGame.common.Config;
+import io.github.sandboxGame.controler.network.PacketServerToClient.*;
+import io.github.sandboxGame.client.view.DrawableRectangle;
+import io.github.sandboxGame.client.view.Scene;
+import io.github.sandboxGame.controler.network.PacketClientToServer.*;
+import io.github.sandboxGame.utils.IntVector2;
 
 import java.util.ArrayList;
 

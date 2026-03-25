@@ -1,4 +1,4 @@
-package io.github.terraria.utils;
+package io.github.sandboxGame.utils;
 
 import com.badlogic.gdx.math.Vector2;
 

@@ -1,10 +1,10 @@
-package io.github.terraria.logic.players;
+package io.github.sandboxGame.logic.players;
 
-import io.github.terraria.controler.playerNetworkData.ItemHolderObserver;
-import io.github.terraria.controler.playerNetworkData.PhysicalPlayerObserver;
-import io.github.terraria.logic.actions.PlayerWorldInteractor;
-import io.github.terraria.logic.equipment.Item;
-import io.github.terraria.logic.equipment.ItemHolder;
+import io.github.sandboxGame.controler.playerNetworkData.ItemHolderObserver;
+import io.github.sandboxGame.controler.playerNetworkData.PhysicalPlayerObserver;
+import io.github.sandboxGame.logic.actions.PlayerWorldInteractor;
+import io.github.sandboxGame.logic.equipment.Item;
+import io.github.sandboxGame.logic.equipment.ItemHolder;
 
 import java.util.ArrayList;
 import java.util.List;

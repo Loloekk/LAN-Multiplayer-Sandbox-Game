@@ -1,7 +1,7 @@
-package io.github.terraria.logic.creatures;
+package io.github.sandboxGame.logic.creatures;
 
-import io.github.terraria.logic.creatures.projectiles.BasicProjectile;
-import io.github.terraria.logic.creatures.projectiles.ProjectileBody;
+import io.github.sandboxGame.logic.creatures.projectiles.BasicProjectile;
+import io.github.sandboxGame.logic.creatures.projectiles.ProjectileBody;
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;

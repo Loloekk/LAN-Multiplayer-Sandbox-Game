@@ -1,18 +1,18 @@
-package io.github.terraria.controler.playerNetworkData;
+package io.github.sandboxGame.controler.playerNetworkData;
 
-import io.github.terraria.common.BlockState;
-import io.github.terraria.common.Config;
-import io.github.terraria.controler.network.PacketServerToClient.*;
-import io.github.terraria.logic.actions.GameState;
+import io.github.sandboxGame.common.BlockState;
+import io.github.sandboxGame.common.Config;
+import io.github.sandboxGame.controler.network.PacketServerToClient.*;
+import io.github.sandboxGame.logic.actions.GameState;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
 import com.esotericsoftware.kryonet.Connection;
-import io.github.terraria.logic.equipment.Item;
-import io.github.terraria.logic.players.ObservablePhysicalPlayer;
-import io.github.terraria.logic.players.PhysicalPlayer;
+import io.github.sandboxGame.logic.equipment.Item;
+import io.github.sandboxGame.logic.players.ObservablePhysicalPlayer;
+import io.github.sandboxGame.logic.players.PhysicalPlayer;
 
 import static java.lang.Math.abs;
 

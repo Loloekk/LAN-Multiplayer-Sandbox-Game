@@ -1,4 +1,4 @@
-package io.github.terraria.loading.grid;
+package io.github.sandboxGame.loading.grid;
 
 public abstract class GridGeneratorDecorator implements GridGenerator {
     protected final GridGenerator generator;

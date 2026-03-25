@@ -1,4 +1,4 @@
-package io.github.terraria.logic.creatures;
+package io.github.sandboxGame.logic.creatures;
 
 import com.badlogic.gdx.math.Vector2;
 

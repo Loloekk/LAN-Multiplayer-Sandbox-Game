@@ -1,6 +1,6 @@
-package io.github.terraria.logic.physics;
+package io.github.sandboxGame.logic.physics;
 
-import io.github.terraria.common.Config;
+import io.github.sandboxGame.common.Config;
 
 public record BlockFixture(float width, float height, float friction, float restitution) {
     public static final float defaultFriction = Config.BLOCK_DEFAULT_FRICTION;

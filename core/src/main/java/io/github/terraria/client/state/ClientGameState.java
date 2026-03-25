@@ -1,10 +1,10 @@
-package io.github.terraria.client.state;
+package io.github.sandboxGame.client.state;
 
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
-import io.github.terraria.common.BlockState;
-import io.github.terraria.common.Config;
-import io.github.terraria.controler.network.PacketServerToClient.*;
+import io.github.sandboxGame.common.BlockState;
+import io.github.sandboxGame.common.Config;
+import io.github.sandboxGame.controler.network.PacketServerToClient.*;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.HashMap;
@@ -12,8 +12,8 @@ import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 
-import static io.github.terraria.common.Config.SCENE_HEIGHT;
-import static io.github.terraria.common.Config.SCENE_WIDTH;
+import static io.github.sandboxGame.common.Config.SCENE_HEIGHT;
+import static io.github.sandboxGame.common.Config.SCENE_WIDTH;
 import static java.lang.Math.abs;
 
 

@@ -1,15 +1,15 @@
-package io.github.terraria.logic.crafting;
+package io.github.sandboxGame.logic.crafting;
 
-import io.github.terraria.logic.crafting.station.CraftingStation;
-import io.github.terraria.logic.crafting.station.CraftingStationRegistry;
-import io.github.terraria.logic.crafting.station.InventoryStation;
-import io.github.terraria.logic.crafting.station.WorkBenchStation;
-import io.github.terraria.logic.equipment.ItemHolder;
-import io.github.terraria.logic.equipment.ItemRegistry;
-import io.github.terraria.logic.equipment.MultisetItemHolder;
-import io.github.terraria.logic.building.BlockFactory;
-import io.github.terraria.loading.BlockFactoryLoader;
-import io.github.terraria.common.StationType;
+import io.github.sandboxGame.logic.crafting.station.CraftingStation;
+import io.github.sandboxGame.logic.crafting.station.CraftingStationRegistry;
+import io.github.sandboxGame.logic.crafting.station.InventoryStation;
+import io.github.sandboxGame.logic.crafting.station.WorkBenchStation;
+import io.github.sandboxGame.logic.equipment.ItemHolder;
+import io.github.sandboxGame.logic.equipment.ItemRegistry;
+import io.github.sandboxGame.logic.equipment.MultisetItemHolder;
+import io.github.sandboxGame.logic.building.BlockFactory;
+import io.github.sandboxGame.loading.BlockFactoryLoader;
+import io.github.sandboxGame.common.StationType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

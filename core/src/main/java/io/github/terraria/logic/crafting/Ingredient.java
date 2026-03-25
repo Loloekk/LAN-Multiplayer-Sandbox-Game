@@ -1,6 +1,6 @@
-package io.github.terraria.logic.crafting;
+package io.github.sandboxGame.logic.crafting;
 
-import io.github.terraria.logic.equipment.Item;
+import io.github.sandboxGame.logic.equipment.Item;
 
 public record Ingredient(Item item, int amount) {
     public Item getItem() { return item; }

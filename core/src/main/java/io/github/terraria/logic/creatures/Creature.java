@@ -1,7 +1,7 @@
-package io.github.terraria.logic.creatures;
+package io.github.sandboxGame.logic.creatures;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.utils.IntVector2;
+import io.github.sandboxGame.utils.IntVector2;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package io.github.terraria.utils;
+package io.github.sandboxGame.utils;
 
 public class MathUtils {
     public static int floor(float value) { return (int) Math.floor(value); }

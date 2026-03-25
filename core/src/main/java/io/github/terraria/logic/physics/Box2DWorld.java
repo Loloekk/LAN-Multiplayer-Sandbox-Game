@@ -1,13 +1,13 @@
-package io.github.terraria.logic.physics;
+package io.github.sandboxGame.logic.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import io.github.terraria.logic.creatures.BasicCreatureBody;
-import io.github.terraria.logic.creatures.CollisionHandler;
-import io.github.terraria.logic.creatures.CreatureBody;
-import io.github.terraria.logic.players.PlayerActivator;
+import io.github.sandboxGame.logic.creatures.BasicCreatureBody;
+import io.github.sandboxGame.logic.creatures.CollisionHandler;
+import io.github.sandboxGame.logic.creatures.CreatureBody;
+import io.github.sandboxGame.logic.players.PlayerActivator;
 
 public class Box2DWorld implements World {
     private final com.badlogic.gdx.physics.box2d.World world;

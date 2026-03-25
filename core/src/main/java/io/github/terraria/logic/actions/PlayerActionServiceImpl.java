@@ -1,9 +1,9 @@
-package io.github.terraria.logic.actions;
+package io.github.sandboxGame.logic.actions;
 
 import com.badlogic.gdx.math.Vector2;
-import io.github.terraria.utils.IntVector2;
-import io.github.terraria.logic.building.Block;
-import io.github.terraria.logic.players.PhysicalPlayer;
+import io.github.sandboxGame.utils.IntVector2;
+import io.github.sandboxGame.logic.building.Block;
+import io.github.sandboxGame.logic.players.PhysicalPlayer;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package io.github.terraria.logic.building;
+package io.github.sandboxGame.logic.building;
 
-import io.github.terraria.utils.IntVector2;
+import io.github.sandboxGame.utils.IntVector2;
 
 public interface LocalPlaneContainer {
     int getWidth();
