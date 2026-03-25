@@ -41,6 +41,9 @@ test {
   useJUnitPlatform()
 }
 
-
+task runServer(type: JavaExec) {
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = 'io.github.terraria.controler.server.GameServer'
+}
 
 
